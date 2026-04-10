@@ -89,6 +89,10 @@ Cada traducció necessita:
 
 La configuració no traduïble (`config.toml`) és compartida entre tots els idiomes.
 
+## Contribuir
+
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md) per a la guia completa.
+
 ## Llicència
 
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca)
