@@ -68,7 +68,7 @@
   page(numbering: none)[
     #v(1fr)
     #align(right)[
-      #block(width: 50%)[
+      #block[
         #text(weight: "bold")[#title] \
         #text(fill: color-muted)[#subtitle]
 
@@ -80,6 +80,7 @@
         #generated-text
 
         #v(1.5em)
+        #set text(hyphenate: false)
         #link(repo)[#repo] \
         #link("mailto:" + email)[#email]
 
