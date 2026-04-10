@@ -43,7 +43,7 @@ def last_modified_date(files: list[Path]) -> str:
     if not mtimes:
         return "-"
     dt = datetime.fromtimestamp(max(mtimes), tz=timezone.utc)
-    return dt.strftime("%d/%m/%Y %H:%M")
+    return dt.strftime("%d/%m/%Y %H:%M UTC")
 
 
 def generation_date() -> str:
