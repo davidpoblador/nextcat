@@ -17,6 +17,16 @@ title = "Annex"
 [changelog]
 title = "Registre de canvis"
 
+[translation]
+notice = "Aquest document és una traducció. La versió canònica és en català: {repo}"
+
+[site]
+downloads = "Descarregar PDF"
+downloads_text = "La versió PDF més recent es pot descarregar des de les [releases del projecte]({repo}/releases)."
+languages = "Idiomes"
+license = "Llicència"
+license_text = "Aquesta obra està subjecta a la llicència [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca)."
+
 [colophon]
 title = "Colofó"
 text = "Aquest document ha estat generat automàticament a partir de fitxers Markdown amb Typst."

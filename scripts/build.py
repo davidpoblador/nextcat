@@ -1,6 +1,7 @@
 # ABOUTME: Generates a Typst document that renders markdown chapters via cmarker.
 # ABOUTME: Reads config, strings, and chapters from xarter/, writes document.typ.
 
+import re
 import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,6 +16,7 @@ VERSION_FILE = ROOT / "VERSION"
 CHANGELOG_FILE = ROOT / "CHANGELOG.md"
 BUILD_DIR = ROOT / "build"
 OUTPUT_FILE = BUILD_DIR / "document.typ"
+INDEX_FILE = CONTENT_DIR / "index.md"
 
 
 def load_toml(path: Path) -> dict:
@@ -42,6 +44,53 @@ def generation_date() -> str:
     return datetime.now(tz=timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
 
 
+def chapter_title(path: Path) -> str:
+    """Extract the first top-level heading from a markdown file."""
+    for line in path.read_text().splitlines():
+        match = re.match(r"^#\s+(.+)$", line)
+        if match:
+            return match.group(1)
+        match2 = re.match(r"^##\s+(.+)$", line)
+        if match2:
+            return match2.group(1)
+    return path.stem
+
+
+def build_index(
+    doc_strings: dict,
+    site: dict,
+    repo: str,
+    front_matter: list[Path],
+    chapter_files: list[Path],
+) -> None:
+    """Generate the mkdocs index.md from chapter files and strings."""
+    lines = [
+        f"# {doc_strings['title']}",
+        "",
+        f"**{doc_strings['subtitle']}**",
+        "",
+    ]
+
+    for fm in front_matter:
+        lines.append(f"- [{chapter_title(fm)}]({fm.name})")
+    for ch in chapter_files:
+        lines.append(f"- [{chapter_title(ch)}]({ch.name})")
+    lines.append("")
+
+    lines.append(f"## {site['downloads']}")
+    lines.append("")
+    lines.append(site["downloads_text"].format(repo=repo))
+    lines.append("")
+
+    lines.append(f"## {site['license']}")
+    lines.append("")
+    lines.append(site["license_text"])
+    lines.append("")
+
+    INDEX_FILE.write_text("\n".join(lines))
+    print(f"Written {INDEX_FILE}")
+
+
 def typst_param(key: str, value: str) -> str:
     """Format a Typst named parameter with an escaped string value."""
     return f'  {key}: "{escape_typst(value)}",'
@@ -66,7 +115,7 @@ def build() -> None:
 
     all_md = sorted(CONTENT_DIR.glob("*.md"))
     front_matter = [f for f in all_md if f.name.startswith("00-")]
-    chapter_files = [f for f in all_md if not f.name.startswith("00-")]
+    chapter_files = [f for f in all_md if not f.name.startswith("00-") and f.name != "index.md"]
 
     if not chapter_files and not front_matter:
         print("No content files found in xarter/")
@@ -78,6 +127,8 @@ def build() -> None:
     for f in chapter_files:
         print(f"  - {f.name}")
 
+    build_index(doc_strings, strings.get("site", {}), doc["repo"], front_matter, chapter_files)
+
     content_files = [*front_matter, *chapter_files, CONFIG_FILE, STRINGS_FILE]
     footer = (
         f'{title_page["generated"]}: {generation_date()}'
@@ -86,7 +137,7 @@ def build() -> None:
 
     parts: list[str] = [
         '#import "@preview/cmarker:0.1.8": render',
-        '#import "../template.typ": project',
+        '#import "../templates/template.typ": project',
         "",
         "#show: project.with(",
         typst_param("title", doc_strings["title"]),

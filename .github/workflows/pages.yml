@@ -40,7 +40,7 @@ jobs:
           cp build/*.pdf xarter/downloads/
 
       - name: Build site
-        run: uv run mkdocs build
+        run: just site
 
       - uses: actions/upload-pages-artifact@v3
         with:

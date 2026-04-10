@@ -20,11 +20,11 @@ watch: typst
 
 # Build the website
 site:
-    uv run mkdocs build
+    uv run mkdocs build -f templates/mkdocs.yml
 
 # Serve the website locally
 serve:
-    uv run mkdocs serve
+    uv run mkdocs serve -f templates/mkdocs.yml
 
 # Remove generated files
 clean:
