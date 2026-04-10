@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.1.3](https://github.com/davidpoblador/xarter/compare/v0.1.2...v0.1.3) (2026-04-10)
+
+
+### Contingut nou
+
+* authors section in annex, clean changelog items ([a640652](https://github.com/davidpoblador/xarter/commit/a64065293ce98bf4ddec4d15039962c5e6563783))
+
+
+### Correccions
+
+* generate mkdocs nav from chapters, fix Catalan strings ([94ce02f](https://github.com/davidpoblador/xarter/commit/94ce02f2f672695996458141ef139899bc5be469))
+* use ordered list for chapters in index page ([bcc171b](https://github.com/davidpoblador/xarter/commit/bcc171b644e8999dba842bcab0de04b42d1ed052))
+
+
+### Manteniment
+
+* **deps:** update actions/deploy-pages action to v5 ([#8](https://github.com/davidpoblador/xarter/issues/8)) ([c6a2e80](https://github.com/davidpoblador/xarter/commit/c6a2e80edb3111d7202bfda46317f285779b5bac))
+* **deps:** update actions/upload-pages-artifact action to v4 ([#9](https://github.com/davidpoblador/xarter/issues/9)) ([3349851](https://github.com/davidpoblador/xarter/commit/3349851f7a115e9b547f7335065a1d27f282f41e))
+
 ## [0.1.2](https://github.com/davidpoblador/xarter/compare/v0.1.1...v0.1.2) (2026-04-10)
 
 
