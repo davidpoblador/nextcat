@@ -13,12 +13,10 @@ Disponible en PDF i en línia a [davidpoblador.github.io/xarter](https://davidpo
 ## Ús
 
 ```
-just pdf       # Genera el PDF (build/xarter-{versió}.{lang}.pdf)
+just pdf       # Genera PDFs per a tots els idiomes (build/xarter-{versió}.{lang}.pdf)
 just site      # Genera el lloc web (site/)
 just serve     # Serveix el lloc web localment
-just watch     # Recompila el PDF automàticament
 just clean     # Elimina fitxers generats
-just chapters  # Llista els capítols
 ```
 
 ## Estructura
