@@ -51,7 +51,7 @@
     #v(3fr)
     #align(center)[
       #text(size: size-title, weight: "bold")[#title]
-      #v(0.5em)
+      #v(0.2em)
       #text(size: size-subtitle, fill: color-muted)[#subtitle]
     ]
     #v(4fr)
