@@ -97,6 +97,9 @@
       ]
     ]
     #v(1fr)
+    #align(center)[
+      #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
+    ]
   ]
 
   // Heading styles
