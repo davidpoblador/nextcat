@@ -5,20 +5,20 @@ default: pdf
 
 # Build PDFs for all languages
 pdf:
-    uv run xarter
+    uv run python -m scripts.build
 
 # Build PDF for a single language (e.g. just lang ca)
 lang LANG:
-    uv run xarter {{LANG}}
+    uv run python -m scripts.build {{LANG}}
 
 # Build the website
 site: pdf
-    uv run --group docs mkdocs build
+    uv run mkdocs build
 
 # Serve the website locally
 serve: pdf
-    uv run --group docs mkdocs serve
+    uv run mkdocs serve
 
 # Remove all generated files
 clean:
-    rm -rf build/ site/ xarter/index.md xarter/changelog.md xarter/contributing.md mkdocs.yml
+    rm -rf build/ site/ book/index.md book/changelog.md book/contributing.md mkdocs.yml

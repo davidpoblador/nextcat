@@ -1,8 +1,8 @@
 build/
 site/
 mkdocs.yml
-xarter/index.md
-xarter/changelog.md
-xarter/contributing.md
+book/index.md
+book/changelog.md
+book/contributing.md
 __pycache__/
 .DS_Store

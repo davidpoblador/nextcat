@@ -486,25 +486,23 @@ wheels = [
 
 [[package]]
 name = "xarter"
-version = "0.1.4"
-source = { editable = "." }
-dependencies = [
+version = "0.0.0"
+source = { virtual = "." }
+
+[package.dev-dependencies]
+dev = [
     { name = "babel" },
     { name = "dunamai" },
+    { name = "mkdocs-material" },
     { name = "typer" },
 ]
 
-[package.dev-dependencies]
-docs = [
-    { name = "mkdocs-material" },
-]
-
 [package.metadata]
-requires-dist = [
-    { name = "babel", specifier = ">=2.18.0" },
-    { name = "dunamai", specifier = ">=1.26.1" },
-    { name = "typer", specifier = ">=0.24.1" },
-]
 
 [package.metadata.requires-dev]
-docs = [{ name = "mkdocs-material", specifier = ">=9.7.6" }]
+dev = [
+    { name = "babel", specifier = ">=2.18.0" },
+    { name = "dunamai", specifier = ">=1.26.1" },
+    { name = "mkdocs-material", specifier = ">=9.7.6" },
+    { name = "typer", specifier = ">=0.24.1" },
+]

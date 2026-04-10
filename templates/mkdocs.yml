@@ -37,4 +37,4 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.inlinehilite
 
-docs_dir: xarter
+docs_dir: book

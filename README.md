@@ -2,7 +2,7 @@
 
 Document fundacional de l'agència de programari Xarter.
 
-Disponible en PDF i en línia a [davidpoblador.github.io/xarter](https://davidpoblador.github.io/xarter/).
+Disponible en PDF i en línia a [davidpoblador.github.io/xarter](https://davidpoblador.github.io/book/).
 
 ## Requisits
 
@@ -23,7 +23,7 @@ just clean     # Elimina fitxers generats
 ## Estructura
 
 ```
-xarter/
+book/
   config.toml        -- Metadades (autor, email, repo)
   strings.toml       -- Cadenes traduïbles (títol, etiquetes, etc.)
   00-prefaci.md      -- Prefaci (front matter, sense numeració)
@@ -31,9 +31,10 @@ xarter/
   02-serveis.md      -- Capítol 2
   ...
   license.md         -- Llicència localitzada per al PDF
-src/xarter/
-  build.py           -- CLI (`uv run xarter`)
+scripts/
+  build.py           -- CLI de generació
   generate.py        -- Lògica de generació de documents
+config.toml            -- Metadades (autor, email, repo)
 templates/
   template.typ       -- Plantilla Typst (estil LaTeX, tokens de disseny)
   mkdocs.yml         -- Plantilla MkDocs (la nav es genera automàticament)
@@ -47,21 +48,21 @@ No cal saber Typst per modificar el document. Tot el contingut es gestiona amb f
 
 ### Editar contingut
 
-1. Edita els fitxers `.md` dins de `xarter/`.
+1. Edita els fitxers `.md` dins de `book/`.
 2. El prefix numèric (`01-`, `02-`, ...) determina l'ordre dels capítols.
 3. Fitxers amb prefix `00-` són front matter (sense numeració, no apareixen a l'índex del PDF).
 4. Executa `just pdf` per verificar el resultat.
 
 ### Afegir un capítol
 
-1. Crea un fitxer `.md` a `xarter/` amb el prefix numèric adequat (p. ex. `05-nou-capitol.md`).
+1. Crea un fitxer `.md` a `book/` amb el prefix numèric adequat (p. ex. `05-nou-capitol.md`).
 2. Comença el fitxer amb un encapçalament de nivell 1 (`# Títol del capítol`).
 3. El capítol apareixerà automàticament a l'índex, la navegació web i la pàgina d'inici.
 
 ### Configuració
 
-- `xarter/config.toml` -- Metadades no traduïbles: autor, email, URL del repositori.
-- `xarter/strings.toml` -- Cadenes traduïbles: títol, subtítol, etiquetes de la portada, l'índex, l'annex i el colofó.
+- `book/config.toml` -- Metadades no traduïbles: autor, email, URL del repositori.
+- `book/strings.toml` -- Cadenes traduïbles: títol, subtítol, etiquetes de la portada, l'índex, l'annex i el colofó.
 
 ### Traduccions
 
