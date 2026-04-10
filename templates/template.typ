@@ -43,6 +43,9 @@
   set text(font: font-body, size: font-size, lang: lang)
   set par(justify: true, leading: 0.65em)
 
+  // Link styling
+  show link: it => underline(text(fill: color-link, it))
+
   // Cover
   page(numbering: none)[
     #v(3fr)
@@ -117,9 +120,6 @@
     text(size: size-h3, weight: "bold")[#it]
     v(0.5em)
   }
-
-  // Link styling
-  show link: it => underline(text(fill: color-link, it))
 
   // List styling
   set list(indent: 1em, body-indent: 0.5em)
