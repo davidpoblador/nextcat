@@ -13,6 +13,7 @@ typst:
 # Compile the Typst document to PDF
 pdf: typst
     typst compile --root . build/document.typ build/xarter-{{version}}.{{lang}}.pdf
+    rm build/document.typ
 
 # Watch for changes and recompile (run `just typst` first)
 watch: typst

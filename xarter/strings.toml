@@ -17,6 +17,8 @@ license_title = "Llicència"
 
 [changelog]
 title = "Registre de canvis"
+intro = "Aquesta secció recull els canvis introduïts al xàrter i a les eines del repositori en cada versió."
+version_label = "Versió"
 
 [site]
 downloads = "Descarregar PDF"

@@ -44,6 +44,50 @@ def generation_date() -> str:
     return datetime.now(tz=timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
 
 
+def parse_changelog(path: Path) -> list[tuple[str, list[str]]]:
+    """Parse a release-please CHANGELOG.md into [(version, [items])]."""
+    versions: list[tuple[str, list[str]]] = []
+    current_version: str | None = None
+    current_items: list[str] = []
+
+    for line in path.read_text().splitlines():
+        # Version heading: ## [0.1.1](url) (2026-04-10)
+        version_match = re.match(r"^##\s+\[?(\d+\.\d+\.\d+)", line)
+        if version_match:
+            if current_version:
+                versions.append((current_version, current_items))
+            current_version = version_match.group(1)
+            current_items = []
+            continue
+        # Skip subsection headings (### Contingut nou, etc.)
+        if line.startswith("###"):
+            continue
+        # List items: * text ([hash](url)) or * text (hash)
+        item_match = re.match(r"^\*\s+(.+?)(?:\s+\(\[?[a-f0-9]+\]?\(?[^)]*\)?\))?$", line)
+        if item_match:
+            text = item_match.group(1)
+            # Strip trailing markdown links
+            text = re.sub(r"\s*\(\[[a-f0-9]+\]\([^)]+\)\)\s*$", "", text)
+            if text:
+                current_items.append(text)
+
+    if current_version:
+        versions.append((current_version, current_items))
+
+    return versions
+
+
+def changelog_to_typst(versions: list[tuple[str, list[str]]], version_label: str) -> list[str]:
+    """Convert parsed changelog to Typst headings and lists."""
+    lines: list[str] = []
+    for ver, items in versions:
+        lines.append(f'   heading(level: 3)[{version_label} {ver}]')
+        for item in items:
+            lines.append(f"   [- {escape_typst(item)}]")
+        lines.append("")
+    return lines
+
+
 def chapter_title(path: Path) -> str:
     """Extract the first top-level heading from a markdown file."""
     for line in path.read_text().splitlines():
@@ -189,8 +233,14 @@ def build() -> None:
     parts.append(f'   render(read("../LICENSE"), h1-level: 3)')
     if CHANGELOG_FILE.exists():
         changelog_title = escape_typst(changelog["title"])
+        changelog_intro = escape_typst(changelog.get("intro", ""))
+        version_label = escape_typst(changelog.get("version_label", "Versió"))
+        versions = parse_changelog(CHANGELOG_FILE)
         parts.append(f'   heading(level: 2)[{changelog_title}]')
-        parts.append(f'   render(read("../CHANGELOG.md"), h1-level: 3)')
+        if changelog_intro:
+            parts.append(f"   [{changelog_intro}]")
+            parts.append("")
+        parts.extend(changelog_to_typst(versions, version_label))
     parts.append("}")
     parts.append("")
 
