@@ -31,4 +31,4 @@ license_text = "Aquesta obra està subjecta a la llicència [CC BY-SA 4.0](https
 
 [colophon]
 title = "Colofó"
-text = "Aquest document ha estat generat automàticament a partir de fitxers Markdown amb Typst."
+text = "PDF generat a partir dels fitxers Markdown del repositori mitjançant Typst."
