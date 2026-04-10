@@ -62,8 +62,9 @@
     ]
   ]
 
-  // No page numbers on front matter and TOC
+  // Pages count from here but numbers are hidden until after the TOC
   set page(numbering: none)
+  counter(page).update(1)
 
   // Heading styles
   set heading(numbering: "1.1.")

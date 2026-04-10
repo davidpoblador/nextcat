@@ -241,9 +241,8 @@ def build() -> None:
     parts.append(f'#outline(title: "{toc_title}", depth: 2, indent: 1.5em)')
     parts.append("")
 
-    # Page numbering starts after TOC
+    # Display page numbers from here (counter has been running since prefaci)
     parts.append('#set page(numbering: "1", number-align: center)')
-    parts.append("#counter(page).update(1)")
     parts.append("")
 
     for chapter_file in chapter_files:
