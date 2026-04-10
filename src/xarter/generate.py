@@ -10,7 +10,7 @@ from pathlib import Path
 from babel.dates import format_date
 from dunamai import Style, Version
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path.cwd()
 CANONICAL_DIR = ROOT / "xarter"
 TRANSLATIONS_DIR = ROOT / "translations"
 CONFIG_FILE = CANONICAL_DIR / "config.toml"

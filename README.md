@@ -31,8 +31,9 @@ xarter/
   02-serveis.md      -- Capítol 2
   ...
   license.md         -- Llicència localitzada per al PDF
-scripts/
-  build.py           -- Genera document.typ, index.md i mkdocs.yml
+src/xarter/
+  build.py           -- CLI (`uv run xarter`)
+  generate.py        -- Lògica de generació de documents
 templates/
   template.typ       -- Plantilla Typst (estil LaTeX, tokens de disseny)
   mkdocs.yml         -- Plantilla MkDocs (la nav es genera automàticament)
