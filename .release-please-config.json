@@ -15,11 +15,11 @@
         }
       ],
       "changelog-sections": [
-        {"type": "feat", "section": "Contingut nou"},
-        {"type": "fix", "section": "Correccions"},
-        {"type": "refactor", "section": "Refactorització"},
-        {"type": "docs", "section": "Documentació"},
-        {"type": "chore", "section": "Manteniment"},
+        {"type": "feat", "section": "Features"},
+        {"type": "fix", "section": "Bug Fixes"},
+        {"type": "refactor", "section": "Code Refactoring"},
+        {"type": "docs", "section": "Documentation"},
+        {"type": "chore", "section": "Miscellaneous Chores"},
         {"type": "ci", "section": "CI/CD"}
       ]
     }
