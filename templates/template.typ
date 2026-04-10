@@ -103,7 +103,7 @@
         #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
       ]
     ]
-    ]
+    #v(1fr)
   ]
 
   // TOC spacing between main sections
@@ -144,7 +144,8 @@
   page[
     #v(1fr)
     #align(center)[
-      #text(size: size-h1, weight: "bold")[#colophon-title] \
+      #text(size: size-h1, weight: "bold")[#colophon-title]
+      #v(1em)
       #text(fill: color-muted)[#colophon-text]
 
       #v(1.5em)
