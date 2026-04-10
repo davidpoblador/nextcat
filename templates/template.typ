@@ -102,6 +102,12 @@
     ]
   ]
 
+  // TOC spacing between main sections
+  show outline.entry.where(level: 1): it => {
+    v(0.4em)
+    it
+  }
+
   // Heading styles
   set heading(numbering: "1.1.")
 
