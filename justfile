@@ -5,11 +5,11 @@ default: pdf
 
 # Build PDFs for all languages
 pdf:
-    uv run python scripts/build.py
+    uv run python -m scripts.build
 
 # Build PDF for a single language (e.g. just lang ca)
 lang LANG:
-    uv run python scripts/build.py {{LANG}}
+    uv run python -m scripts.build {{LANG}}
 
 # Build the website
 site: pdf
