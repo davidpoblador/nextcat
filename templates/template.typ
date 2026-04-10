@@ -50,14 +50,13 @@
       #text(size: size-title, weight: "bold")[#title]
       #v(0.5em)
       #text(size: size-subtitle, fill: color-muted)[#subtitle]
-      #v(3em)
-      #text(size: size-h2)[#author]
-      #v(1.5em)
-      #text(size: font-size, fill: color-light)[#version-label #version]
-      #v(0.5em)
-      #text(size: font-size, fill: color-light)[#cover-date]
     ]
     #v(4fr)
+    #align(right)[
+      #text(size: font-size, fill: color-light)[#version-label #version -- #cover-date]
+      #v(0.3em)
+      #text(size: font-size)[#author]
+    ]
   ]
 
   // Metadata page
