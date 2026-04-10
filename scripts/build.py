@@ -166,6 +166,10 @@ def build_index(
     appendix = strings.get("appendix", {})
     nav_lines.append(f"  - {appendix.get('title', 'Annex')}:")
     nav_lines.append(f"    - {appendix.get('license_title', 'Llicència')}: license.md")
+    about_author_file = CONTENT_DIR / "about-author.md"
+    if about_author_file.exists():
+        about_nav_title = appendix.get("about_author_title", "Sobre l'autor")
+        nav_lines.append(f"    - {about_nav_title}: about-author.md")
 
     mkdocs_output.write_text(mkdocs_template.read_text() + "\n".join(nav_lines) + "\n")
     print(f"Written {mkdocs_output}")
