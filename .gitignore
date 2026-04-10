@@ -2,5 +2,6 @@ build/
 site/
 mkdocs.yml
 xarter/index.md
+xarter/changelog.md
 __pycache__/
 .DS_Store
