@@ -31,6 +31,11 @@ def escape_typst(s: str) -> str:
     return s.replace("\\", "\\\\").replace('"', '\\"').replace("#", "\\#")
 
 
+def escape_typst_content(s: str) -> str:
+    """Escape a string for safe inclusion in Typst content mode."""
+    return s.replace("\\", "\\\\").replace("#", "\\#").replace("_", "\\_").replace("*", "\\*")
+
+
 def last_modified_date(files: list[Path]) -> str:
     """Most recent filesystem mtime across the given files."""
     mtimes = [f.stat().st_mtime for f in files if f.exists()]
@@ -88,7 +93,7 @@ def changelog_to_typst(versions: list[tuple[str, list[str]]], version_label: str
     for ver, items in versions:
         lines.append(f'   heading(level: 3)[{version_label} {ver}]')
         for item in items:
-            lines.append(f"   [- {escape_typst(item)}]")
+            lines.append(f"   [- {escape_typst_content(item)}]")
         lines.append("")
     return lines
 
