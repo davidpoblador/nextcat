@@ -26,6 +26,15 @@ theme:
   features:
     - navigation.sections
     - navigation.top
+    - toc.integrate
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
 
 docs_dir: xarter
 
