@@ -1,6 +1,23 @@
 // ABOUTME: Typst document template with a LaTeX-inspired style.
 // ABOUTME: Defines page layout, fonts, heading styles, and title page.
 
+// Design tokens
+#let font-body = "New Computer Modern"
+#let font-size = 11pt
+#let color-body = rgb("#000")
+#let color-muted = rgb("#555")
+#let color-light = rgb("#777")
+#let color-faint = rgb("#999")
+#let color-link = rgb("#2244aa")
+#let margin-page = (top: 3cm, bottom: 3cm, left: 3.5cm, right: 3.5cm)
+#let size-title = 28pt
+#let size-subtitle = 16pt
+#let size-h1 = 20pt
+#let size-h2 = 14pt
+#let size-h3 = 12pt
+#let size-colophon = 10pt
+#let size-meta = 8pt
+
 #let project(
   title: "",
   subtitle: "",
@@ -17,44 +34,31 @@
   body,
 ) = {
   set document(title: title, author: author)
-
-  set page(
-    paper: "a4",
-    margin: (top: 3cm, bottom: 3cm, left: 3.5cm, right: 3.5cm),
-  )
-
-  set text(
-    font: "New Computer Modern",
-    size: 11pt,
-    lang: lang,
-  )
-
-  set par(
-    justify: true,
-    leading: 0.65em,
-  )
+  set page(paper: "a4", margin: margin-page)
+  set text(font: font-body, size: font-size, lang: lang)
+  set par(justify: true, leading: 0.65em)
 
   // Cover
   page(numbering: none)[
     #v(3fr)
     #align(center)[
-      #text(size: 28pt, weight: "bold")[#title]
+      #text(size: size-title, weight: "bold")[#title]
       #v(1em)
-      #text(size: 16pt, fill: rgb("#555"))[#subtitle]
+      #text(size: size-subtitle, fill: color-muted)[#subtitle]
       #v(3em)
-      #text(size: 14pt)[#author]
+      #text(size: size-h2)[#author]
       #v(0.5em)
-      #text(size: 11pt, fill: rgb("#555"))[#email]
+      #text(size: font-size, fill: color-muted)[#email]
       #v(1.5em)
-      #text(size: 10pt, fill: rgb("#777"))[v#version]
+      #text(size: size-colophon, fill: color-light)[v#version]
     ]
     #v(4fr)
     #align(center)[
-      #text(size: 8pt, fill: rgb("#999"))[#generated-text]
+      #text(size: size-meta, fill: color-faint)[#generated-text]
       #v(0.3em)
-      #text(size: 8pt, fill: rgb("#999"))[#modified-text]
+      #text(size: size-meta, fill: color-faint)[#modified-text]
       #v(0.3em)
-      #text(size: 8pt, fill: rgb("#999"))[#repo]
+      #text(size: size-meta, fill: color-faint)[#repo]
     ]
   ]
 
@@ -67,21 +71,24 @@
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
     v(2em)
-    text(size: 20pt, weight: "bold")[#it]
+    text(size: size-h1, weight: "bold")[#it]
     v(1em)
   }
 
   show heading.where(level: 2): it => {
     v(1.5em)
-    text(size: 14pt, weight: "bold")[#it]
+    text(size: size-h2, weight: "bold")[#it]
     v(0.75em)
   }
 
   show heading.where(level: 3): it => {
     v(1em)
-    text(size: 12pt, weight: "bold")[#it]
+    text(size: size-h3, weight: "bold")[#it]
     v(0.5em)
   }
+
+  // Link styling
+  show link: it => underline(text(fill: color-link, it))
 
   // List styling
   set list(indent: 1em, body-indent: 0.5em)
@@ -93,19 +100,19 @@
   page(numbering: none, footer: none)[
     #v(1fr)
     #align(center)[
-      #text(size: 14pt, weight: "bold")[#colophon-title]
+      #text(size: size-h2, weight: "bold")[#colophon-title]
       #v(2em)
-      #text(size: 10pt, fill: rgb("#555"))[#colophon-text]
+      #text(size: size-colophon, fill: color-muted)[#colophon-text]
       #v(1.5em)
-      #text(size: 10pt, fill: rgb("#555"))[v#version]
+      #text(size: size-colophon, fill: color-muted)[v#version]
       #v(0.5em)
-      #text(size: 10pt, fill: rgb("#555"))[#generated-text]
+      #text(size: size-colophon, fill: color-muted)[#generated-text]
       #v(0.3em)
-      #text(size: 10pt, fill: rgb("#555"))[#modified-text]
+      #text(size: size-colophon, fill: color-muted)[#modified-text]
       #v(1.5em)
-      #text(size: 10pt, fill: rgb("#555"))[#repo]
+      #text(size: size-colophon, fill: color-muted)[#repo]
       #v(3em)
-      #text(size: 9pt, fill: rgb("#777"))[CC BY-SA 4.0]
+      #text(size: size-meta, fill: color-light)[CC BY-SA 4.0]
     ]
     #v(1fr)
   ]
