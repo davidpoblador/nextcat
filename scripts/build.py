@@ -153,6 +153,10 @@ def build_index(
         nav_lines.append(f"  - {chapter_title(fm)}: {fm.name}")
     for ch in chapter_files:
         nav_lines.append(f"  - {chapter_title(ch)}: {ch.name}")
+    # Annex
+    appendix = strings.get("appendix", {})
+    nav_lines.append(f"  - {appendix.get('title', 'Annex')}:")
+    nav_lines.append(f"    - {appendix.get('license_title', 'Llicència')}: license.md")
 
     mkdocs_output.write_text(mkdocs_template.read_text() + "\n".join(nav_lines) + "\n")
     print(f"Written {mkdocs_output}")
