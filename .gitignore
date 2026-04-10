@@ -3,5 +3,6 @@ site/
 mkdocs.yml
 xarter/index.md
 xarter/changelog.md
+xarter/contributing.md
 __pycache__/
 .DS_Store
