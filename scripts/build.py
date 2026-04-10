@@ -5,6 +5,8 @@ import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
 
+from dunamai import Style, Version
+
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT_DIR = ROOT / "xarter"
 CONFIG_FILE = CONTENT_DIR / "config.toml"
@@ -57,7 +59,10 @@ def build() -> None:
     changelog = strings["changelog"]
     colophon = strings["colophon"]
     lang = strings["lang"]
-    version = VERSION_FILE.read_text().strip()
+    try:
+        version = Version.from_git().serialize(style=Style.Pep440)
+    except RuntimeError:
+        version = VERSION_FILE.read_text().strip()
 
     all_md = sorted(CONTENT_DIR.glob("*.md"))
     front_matter = [f for f in all_md if f.name.startswith("00-")]
