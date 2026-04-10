@@ -13,6 +13,7 @@ CONTENT_DIR = ROOT / "xarter"
 CONFIG_FILE = CONTENT_DIR / "config.toml"
 STRINGS_FILE = CONTENT_DIR / "strings.toml"
 VERSION_FILE = ROOT / "VERSION"
+AUTHORS_FILE = ROOT / "AUTHORS"
 CHANGELOG_FILE = ROOT / "CHANGELOG.md"
 BUILD_DIR = ROOT / "build"
 OUTPUT_FILE = BUILD_DIR / "document.typ"
@@ -62,12 +63,16 @@ def parse_changelog(path: Path) -> list[tuple[str, list[str]]]:
         # Skip subsection headings (### Contingut nou, etc.)
         if line.startswith("###"):
             continue
-        # List items: * text ([hash](url)) or * text (hash)
-        item_match = re.match(r"^\*\s+(.+?)(?:\s+\(\[?[a-f0-9]+\]?\(?[^)]*\)?\))?$", line)
-        if item_match:
-            text = item_match.group(1)
-            # Strip trailing markdown links
-            text = re.sub(r"\s*\(\[[a-f0-9]+\]\([^)]+\)\)\s*$", "", text)
+        # List items: * text
+        if line.startswith("* "):
+            text = line[2:]
+            # Strip commit hash references: ([hash](url)) or (hash)
+            text = re.sub(r"\s*\(\[?[a-f0-9]{7,}\]?\(?[^)]*\)?\)\s*$", "", text)
+            # Strip PR/issue references: ([#N](url))
+            text = re.sub(r"\s*\(\[#\d+\]\([^)]+\)\)\s*$", "", text)
+            # Strip bold scope prefixes: **deps:** -> deps:
+            text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
+            text = text.strip()
             if text:
                 current_items.append(text)
 
@@ -234,6 +239,22 @@ def build() -> None:
     license_file = CONTENT_DIR / "license.md"
     license_path = f"../{license_file.relative_to(ROOT)}" if license_file.exists() else "../LICENSE"
     parts.append(f'   render(read("{license_path}"), h1-level: 3)')
+    if AUTHORS_FILE.exists():
+        authors_title = escape_typst(strings.get("appendix", {}).get("authors_title", "Autors"))
+        parts.append(f'   heading(level: 2)[{authors_title}]')
+        for line in AUTHORS_FILE.read_text().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            # Parse "Name <url>" format
+            author_match = re.match(r"^(.+?)\s+<(.+?)>\s*$", line)
+            if author_match:
+                name = escape_typst(author_match.group(1))
+                url = escape_typst(author_match.group(2))
+                parts.append(f'   [- {name} (#link("{url}")[{url}])]')
+            else:
+                parts.append(f"   [- {escape_typst(line)}]")
+        parts.append("")
     if CHANGELOG_FILE.exists():
         changelog_title = escape_typst(changelog["title"])
         changelog_intro = escape_typst(changelog.get("intro", ""))
