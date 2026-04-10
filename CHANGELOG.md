@@ -1,5 +1,59 @@
 # Changelog
 
+## [0.1.4](https://github.com/davidpoblador/xarter/compare/v0.1.3...v0.1.4) (2026-04-10)
+
+
+### Contingut nou
+
+* add style guide chapter showcasing markdown features ([1fa67a2](https://github.com/davidpoblador/xarter/commit/1fa67a2701059599965aebfbe1a1e7e289ba3e20))
+* author bio in annex, rename authors to contributors ([201bc2f](https://github.com/davidpoblador/xarter/commit/201bc2f9e83f785e5699ab3ba52c3a848185c96c))
+* colophon as numbered page in TOC, move content to build script ([a208496](https://github.com/davidpoblador/xarter/commit/a208496495dd55b8bd6d4faf394fc2507a5e6cfc))
+* cover redesign, metadata page, localized dates, dev deps ([c334164](https://github.com/davidpoblador/xarter/commit/c334164f4bab1a6b48ddb2a8c65e61413293f388))
+* separate url and repo fields, colophon with h1 title and page number ([0424b62](https://github.com/davidpoblador/xarter/commit/0424b629f25bf122d88f84823f9415b10433d199))
+
+
+### Correccions
+
+* add blank verso after cover for proper book page layout ([2a5b1a7](https://github.com/davidpoblador/xarter/commit/2a5b1a7f645573cdb1b8e7bc0bd8f14a7e3a567c))
+* add CC BY-SA 4.0 to bottom of metadata page ([b978d58](https://github.com/davidpoblador/xarter/commit/b978d58cf6f9bb55c71402cc7170dbe300571016))
+* add colon after version label on metadata page ([0992c62](https://github.com/davidpoblador/xarter/commit/0992c62c0623ef6114f3e02e322de1fea154dde0))
+* add Prefaci heading with subsection structure ([78ad0ca](https://github.com/davidpoblador/xarter/commit/78ad0ca04519b4fd9a37c34a593d8cad570309e7))
+* add subtle spacing between main sections in TOC ([4bc024a](https://github.com/davidpoblador/xarter/commit/4bc024ae30f45e34c83fec03a58e8755370d4292))
+* author above version on cover, UTC on both timestamps ([cfbec8a](https://github.com/davidpoblador/xarter/commit/cfbec8aa28b8bb15f32e6ee89f56f82986690f93))
+* bracket mismatch in template, add spacing after colophon title ([2b71b16](https://github.com/davidpoblador/xarter/commit/2b71b161e7435a3f8550bbdba9636a6996fd9e8e))
+* centered colophon title, remove bracket artifacts ([4f8e284](https://github.com/davidpoblador/xarter/commit/4f8e284f18357d145a8b753918fb34c7271898da))
+* colophon layout matches metadata page spacing and structure ([a315587](https://github.com/davidpoblador/xarter/commit/a31558713eeb838936e3d24cb65dea4d8301276f))
+* continuous page counting from prefaci ([ec18221](https://github.com/davidpoblador/xarter/commit/ec18221645c0f269370fa8c33c37e648f54a47d0))
+* contributor names as clickable links, add pyproject metadata ([5ed97e6](https://github.com/davidpoblador/xarter/commit/5ed97e63c5bd53193c1c41163f258145c36f5fdc))
+* date immediately below author on cover, version spaced below ([e2ddeed](https://github.com/davidpoblador/xarter/commit/e2ddeed17a909d3a3f0bb222ca9604ead65f75c4))
+* escape underscores and markup in changelog items ([449edd7](https://github.com/davidpoblador/xarter/commit/449edd7650c7f3948d4d3df20ed96e6fa7b449c1))
+* metadata and colophon link layout, CC BY-SA in right-aligned block ([d752293](https://github.com/davidpoblador/xarter/commit/d752293e663b4c8c06f9739b30c5a9d08bc1ef10))
+* move author to bottom-right of cover below version/date ([3658ec9](https://github.com/davidpoblador/xarter/commit/3658ec9aa4e9da4fff64ef2ba90e653dee437a3f))
+* move link styling before cover so metadata page links are styled ([68a52ff](https://github.com/davidpoblador/xarter/commit/68a52ffb7a1a335182873cf57ebe5c9d7a4c810e))
+* note that changelog entries are in English by convention ([721efea](https://github.com/davidpoblador/xarter/commit/721efeaa58077c1b1b2f677569abcd675e80f12d))
+* pass strings to build_index for annex nav generation ([3d7ccf9](https://github.com/davidpoblador/xarter/commit/3d7ccf99fba5654a0fe6a2757b59bbfd4fd9faf0))
+* reduce spacing between title and subtitle on cover ([8fa05be](https://github.com/davidpoblador/xarter/commit/8fa05be62ad0152f9064c7533809383e4bb68fa4))
+* remove toc.integrate to avoid duplicate nav entries ([9f51c04](https://github.com/davidpoblador/xarter/commit/9f51c049704867e121b3684ad6805441d14619ba))
+* remove width constraint on metadata page, prevent URL wrapping ([e987314](https://github.com/davidpoblador/xarter/commit/e987314d9b61b86ffacd72e53f6ca2c6d238901d))
+* rename prefaci heading, add annex to website nav ([7f63ce2](https://github.com/davidpoblador/xarter/commit/7f63ce2ec7b17ab93e80ccff2bc00774139255c6))
+* show only version number on cover, smaller and fainter ([1063324](https://github.com/davidpoblador/xarter/commit/106332427dacaf0522968058e281ae80b9e71eaf))
+* start page counter before metadata page ([b9e1ba0](https://github.com/davidpoblador/xarter/commit/b9e1ba04d629e2a44e083a77f7214ca21fbaca3e))
+* update colophon text to be more accurate ([5aaf0f6](https://github.com/davidpoblador/xarter/commit/5aaf0f6652e5a3d58d732109ab3772c68ff62dcc))
+
+
+### Documentació
+
+* add contributing link to README ([5f41f75](https://github.com/davidpoblador/xarter/commit/5f41f75785b75db455c86caead505fe788a26130))
+* add CONTRIBUTING.md and contributing section to AGENTS.md ([5c1031c](https://github.com/davidpoblador/xarter/commit/5c1031c7eebfa3f4d7ac55dfe7eb36ab5cb4fe29))
+* expand PR workflow, commit conventions, and AI disclosure ([9992c3e](https://github.com/davidpoblador/xarter/commit/9992c3e8be3a0de00a8268797d2301d4e78c1e8e))
+
+
+### Manteniment
+
+* **deps:** update astral-sh/setup-uv action to v7 ([#11](https://github.com/davidpoblador/xarter/issues/11)) ([b01ff37](https://github.com/davidpoblador/xarter/commit/b01ff37ebcd94b90ceffb16b6b22eba43b0201be))
+* **deps:** update extractions/setup-just action to v4 ([#12](https://github.com/davidpoblador/xarter/issues/12)) ([3b517fa](https://github.com/davidpoblador/xarter/commit/3b517fa6de7ae026407fbfd54543f25b288a37ea))
+* rename CLAUDE.md to AGENTS.md, symlink CLAUDE.md ([269ad3c](https://github.com/davidpoblador/xarter/commit/269ad3c3840e77b001d0bdf0407697a6861be192))
+
 ## [0.1.3](https://github.com/davidpoblador/xarter/compare/v0.1.2...v0.1.3) (2026-04-10)
 
 
