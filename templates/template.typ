@@ -140,6 +140,13 @@
     )[#text(fill: color-muted)[#it.body]]
   }
 
+  // Table styling
+  set table(stroke: 0.5pt + color-faint)
+  show table.cell.where(y: 0): set text(weight: "bold")
+
+  // Horizontal rule styling
+  set line(stroke: 0.5pt + color-faint)
+
   // List styling
   set list(indent: 1em, body-indent: 0.5em)
   set enum(indent: 1em, body-indent: 0.5em)
