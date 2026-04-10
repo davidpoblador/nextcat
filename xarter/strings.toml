@@ -11,6 +11,12 @@ modified = "Última modificació"
 [toc]
 title = "Índex"
 
+[appendix]
+title = "Annex"
+
+[changelog]
+title = "Registre de canvis"
+
 [colophon]
 title = "Colofó"
 text = "Aquest document ha estat generat automàticament a partir de fitxers Markdown amb Typst."
