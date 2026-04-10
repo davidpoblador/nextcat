@@ -112,6 +112,7 @@ def chapter_title(path: Path) -> str:
 
 def build_index(
     doc_strings: dict,
+    strings: dict,
     site: dict,
     repo: str,
     front_matter: list[Path],
@@ -199,7 +200,7 @@ def build() -> None:
     for f in chapter_files:
         print(f"  - {f.name}")
 
-    build_index(doc_strings, strings.get("site", {}), doc["repo"], front_matter, chapter_files)
+    build_index(doc_strings, strings, strings.get("site", {}), doc["repo"], front_matter, chapter_files)
 
     content_files = [*front_matter, *chapter_files, CONFIG_FILE, STRINGS_FILE]
     generated_text = f'{title_page["generated"]}: {generation_date()}'
