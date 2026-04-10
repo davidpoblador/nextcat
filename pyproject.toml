@@ -1,6 +1,6 @@
 [project]
 name = "xarter"
-version = "0.0.0"
+version = "0.0.1"
 description = "Carta fundacional de l'agència de programari Xarter"
 readme = "README.md"
 requires-python = ">=3.14"
