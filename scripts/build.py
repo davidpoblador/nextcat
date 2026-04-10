@@ -159,7 +159,8 @@ def build() -> None:
 
     all_md = sorted(CONTENT_DIR.glob("*.md"))
     front_matter = [f for f in all_md if f.name.startswith("00-")]
-    chapter_files = [f for f in all_md if not f.name.startswith("00-") and f.name != "index.md"]
+    excluded = {"index.md", "license.md"}
+    chapter_files = [f for f in all_md if not f.name.startswith("00-") and f.name not in excluded]
 
     if not chapter_files and not front_matter:
         print("No content files found in xarter/")
@@ -230,7 +231,9 @@ def build() -> None:
     license_title = escape_typst(strings.get("appendix", {}).get("license_title", "Llicència"))
     parts.append(f'   heading(level: 1)[{appendix_title}]')
     parts.append(f'   heading(level: 2)[{license_title}]')
-    parts.append(f'   render(read("../LICENSE"), h1-level: 3)')
+    license_file = CONTENT_DIR / "license.md"
+    license_path = f"../{license_file.relative_to(ROOT)}" if license_file.exists() else "../LICENSE"
+    parts.append(f'   render(read("{license_path}"), h1-level: 3)')
     if CHANGELOG_FILE.exists():
         changelog_title = escape_typst(changelog["title"])
         changelog_intro = escape_typst(changelog.get("intro", ""))
