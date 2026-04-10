@@ -122,8 +122,8 @@ def build_index(
 
     for fm in front_matter:
         lines.append(f"- [{chapter_title(fm)}]({fm.name})")
-    for i, ch in enumerate(chapter_files, 1):
-        lines.append(f"- {i}. [{chapter_title(ch)}]({ch.name})")
+    for ch in chapter_files:
+        lines.append(f"1. [{chapter_title(ch)}]({ch.name})")
     lines.append("")
 
     lines.append("---")
