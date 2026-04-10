@@ -1,0 +1,43 @@
+# ABOUTME: MkDocs configuration for the Xarter website.
+# ABOUTME: Serves the same markdown chapters used to build the PDF.
+
+site_name: Xarter
+site_description: Carta fundacional de l'agència de programari Xarter
+site_url: https://davidpoblador.github.io/xarter/
+repo_url: https://github.com/davidpoblador/xarter
+repo_name: davidpoblador/xarter
+
+theme:
+  name: material
+  language: ca
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Mode fosc
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Mode clar
+  features:
+    - navigation.sections
+    - navigation.top
+    - toc.integrate
+
+docs_dir: xarter
+
+nav:
+  - Inici: index.md
+  - Prefaci: 00-prefaci.md
+  - Introducció: 01-introduccio.md
+  - Serveis: 02-serveis.md
+  - Metodologia: 03-metodologia.md
+  - Tecnologia: 04-tecnologia.md
+
+extra:
+  version:
+    provider: mike

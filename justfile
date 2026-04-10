@@ -18,9 +18,17 @@ pdf: typst
 watch: typst
     typst watch --root . build/document.typ build/xarter-{{version}}.{{lang}}.pdf
 
+# Build the website
+site:
+    uv run mkdocs build
+
+# Serve the website locally
+serve:
+    uv run mkdocs serve
+
 # Remove generated files
 clean:
-    rm -rf build/
+    rm -rf build/ site/
 
 # List all chapters
 chapters:
