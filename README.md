@@ -90,7 +90,7 @@ La configuració no traduïble (`config.toml`) és compartida entre tots els idi
 
 ## Contribuir
 
-Consulta [CONTRIBUTING.md](CONTRIBUTING.md) per a la guia completa.
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md) per a la guia completa i el [codi de conducta](CODE_OF_CONDUCT.md).
 
 ## Llicència
 
