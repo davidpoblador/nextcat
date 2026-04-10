@@ -55,22 +55,8 @@
     ]
   ]
 
-  // Page numbering starts after cover
-  set page(
-    numbering: "1",
-    number-align: center,
-    footer: context {
-      let num = counter(page).display("1")
-      align(center, text(size: 9pt, fill: rgb("#777"))[
-        #title · v#version
-        #h(1fr)
-        #num
-        #h(1fr)
-        #author
-      ])
-    },
-  )
-  counter(page).update(1)
+  // No page numbers on front matter and TOC
+  set page(numbering: none)
 
   // Heading styles
   set heading(numbering: "1.1.")
