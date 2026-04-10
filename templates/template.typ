@@ -76,7 +76,7 @@
         #text(fill: color-muted)[#subtitle]
 
         #v(1.5em)
-        #version-label #version
+        #version-label: #version
 
         #v(1.5em)
         #modified-text \
