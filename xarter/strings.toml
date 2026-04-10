@@ -1,0 +1,16 @@
+lang = "ca"
+
+[document]
+title = "Xarter"
+subtitle = "Agència de Programari"
+
+[title_page]
+generated = "Generat"
+modified = "Última modificació"
+
+[toc]
+title = "Índex"
+
+[colophon]
+title = "Colofó"
+text = "Aquest document ha estat generat automàticament a partir de fitxers Markdown amb Typst."

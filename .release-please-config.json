@@ -1,0 +1,23 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "changelog-path": "CHANGELOG.md",
+      "include-component-in-tag": false,
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "extra-files": [
+        "VERSION"
+      ],
+      "changelog-sections": [
+        {"type": "feat", "section": "Contingut nou"},
+        {"type": "fix", "section": "Correccions"},
+        {"type": "refactor", "section": "Refactorització"},
+        {"type": "docs", "section": "Documentació"},
+        {"type": "chore", "section": "Manteniment"},
+        {"type": "ci", "section": "CI/CD"}
+      ]
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
