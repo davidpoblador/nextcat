@@ -38,7 +38,3 @@ markdown_extensions:
   - pymdownx.inlinehilite
 
 docs_dir: xarter
-
-extra:
-  version:
-    provider: mike
