@@ -27,6 +27,7 @@
   version: "",
   version-label: "Versió",
   cover-date: "",
+  url: "",
   repo: "",
   toc-title: "",
   generated-text: "",
@@ -87,6 +88,7 @@
 
         #v(1.5em)
         #set text(hyphenate: false)
+        #link(url)[#url] \
         #link(repo)[#repo] \
         #link("mailto:" + email)[#email]
 
@@ -137,10 +139,10 @@
   body
 
   // Colophon
-  page(numbering: none, footer: none)[
+  page[
     #v(1fr)
     #align(center)[
-      #text(weight: "bold")[#colophon-title] \
+      #text(size: size-h1, weight: "bold")[#colophon-title] \
       #text(fill: color-muted)[#colophon-text]
 
       #v(1.5em)
@@ -152,6 +154,7 @@
 
       #v(1.5em)
       #set text(hyphenate: false)
+      #link(url)[#url] \
       #link(repo)[#repo] \
       #link("mailto:" + email)[#email]
 

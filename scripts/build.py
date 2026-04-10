@@ -228,6 +228,7 @@ def build() -> None:
         typst_param("version", version),
         typst_param("version-label", title_page.get("version_label", "Versió")),
         typst_param("cover-date", cover_date(lang)),
+        typst_param("url", doc["url"]),
         typst_param("repo", doc["repo"]),
         typst_param("generated-text", generated_text),
         typst_param("modified-text", modified_text),
