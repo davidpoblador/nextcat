@@ -18,7 +18,7 @@ VERSION_FILE = ROOT / "VERSION"
 AUTHORS_FILE = ROOT / "AUTHORS"
 CHANGELOG_FILE = ROOT / "CHANGELOG.md"
 BUILD_DIR = ROOT / "build"
-EXCLUDED_MD = {"index.md", "license.md", "about-author.md", "changelog.md"}
+EXCLUDED_MD = {"index.md", "license.md", "about-author.md", "changelog.md", "contributing.md"}
 
 
 def load_toml(path: Path) -> dict:
@@ -195,6 +195,11 @@ def build_index(
         about_nav_title = appendix.get("about_author_title", "Sobre l'autor")
         nav_lines.append(f"    - {about_nav_title}: about-author.md")
 
+    contributing_file = ROOT / "CONTRIBUTING.md"
+    if contributing_file.exists():
+        shutil.copy(contributing_file, CANONICAL_DIR / "contributing.md")
+        contributing_nav = appendix.get("contributing_title", "Contribucions")
+        nav_lines.append(f"    - {contributing_nav}: contributing.md")
     if CHANGELOG_FILE.exists():
         shutil.copy(CHANGELOG_FILE, CANONICAL_DIR / "changelog.md")
         changelog = strings.get("changelog", {})
@@ -293,6 +298,14 @@ def build_typst(
         rel_path = f"../{about_author_file.relative_to(ROOT)}"
         parts.append(f'   heading(level: 2)[{about_title}]')
         parts.append(f'   render(read("{rel_path}"), h1-level: 3)')
+        parts.append("")
+
+    # Contributing
+    contributing_title = appendix.get("contributing_title")
+    contributing_text = appendix.get("contributing_text")
+    if contributing_title and contributing_text:
+        parts.append(f'   heading(level: 2)[{escape_typst(contributing_title)}]')
+        parts.append(f"   [{escape_typst(contributing_text)}]")
         parts.append("")
 
     if AUTHORS_FILE.exists():

@@ -21,4 +21,4 @@ serve: pdf
 
 # Remove all generated files
 clean:
-    rm -rf build/ site/ xarter/index.md xarter/changelog.md mkdocs.yml
+    rm -rf build/ site/ xarter/index.md xarter/changelog.md xarter/contributing.md mkdocs.yml

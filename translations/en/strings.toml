@@ -19,6 +19,8 @@ title = "Contents"
 title = "Appendix"
 license_title = "License"
 about_author_title = "About the author"
+contributing_title = "Contributing"
+contributing_text = "This document is open to contributions. If you would like to propose changes, corrections, or translations, please refer to the contributing guide in the project repository."
 contributors_title = "Contributors"
 
 [changelog]
