@@ -89,18 +89,20 @@
         #v(1.5em)
         #set text(hyphenate: false)
         #link(url)[#url] \
-        #link(repo)[#repo] \
         #link("mailto:" + email)[#email]
+
+        #v(0.5em)
+        #link(repo)[#repo]
 
         #if translation-notice != "" {
           v(1.5em)
           text(size: size-colophon, fill: color-muted)[#translation-notice]
         }
+
+        #v(1.5em)
+        #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
       ]
     ]
-    #v(1fr)
-    #align(center)[
-      #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
     ]
   ]
 
@@ -155,8 +157,10 @@
       #v(1.5em)
       #set text(hyphenate: false)
       #link(url)[#url] \
-      #link(repo)[#repo] \
       #link("mailto:" + email)[#email]
+
+      #v(0.5em)
+      #link(repo)[#repo]
 
       #v(1.5em)
       #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
