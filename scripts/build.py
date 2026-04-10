@@ -130,10 +130,8 @@ def build() -> None:
     build_index(doc_strings, strings.get("site", {}), doc["repo"], front_matter, chapter_files)
 
     content_files = [*front_matter, *chapter_files, CONFIG_FILE, STRINGS_FILE]
-    footer = (
-        f'{title_page["generated"]}: {generation_date()}'
-        f' · {title_page["modified"]}: {last_modified_date(content_files)}'
-    )
+    generated_text = f'{title_page["generated"]}: {generation_date()}'
+    modified_text = f'{title_page["modified"]}: {last_modified_date(content_files)}'
 
     parts: list[str] = [
         '#import "@preview/cmarker:0.1.8": render',
@@ -148,7 +146,8 @@ def build() -> None:
         typst_param("toc-title", toc["title"]),
         typst_param("version", version),
         typst_param("repo", doc["repo"]),
-        typst_param("footer-text", footer),
+        typst_param("generated-text", generated_text),
+        typst_param("modified-text", modified_text),
         typst_param("colophon-title", colophon["title"]),
         typst_param("colophon-text", colophon["text"]),
         ")",

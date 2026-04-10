@@ -10,7 +10,8 @@
   version: "",
   repo: "",
   toc-title: "",
-  footer-text: "",
+  generated-text: "",
+  modified-text: "",
   colophon-title: "",
   colophon-text: "",
   body,
@@ -49,7 +50,9 @@
     ]
     #v(4fr)
     #align(center)[
-      #text(size: 8pt, fill: rgb("#999"))[#footer-text]
+      #text(size: 8pt, fill: rgb("#999"))[#generated-text]
+      #v(0.3em)
+      #text(size: 8pt, fill: rgb("#999"))[#modified-text]
       #v(0.3em)
       #text(size: 8pt, fill: rgb("#999"))[#repo]
     ]
@@ -94,7 +97,11 @@
       #v(2em)
       #text(size: 10pt, fill: rgb("#555"))[#colophon-text]
       #v(1.5em)
-      #text(size: 10pt, fill: rgb("#555"))[v#version · #footer-text]
+      #text(size: 10pt, fill: rgb("#555"))[v#version]
+      #v(0.5em)
+      #text(size: 10pt, fill: rgb("#555"))[#generated-text]
+      #v(0.3em)
+      #text(size: 10pt, fill: rgb("#555"))[#modified-text]
       #v(1.5em)
       #text(size: 10pt, fill: rgb("#555"))[#repo]
       #v(3em)
@@ -102,4 +109,7 @@
     ]
     #v(1fr)
   ]
+
+  // Blank last page
+  page(numbering: none, footer: none)[]
 }
