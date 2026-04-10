@@ -15,4 +15,5 @@ dev = [
     "babel>=2.18.0",
     "dunamai>=1.26.1",
     "mkdocs-material>=9.7.6",
+    "typer>=0.24.1",
 ]

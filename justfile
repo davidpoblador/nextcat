@@ -7,6 +7,10 @@ default: pdf
 pdf:
     uv run python scripts/build.py
 
+# Build PDF for a single language (e.g. just lang ca)
+lang LANG:
+    uv run python scripts/build.py {{LANG}}
+
 # Build the website
 site: pdf
     uv run mkdocs build

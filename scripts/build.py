@@ -369,6 +369,9 @@ def build_typst(
     parts.append(f"  #v(0.5em)")
     parts.append(f'  #link("{escape_typst(doc["repo"])}")[{escape_typst(doc["repo"])}]')
     parts.append("")
+    if translation_notice:
+        parts.append(f"  #v(1.5em)")
+        parts.append(f'  #text(fill: rgb("#555"))[{escape_typst(translation_notice)}]')
     parts.append(f"  #v(1.5em)")
     parts.append('  #text(size: 8pt, fill: rgb("#999"))[CC BY-SA 4.0]')
     parts.append("]")
@@ -397,8 +400,8 @@ def compile_typst(typ_file: Path, version: str, lang: str) -> Path:
     return pdf_file
 
 
-def build() -> None:
-    """Build PDFs for all available languages."""
+def build(lang_filter: str | None = None) -> None:
+    """Build PDFs for all available languages, or a single one if lang_filter is set."""
     config = load_toml(CONFIG_FILE)
     version = get_version()
 
@@ -425,8 +428,9 @@ def build() -> None:
     # Collect all languages to build
     builds: list[tuple[Path, str]] = []  # (typ_file, lang)
 
-    typ_file = build_typst(CANONICAL_DIR, canonical_strings, config, version, canonical_fm, canonical_ch)
-    builds.append((typ_file, canonical_lang))
+    if lang_filter is None or lang_filter == canonical_lang:
+        typ_file = build_typst(CANONICAL_DIR, canonical_strings, config, version, canonical_fm, canonical_ch)
+        builds.append((typ_file, canonical_lang))
 
     if TRANSLATIONS_DIR.exists():
         for lang_dir in sorted(TRANSLATIONS_DIR.iterdir()):
@@ -436,6 +440,10 @@ def build() -> None:
 
             lang_strings = load_toml(strings_file)
             lang = lang_strings["lang"]
+
+            if lang_filter is not None and lang != lang_filter:
+                continue
+
             translation_notice = lang_strings.get("translation", {}).get("notice", "")
             fm, ch = resolve_chapters(lang_dir, CANONICAL_DIR)
 
@@ -451,4 +459,6 @@ def build() -> None:
 
 
 if __name__ == "__main__":
-    build()
+    import sys
+    lang_filter = sys.argv[1] if len(sys.argv) > 1 else None
+    build(lang_filter=lang_filter)
