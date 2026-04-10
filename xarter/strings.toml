@@ -17,9 +17,6 @@ title = "Annex"
 [changelog]
 title = "Registre de canvis"
 
-[translation]
-notice = "Aquest document és una traducció. La versió canònica és en català: {repo}"
-
 [site]
 downloads = "Descarregar PDF"
 downloads_text = "La versió PDF més recent es pot descarregar des de les [releases del projecte]({repo}/releases)."
