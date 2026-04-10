@@ -56,9 +56,9 @@
     ]
     #v(4fr)
     #align(right)[
-      #text(size: size-h2)[#author]
-      #v(0.3em)
-      #text(size: font-size, fill: color-light)[#cover-date] \
+      #text(size: size-h2)[#author] \
+      #text(size: font-size, fill: color-light)[#cover-date]
+      #v(0.5em)
       #text(size: size-meta, fill: color-faint)[#version]
     ]
   ]
