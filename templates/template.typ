@@ -34,8 +34,6 @@
   modified-text: "",
   generated-label: "",
   modified-label: "",
-  colophon-title: "",
-  colophon-text: "",
   translation-notice: "",
   body,
 ) = {
@@ -139,35 +137,6 @@
   set enum(indent: 1em, body-indent: 0.5em)
 
   body
-
-  // Colophon
-  page[
-    #v(1fr)
-    #align(center)[
-      #text(size: size-h1, weight: "bold")[#colophon-title]
-      #v(1em)
-      #text(fill: color-muted)[#colophon-text]
-
-      #v(1.5em)
-      #version-label: #version
-
-      #v(1.5em)
-      #modified-text \
-      #generated-text
-
-      #v(1.5em)
-      #set text(hyphenate: false)
-      #link(url)[#url] \
-      #link("mailto:" + email)[#email]
-
-      #v(0.5em)
-      #link(repo)[#repo]
-
-      #v(1.5em)
-      #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
-    ]
-    #v(1fr)
-  ]
 
   // Blank last page
   page(numbering: none, footer: none)[]

@@ -234,8 +234,6 @@ def build() -> None:
         typst_param("modified-text", modified_text),
         typst_param("modified-label", title_page["modified"]),
         typst_param("generated-label", title_page["generated"]),
-        typst_param("colophon-title", colophon["title"]),
-        typst_param("colophon-text", colophon["text"]),
         ")",
         "",
     ]
@@ -310,6 +308,40 @@ def build() -> None:
             parts.append("")
         parts.extend(changelog_to_typst(versions, version_label))
     parts.append("}")
+    parts.append("")
+
+    # Colophon (unnumbered, in TOC)
+    colophon_title = escape_typst(colophon["title"])
+    colophon_text = escape_typst(colophon["text"])
+    version_label = escape_typst(title_page.get("version_label", "Versió"))
+    parts.append("#{ set heading(numbering: none)")
+    parts.append(f'   heading(level: 1)[{colophon_title}]')
+    parts.append("}")
+    parts.append("")
+    parts.append("#v(1fr)")
+    parts.append("#align(center)[")
+    parts.append(f'  [{colophon_text}]')
+    parts.append("")
+    parts.append(f"  #v(1.5em)")
+    parts.append(f'  {version_label}: {escape_typst(version)}')
+    parts.append("")
+    parts.append(f"  #v(1.5em)")
+    parts.append(f'  {escape_typst(modified_text)} \\')
+    parts.append(f'  {escape_typst(generated_text)}')
+    parts.append("")
+    parts.append(f"  #v(1.5em)")
+    parts.append(f'  #set text(hyphenate: false)')
+    parts.append(f'  #link("{escape_typst(doc["url"])}")[{escape_typst(doc["url"])}] \\')
+    email_escaped = escape_typst(doc["email"]).replace("@", "\\@")
+    parts.append(f'  #link("mailto:{escape_typst(doc["email"])}")[{email_escaped}]')
+    parts.append("")
+    parts.append(f"  #v(0.5em)")
+    parts.append(f'  #link("{escape_typst(doc["repo"])}")[{escape_typst(doc["repo"])}]')
+    parts.append("")
+    parts.append(f"  #v(1.5em)")
+    parts.append('  #text(size: 8pt, fill: rgb("#999"))[CC BY-SA 4.0]')
+    parts.append("]")
+    parts.append("#v(1fr)")
     parts.append("")
 
     BUILD_DIR.mkdir(exist_ok=True)
