@@ -131,19 +131,23 @@
   page(numbering: none, footer: none)[
     #v(1fr)
     #align(center)[
-      #text(size: size-h2, weight: "bold")[#colophon-title]
-      #v(2em)
-      #text(size: size-colophon, fill: color-muted)[#colophon-text]
+      #text(weight: "bold")[#colophon-title] \
+      #text(fill: color-muted)[#colophon-text]
+
       #v(1.5em)
-      #text(size: size-colophon, fill: color-muted)[v#version]
-      #v(0.5em)
-      #text(size: size-colophon, fill: color-muted)[#generated-text]
-      #v(0.3em)
-      #text(size: size-colophon, fill: color-muted)[#modified-text]
+      #version-label: #version
+
       #v(1.5em)
-      #text(size: size-colophon, fill: color-muted)[#repo]
-      #v(3em)
-      #text(size: size-meta, fill: color-light)[CC BY-SA 4.0]
+      #modified-text \
+      #generated-text
+
+      #v(1.5em)
+      #set text(hyphenate: false)
+      #link(repo)[#repo] \
+      #link("mailto:" + email)[#email]
+
+      #v(1.5em)
+      #text(size: size-meta, fill: color-faint)[CC BY-SA 4.0]
     ]
     #v(1fr)
   ]
