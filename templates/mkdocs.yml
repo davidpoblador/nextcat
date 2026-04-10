@@ -26,7 +26,6 @@ theme:
   features:
     - navigation.sections
     - navigation.top
-    - toc.integrate
 
 docs_dir: xarter
 
