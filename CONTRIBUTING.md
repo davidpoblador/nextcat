@@ -61,21 +61,21 @@ Release-please genera automàticament el changelog i les versions a partir d'aqu
 
 ## Editar contingut
 
-- Edita els fitxers `.md` dins de `xarter/`.
+- Edita els fitxers `.md` dins de `book/`.
 - El prefix numèric (`01-`, `02-`, ...) determina l'ordre.
 - Fitxers amb prefix `00-` són front matter (sense numeració).
 - Cada capítol comença amb un encapçalament `# Títol`.
 
 ## Afegir un capítol
 
-1. Crea `xarter/NN-slug.md` amb el prefix numèric adequat.
+1. Crea `book/NN-slug.md` amb el prefix numèric adequat.
 2. Comença amb `# Títol del capítol`.
 3. Apareixerà automàticament a l'índex del PDF, la navegació web i la pàgina d'inici.
 
 ## Modificar cadenes i etiquetes
 
-- `xarter/strings.toml` conté totes les cadenes traduïbles (títol, subtítol, etiquetes).
-- `xarter/config.toml` conté les metadades no traduïbles (autor, email, repo).
+- `book/strings.toml` conté totes les cadenes traduïbles (títol, subtítol, etiquetes).
+- `config.toml` conté les metadades no traduïbles (autor, email, repo).
 - Mai escriguis cadenes directament en els templates o scripts.
 
 ## Traduccions
@@ -110,7 +110,7 @@ Nom Complet <https://elsiteweb.example/>
 No editis manualment:
 
 - `mkdocs.yml` (generat per `scripts/build.py`)
-- `xarter/index.md` (generat per `scripts/build.py`)
+- `book/index.md` (generat per `scripts/build.py`)
 - `build/` (artefactes de compilació)
 - `VERSION` (gestionat per release-please)
 - `CHANGELOG.md` (gestionat per release-please)

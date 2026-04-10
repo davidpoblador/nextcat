@@ -9,7 +9,7 @@ from typing import Optional
 import typer
 from rich.console import Console
 
-from xarter.generate import (
+from scripts.generate import (
     BUILD_DIR,
     CANONICAL_DIR,
     CHANGELOG_FILE,

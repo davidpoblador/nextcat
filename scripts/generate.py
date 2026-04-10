@@ -11,9 +11,9 @@ from babel.dates import format_date
 from dunamai import Style, Version
 
 ROOT = Path.cwd()
-CANONICAL_DIR = ROOT / "xarter"
-TRANSLATIONS_DIR = ROOT / "translations"
-CONFIG_FILE = CANONICAL_DIR / "config.toml"
+CANONICAL_DIR = ROOT / "book"
+TRANSLATIONS_DIR = CANONICAL_DIR / "translations"
+CONFIG_FILE = ROOT / "config.toml"
 VERSION_FILE = ROOT / "VERSION"
 AUTHORS_FILE = ROOT / "AUTHORS"
 CHANGELOG_FILE = ROOT / "CHANGELOG.md"

@@ -36,8 +36,8 @@ jobs:
 
       - name: Copy PDF to site
         run: |
-          mkdir -p xarter/downloads
-          cp build/*.pdf xarter/downloads/
+          mkdir -p book/downloads
+          cp build/*.pdf book/downloads/
 
       - name: Build site
         run: uv run --group docs mkdocs build
