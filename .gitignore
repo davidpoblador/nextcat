@@ -1,3 +1,5 @@
 build/
 site/
+mkdocs.yml
+xarter/index.md
 __pycache__/

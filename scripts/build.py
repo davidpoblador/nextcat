@@ -116,28 +116,41 @@ def build_index(
     lines = [
         f"# {doc_strings['title']}",
         "",
-        f"**{doc_strings['subtitle']}**",
+        f"*{doc_strings['subtitle']}*",
         "",
     ]
 
     for fm in front_matter:
         lines.append(f"- [{chapter_title(fm)}]({fm.name})")
-    for ch in chapter_files:
-        lines.append(f"- [{chapter_title(ch)}]({ch.name})")
+    for i, ch in enumerate(chapter_files, 1):
+        lines.append(f"- {i}. [{chapter_title(ch)}]({ch.name})")
     lines.append("")
 
-    lines.append(f"## {site['downloads']}")
+    lines.append("---")
     lines.append("")
     lines.append(site["downloads_text"].format(repo=repo))
-    lines.append("")
-
-    lines.append(f"## {site['license']}")
     lines.append("")
     lines.append(site["license_text"])
     lines.append("")
 
     INDEX_FILE.write_text("\n".join(lines))
     print(f"Written {INDEX_FILE}")
+
+    # Generate mkdocs.yml with nav from template
+    mkdocs_template = ROOT / "templates" / "mkdocs.yml"
+    mkdocs_output = ROOT / "mkdocs.yml"
+    nav_lines = [
+        "",
+        "nav:",
+        "  - Inici: index.md",
+    ]
+    for fm in front_matter:
+        nav_lines.append(f"  - {chapter_title(fm)}: {fm.name}")
+    for ch in chapter_files:
+        nav_lines.append(f"  - {chapter_title(ch)}: {ch.name}")
+
+    mkdocs_output.write_text(mkdocs_template.read_text() + "\n".join(nav_lines) + "\n")
+    print(f"Written {mkdocs_output}")
 
 
 def typst_param(key: str, value: str) -> str:

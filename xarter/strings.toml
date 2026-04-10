@@ -23,8 +23,7 @@ version_label = "Versió"
 
 [site]
 downloads = "Descarregar PDF"
-downloads_text = "La versió PDF més recent es pot descarregar des de les [releases del projecte]({repo}/releases)."
-languages = "Idiomes"
+downloads_text = "La versió PDF més recent es pot descarregar des de les [versions publicades del projecte]({repo}/releases)."
 license = "Llicència"
 license_text = "Aquesta obra està subjecta a la llicència [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca)."
 

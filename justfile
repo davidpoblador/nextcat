@@ -19,13 +19,13 @@ pdf: typst
 watch: typst
     typst watch --root . build/document.typ build/xarter-{{version}}.{{lang}}.pdf
 
-# Build the website
-site:
-    uv run mkdocs build -f templates/mkdocs.yml
+# Build the website (run `just typst` first to generate index and mkdocs.yml)
+site: typst
+    uv run mkdocs build
 
 # Serve the website locally
-serve:
-    uv run mkdocs serve -f templates/mkdocs.yml
+serve: typst
+    uv run mkdocs serve
 
 # Remove generated files
 clean:

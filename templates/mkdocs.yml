@@ -28,8 +28,7 @@ theme:
     - navigation.top
     - toc.integrate
 
-docs_dir: ../xarter
-site_dir: ../site
+docs_dir: xarter
 
 extra:
   version:
