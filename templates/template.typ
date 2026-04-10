@@ -132,6 +132,14 @@
     v(0.5em)
   }
 
+  // Blockquote styling
+  show quote: it => {
+    block(
+      inset: (left: 1em, y: 0.5em),
+      stroke: (left: 2pt + color-faint),
+    )[#text(fill: color-muted)[#it.body]]
+  }
+
   // List styling
   set list(indent: 1em, body-indent: 0.5em)
   set enum(indent: 1em, body-indent: 0.5em)
