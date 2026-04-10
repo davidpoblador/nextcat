@@ -1,10 +1,14 @@
 [project]
 name = "xarter"
 version = "0.1.0"
-description = "Add your description here"
+description = "Carta fundacional de l'agència de programari Xarter"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = [
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "babel>=2.18.0",
     "dunamai>=1.26.1",
     "mkdocs-material>=9.7.6",
 ]

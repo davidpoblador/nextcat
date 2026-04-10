@@ -11,7 +11,7 @@
 #let color-link = rgb("#2244aa")
 #let margin-page = (top: 3cm, bottom: 3cm, left: 3.5cm, right: 3.5cm)
 #let size-title = 28pt
-#let size-subtitle = 16pt
+#let size-subtitle = 18pt
 #let size-h1 = 20pt
 #let size-h2 = 14pt
 #let size-h3 = 12pt
@@ -25,12 +25,17 @@
   email: "",
   lang: "ca",
   version: "",
+  version-label: "Versió",
+  cover-date: "",
   repo: "",
   toc-title: "",
   generated-text: "",
   modified-text: "",
+  generated-label: "",
+  modified-label: "",
   colophon-title: "",
   colophon-text: "",
+  translation-notice: "",
   body,
 ) = {
   set document(title: title, author: author)
@@ -43,23 +48,44 @@
     #v(3fr)
     #align(center)[
       #text(size: size-title, weight: "bold")[#title]
-      #v(1em)
+      #v(0.5em)
       #text(size: size-subtitle, fill: color-muted)[#subtitle]
       #v(3em)
       #text(size: size-h2)[#author]
-      #v(0.5em)
-      #text(size: font-size, fill: color-muted)[#email]
       #v(1.5em)
-      #text(size: size-colophon, fill: color-light)[v#version]
+      #text(size: font-size, fill: color-light)[#version-label #version]
+      #v(0.5em)
+      #text(size: font-size, fill: color-light)[#cover-date]
     ]
     #v(4fr)
-    #align(center)[
-      #text(size: size-meta, fill: color-faint)[#generated-text]
-      #v(0.3em)
-      #text(size: size-meta, fill: color-faint)[#modified-text]
-      #v(0.3em)
-      #text(size: size-meta, fill: color-faint)[#repo]
+  ]
+
+  // Metadata page
+  page(numbering: none)[
+    #v(1fr)
+    #align(right)[
+      #block(width: 50%)[
+        #text(weight: "bold")[#title] \
+        #text(fill: color-muted)[#subtitle]
+
+        #v(1.5em)
+        #version-label #version
+
+        #v(1.5em)
+        #modified-text \
+        #generated-text
+
+        #v(1.5em)
+        #link(repo)[#repo] \
+        #link("mailto:" + email)[#email]
+
+        #if translation-notice != "" {
+          v(1.5em)
+          text(size: size-colophon, fill: color-muted)[#translation-notice]
+        }
+      ]
     ]
+    #v(1fr)
   ]
 
   // Pages count from here but numbers are hidden until after the TOC

@@ -421,13 +421,19 @@ wheels = [
 name = "xarter"
 version = "0.1.0"
 source = { virtual = "." }
-dependencies = [
+
+[package.dev-dependencies]
+dev = [
+    { name = "babel" },
     { name = "dunamai" },
     { name = "mkdocs-material" },
 ]
 
 [package.metadata]
-requires-dist = [
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "babel", specifier = ">=2.18.0" },
     { name = "dunamai", specifier = ">=1.26.1" },
     { name = "mkdocs-material", specifier = ">=9.7.6" },
 ]

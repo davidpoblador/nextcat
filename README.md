@@ -2,20 +2,7 @@
 
 Document fundacional de l'agència de programari Xarter.
 
-## Estructura
-
-```
-xarter/
-  config.toml        -- Metadades del document (autor, data)
-  strings.toml       -- Cadenes traduïbles (títol, subtítol, etiquetes)
-  01-introduccio.md  -- Capítol 1
-  02-serveis.md      -- Capítol 2
-  ...
-scripts/
-  build.py           -- Genera document.typ a partir dels capítols i la configuració
-template.typ         -- Plantilla Typst amb estil LaTeX
-justfile             -- Comandes de construcció
-```
+Disponible en PDF i en línia a [davidpoblador.github.io/xarter](https://davidpoblador.github.io/xarter/).
 
 ## Requisits
 
@@ -26,11 +13,32 @@ justfile             -- Comandes de construcció
 ## Ús
 
 ```
-just pdf       # Genera document.typ i compila a PDF
-just typst     # Només genera document.typ
-just watch     # Recompila automàticament quan canvia document.typ
+just pdf       # Genera el PDF (build/xarter-{versió}.{lang}.pdf)
+just site      # Genera el lloc web (site/)
+just serve     # Serveix el lloc web localment
+just watch     # Recompila el PDF automàticament
 just clean     # Elimina fitxers generats
 just chapters  # Llista els capítols
+```
+
+## Estructura
+
+```
+xarter/
+  config.toml        -- Metadades (autor, email, repo)
+  strings.toml       -- Cadenes traduïbles (títol, etiquetes, etc.)
+  00-prefaci.md      -- Prefaci (front matter, sense numeració)
+  01-introduccio.md  -- Capítol 1
+  02-serveis.md      -- Capítol 2
+  ...
+  license.md         -- Llicència localitzada per al PDF
+scripts/
+  build.py           -- Genera document.typ, index.md i mkdocs.yml
+templates/
+  template.typ       -- Plantilla Typst (estil LaTeX, tokens de disseny)
+  mkdocs.yml         -- Plantilla MkDocs (la nav es genera automàticament)
+AUTHORS              -- Llista d'autors (Name <url>)
+VERSION              -- Versió (gestionada per release-please)
 ```
 
 ## Contribuir
@@ -39,42 +47,48 @@ No cal saber Typst per modificar el document. Tot el contingut es gestiona amb f
 
 ### Editar contingut
 
-1. Edita els fitxers `.md` dins de `xarter/`. Cada fitxer és un capítol.
+1. Edita els fitxers `.md` dins de `xarter/`.
 2. El prefix numèric (`01-`, `02-`, ...) determina l'ordre dels capítols.
-3. Utilitza Markdown estàndard: encapçalaments (`#`, `##`, `###`), llistes, negreta, cursiva, etc.
+3. Fitxers amb prefix `00-` són front matter (sense numeració, no apareixen a l'índex del PDF).
+4. Executa `just pdf` per verificar el resultat.
 
 ### Afegir un capítol
 
 1. Crea un fitxer `.md` a `xarter/` amb el prefix numèric adequat (p. ex. `05-nou-capitol.md`).
 2. Comença el fitxer amb un encapçalament de nivell 1 (`# Títol del capítol`).
-3. Executa `just pdf` per generar el PDF. El nou capítol apareixerà automàticament a l'índex.
+3. El capítol apareixerà automàticament a l'índex, la navegació web i la pàgina d'inici.
 
-### Modificar metadades
+### Configuració
 
-- `xarter/config.toml` -- Autor i data del document.
-- `xarter/strings.toml` -- Títol, subtítol i cadenes de la interfície (etiquetes del peu de pàgina, títol de l'índex).
+- `xarter/config.toml` -- Metadades no traduïbles: autor, email, URL del repositori.
+- `xarter/strings.toml` -- Cadenes traduïbles: títol, subtítol, etiquetes de la portada, l'índex, l'annex i el colofó.
 
 ### Traduccions
 
-El document canònic és en català. Les traduccions es col·loquen a `translations/<lang>/`:
+El document canònic és en català. Les traduccions es col-loquen a `translations/<lang>/`:
 
 ```
 translations/
   es/
-    strings.toml       -- Cadenes en castellà
+    strings.toml       -- Cadenes en castellà (inclou [translation] notice)
+    license.md         -- Llicència en castellà
+    00-prefaci.md      -- Prefaci traduït
     01-introduccio.md  -- Capítols traduïts
     ...
   en/
     strings.toml
+    license.md
     ...
 ```
 
-Cada traducció necessita el seu propi `strings.toml` amb les cadenes localitzades. La configuració no traduïble (`config.toml`) és compartida.
+Cada traducció necessita:
 
-### Generar el PDF
+- `strings.toml` amb totes les cadenes traduïdes, incloent un camp `[translation] notice` que indica que és una traducció del document canònic en català.
+- `license.md` amb el text de la llicència en l'idioma corresponent.
+- Els fitxers `.md` dels capítols traduïts. Si un capítol no es tradueix, es fa servir la versió catalana.
 
-```
-just pdf
-```
+La configuració no traduïble (`config.toml`) és compartida entre tots els idiomes.
 
-Això executa `scripts/build.py` (que llegeix la configuració, les cadenes i els capítols per generar `document.typ`) i després compila el Typst a PDF. La portada inclou automàticament la data de generació i la data de l'última modificació del contingut.
+## Llicència
+
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca)

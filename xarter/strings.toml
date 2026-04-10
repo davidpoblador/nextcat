@@ -5,11 +5,12 @@ title = "Xàrter"
 subtitle = "Agència de Programari"
 
 [title_page]
+version_label = "Versió"
 generated = "Generat"
-modified = "Última modificació"
+modified = "Darrera revisió"
 
 [toc]
-title = "Índex"
+title = "Continguts"
 
 [appendix]
 title = "Annex"

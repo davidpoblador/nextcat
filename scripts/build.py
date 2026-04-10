@@ -6,6 +6,7 @@ import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
 
+from babel.dates import format_date
 from dunamai import Style, Version
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -48,6 +49,13 @@ def last_modified_date(files: list[Path]) -> str:
 def generation_date() -> str:
     """Current timestamp formatted for display."""
     return datetime.now(tz=timezone.utc).strftime("%d/%m/%Y %H:%M UTC")
+
+
+def cover_date(lang: str) -> str:
+    """Current date formatted as 'Month Year' in the given language."""
+    # LLLL = standalone month name (not inflected)
+    result = format_date(datetime.now(tz=timezone.utc), "LLLL yyyy", locale=lang)
+    return result[0].upper() + result[1:]
 
 
 def parse_changelog(path: Path) -> list[tuple[str, list[str]]]:
@@ -218,9 +226,13 @@ def build() -> None:
         typst_param("lang", lang),
         typst_param("toc-title", toc["title"]),
         typst_param("version", version),
+        typst_param("version-label", title_page.get("version_label", "Versió")),
+        typst_param("cover-date", cover_date(lang)),
         typst_param("repo", doc["repo"]),
         typst_param("generated-text", generated_text),
         typst_param("modified-text", modified_text),
+        typst_param("modified-label", title_page["modified"]),
+        typst_param("generated-label", title_page["generated"]),
         typst_param("colophon-title", colophon["title"]),
         typst_param("colophon-text", colophon["text"]),
         ")",

@@ -7,7 +7,12 @@
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "extra-files": [
-        "VERSION"
+        "VERSION",
+        {
+          "type": "toml",
+          "path": "pyproject.toml",
+          "jsonpath": "$.project.version"
+        }
       ],
       "changelog-sections": [
         {"type": "feat", "section": "Contingut nou"},
