@@ -53,3 +53,15 @@ All in `[dependency-groups] dev` in pyproject.toml. `uv sync` installs them.
 ## Translation (future)
 
 Create `translations/<lang>/` with `strings.toml` (translated strings including a `[translation] notice` field), chapter .md files, and `license.md`. The build script will need a `--lang` flag to select the content directory.
+
+## Contributing
+
+See `CONTRIBUTING.md` for the full guide. Key points for agents:
+
+- Always work on a branch, never push directly to `main`
+- Use conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `ci:`)
+- Run `just pdf` and verify the output before opening a PR
+- Content changes go in `xarter/*.md`, never edit generated files (`mkdocs.yml`, `xarter/index.md`, `build/`)
+- Add yourself to `AUTHORS` if you're a new contributor (one line: `Name <url>`)
+- Strings and labels go in `strings.toml`, not hardcoded in templates or scripts
+- Do not edit `VERSION`, `CHANGELOG.md`, or `.release-please-manifest.json` manually
