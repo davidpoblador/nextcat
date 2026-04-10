@@ -60,11 +60,14 @@
     ]
   ]
 
+  // Blank verso of cover
+  page(numbering: none)[]
+
   // Pages count from here but numbers are hidden until after the TOC
   set page(numbering: none)
   counter(page).update(1)
 
-  // Metadata page
+  // Metadata page (verso, facing the prefaci)
   page(numbering: none)[
     #v(1fr)
     #align(right)[
