@@ -15,7 +15,8 @@ title = "Continguts"
 [appendix]
 title = "Annex"
 license_title = "Llicència"
-authors_title = "Autors"
+about_author_title = "Sobre l'autor"
+contributors_title = "Contribuïdors"
 
 [changelog]
 title = "Registre de canvis"

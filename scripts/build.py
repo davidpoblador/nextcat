@@ -195,7 +195,7 @@ def build() -> None:
 
     all_md = sorted(CONTENT_DIR.glob("*.md"))
     front_matter = [f for f in all_md if f.name.startswith("00-")]
-    excluded = {"index.md", "license.md"}
+    excluded = {"index.md", "license.md", "about-author.md"}
     chapter_files = [f for f in all_md if not f.name.startswith("00-") and f.name not in excluded]
 
     if not chapter_files and not front_matter:
@@ -273,9 +273,18 @@ def build() -> None:
     license_file = CONTENT_DIR / "license.md"
     license_path = f"../{license_file.relative_to(ROOT)}" if license_file.exists() else "../LICENSE"
     parts.append(f'   render(read("{license_path}"), h1-level: 3)')
+    # About the author
+    about_author_file = CONTENT_DIR / "about-author.md"
+    if about_author_file.exists():
+        about_title = escape_typst(strings.get("appendix", {}).get("about_author_title", "Sobre l'autor"))
+        rel_path = f"../{about_author_file.relative_to(ROOT)}"
+        parts.append(f'   heading(level: 2)[{about_title}]')
+        parts.append(f'   render(read("{rel_path}"), h1-level: 3)')
+        parts.append("")
+    # Contributors
     if AUTHORS_FILE.exists():
-        authors_title = escape_typst(strings.get("appendix", {}).get("authors_title", "Autors"))
-        parts.append(f'   heading(level: 2)[{authors_title}]')
+        contributors_title = escape_typst(strings.get("appendix", {}).get("contributors_title", "Contribuïdors"))
+        parts.append(f'   heading(level: 2)[{contributors_title}]')
         for line in AUTHORS_FILE.read_text().splitlines():
             line = line.strip()
             if not line:

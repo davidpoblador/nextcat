@@ -1,0 +1,3 @@
+David Poblador i Garcia és un tecnòleg sènior i consultor amb més de 25 anys d'experiència liderant departaments de tecnologia, construint sistemes escalables i gestionant equips d'infraestructura. A Spotify, va fundar el departament de Site Reliability Engineering (SRE) i el va fer créixer de 5 persones a centenars, liderant la migració de més de 15.000 servidors físics a Google Cloud.
+
+És el fundador d'All Tuner Labs, una empresa dedicada a resoldre problemes del món real amb tecnologies modernes i una filosofia de simplicitat. Apassionat pel disseny organitzatiu, l'arquitectura al núvol i els sistemes distribuïts, la seva trajectòria combina lideratge tècnic amb una visió pràctica de com la tecnologia ha de treballar per a les persones.
