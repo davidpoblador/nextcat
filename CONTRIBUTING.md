@@ -16,24 +16,48 @@ uv sync
 
 ## Flux de treball
 
-1. Crea una branca des de `main`.
-2. Fes els canvis.
-3. Executa `just pdf` i verifica el PDF resultant.
-4. Fes commit amb un missatge que segueixi les [Conventional Commits](https://www.conventionalcommits.org/).
-5. Obre un pull request contra `main`.
+1. Crea una branca des de `main` amb un nom descriptiu (p. ex. `feat/nou-capitol-seguretat`).
+2. Fes els canvis en commits petits i freqüents.
+3. Cada commit ha de seguir la sintaxi de [Conventional Commits](https://www.conventionalcommits.org/) (vegeu la secció següent).
+4. Executa `just clean && just pdf && just site` per verificar que tot compila correctament.
+5. Puja la branca i obre un pull request contra `main`.
 
-## Tipus de commits
+## Pull requests
 
-| Prefix | Ús |
-|---|---|
-| `feat:` | Contingut nou o funcionalitat nova |
-| `fix:` | Correccions |
-| `docs:` | Documentació (README, CONTRIBUTING, etc.) |
-| `chore:` | Manteniment (dependències, CI, etc.) |
-| `refactor:` | Reestructuració sense canvi funcional |
-| `ci:` | Canvis a workflows de CI/CD |
+- El títol del PR ha de seguir la sintaxi de Conventional Commits (p. ex. `feat: afegir capítol de seguretat`).
+- La descripció ha d'explicar breument què canvia i per què.
+- Cada PR ha de contenir canvis cohesius: no barregis canvis de contingut amb canvis d'infraestructura.
+- Els PRs es fusionen amb squash merge. El títol del PR es converteix en el missatge del commit a `main`.
+- Release-please utilitza els commits a `main` per generar el changelog i decidir el tipus de versió, per tant els prefixos dels commits són importants.
+- Mai pushis directament a `main`.
 
-El versionat és automàtic: `feat:` incrementa la versió menor, `fix:` incrementa el pegat.
+## Commits convencionals
+
+Els missatges de commit (i títols de PR) han d'estar en anglès i seguir el format:
+
+```
+<tipus>: <descripció curta>
+```
+
+| Prefix | Ús | Efecte al versionat |
+|---|---|---|
+| `feat:` | Contingut nou o funcionalitat nova | Incrementa versió menor (0.X.0) |
+| `fix:` | Correccions | Incrementa pegat (0.0.X) |
+| `docs:` | Documentació (README, CONTRIBUTING, etc.) | Apareix al changelog |
+| `chore:` | Manteniment (dependències, CI, etc.) | Apareix al changelog |
+| `refactor:` | Reestructuració sense canvi funcional | Apareix al changelog |
+| `ci:` | Canvis a workflows de CI/CD | Apareix al changelog |
+
+Exemples:
+
+```
+feat: add security chapter
+fix: correct Catalan spelling in methodology chapter
+docs: update translation instructions in README
+chore: update mkdocs-material to 9.8
+```
+
+Release-please genera automàticament el changelog i les versions a partir d'aquests commits. Commits que no segueixen la convenció no apareixen al changelog.
 
 ## Editar contingut
 
@@ -63,7 +87,17 @@ El document canònic és en català. Per traduir:
 3. Afegeix `license.md` amb el text de la llicència en l'idioma corresponent.
 4. Tradueix els fitxers `.md` dels capítols. Els capítols sense traducció es serviran en català.
 
-## Autors
+## IA i transparència
+
+Si fas servir eines d'intel-ligència artificial per generar contingut o codi, indica-ho al commit amb un `Co-Authored-By` o una nota a la descripció del PR. Exemples:
+
+```
+Co-Authored-By: Claude <noreply@anthropic.com>
+```
+
+La transparència és important perquè els revisors puguin avaluar el contingut adequadament.
+
+## Contribuïdors
 
 Si ets un contribuïdor nou, afegeix-te al fitxer `AUTHORS`:
 

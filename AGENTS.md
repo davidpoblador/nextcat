@@ -59,9 +59,10 @@ Create `translations/<lang>/` with `strings.toml` (translated strings including 
 See `CONTRIBUTING.md` for the full guide. Key points for agents:
 
 - Always work on a branch, never push directly to `main`
-- Use conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `ci:`)
-- Run `just pdf` and verify the output before opening a PR
+- Use conventional commits in English (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `ci:`)
+- PR titles must also follow conventional commit syntax (they become the squash commit message)
+- Run `just clean && just pdf && just site` before opening a PR
 - Content changes go in `xarter/*.md`, never edit generated files (`mkdocs.yml`, `xarter/index.md`, `build/`)
-- Add yourself to `AUTHORS` if you're a new contributor (one line: `Name <url>`)
 - Strings and labels go in `strings.toml`, not hardcoded in templates or scripts
 - Do not edit `VERSION`, `CHANGELOG.md`, or `.release-please-manifest.json` manually
+- Always include a `Co-Authored-By` trailer when AI tools are used to generate content or code
