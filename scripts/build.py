@@ -295,7 +295,7 @@ def build() -> None:
             if author_match:
                 name = escape_typst(author_match.group(1))
                 url = escape_typst(author_match.group(2))
-                parts.append(f'   [- {name} (#link("{url}")[{url}])]')
+                parts.append(f'   [- #link("{url}")[{name}]]')
             else:
                 parts.append(f"   [- {escape_typst(line)}]")
         parts.append("")

@@ -3,3 +3,4 @@ site/
 mkdocs.yml
 xarter/index.md
 __pycache__/
+.DS_Store
