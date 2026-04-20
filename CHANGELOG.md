@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/davidpoblador/xarter/compare/v0.0.2...v0.0.3) (2026-04-20)
+
+
+### Bug Fixes
+
+* **site:** restore MkDocs build in pages.yml and quote nav titles ([#36](https://github.com/davidpoblador/xarter/issues/36)) ([999e7f7](https://github.com/davidpoblador/xarter/commit/999e7f76d51afa28abdc8096ef15b1d3713347ae))
+
 ## [0.0.2](https://github.com/davidpoblador/xarter/compare/v0.0.1...v0.0.2) (2026-04-20)
 
 
