@@ -1,3 +1,0 @@
-David Poblador i Garcia is a senior technologist and consultant with over 25 years of experience leading technology departments, building scalable systems, and managing infrastructure teams. At Spotify, he founded the Site Reliability Engineering (SRE) department and grew it from 5 people to hundreds, leading the migration of over 15,000 physical servers to Google Cloud.
-
-He is the founder of All Tuner Labs, a company dedicated to solving real-world problems with modern technologies and a philosophy of simplicity. Passionate about organizational design, cloud architecture, and distributed systems, his career combines technical leadership with a practical vision of how technology should work for people.
