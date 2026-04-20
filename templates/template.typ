@@ -46,12 +46,22 @@
   show link: it => underline(text(fill: color-link, it))
 
   // Cover
+  // Stick short function words (de, a, i, la, el, als...) to the
+  // following word so they never orphan at line ends.
+  let stick-short(s) = s.replace(
+    regex(" (de|a|i|la|el|els|les|al|als|del|dels|per|en) "),
+    m => " " + m.captures.at(0) + "\u{00A0}",
+  )
   page(numbering: none)[
     #v(3fr)
     #align(center)[
-      #text(size: size-title, weight: "bold")[#title]
-      #v(0.2em)
-      #text(size: size-subtitle, fill: color-muted)[#subtitle]
+      #block(width: 80%)[
+        #set par(justify: false, leading: 0.5em)
+        #set text(hyphenate: false)
+        #text(size: size-title, weight: "bold")[#stick-short(title)]
+        #v(0.4em)
+        #text(size: size-subtitle, fill: color-muted)[#stick-short(subtitle)]
+      ]
     ]
     #v(4fr)
     #align(right)[
