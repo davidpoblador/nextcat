@@ -12,7 +12,7 @@ Per a consellers i directors generals amb responsabilitat en digitalització, ec
 
 ## Com llegir-lo
 
-El document s'organitza en sis blocs: el context tecnològic global, el diagnòstic de la situació actual de Catalunya, els referents internacionals dels quals podem aprendre, els principis que hauria de guiar l'estratègia, les recomanacions concretes per als propers anys i la visió a llarg termini. Cada bloc és independent i pot llegir-se per separat, però la lògica del conjunt és acumulativa.
+El document s'organitza en sis blocs: el context tecnològic global, el diagnòstic de la situació actual de Catalunya, els referents internacionals dels quals podem aprendre, els principis que haurien de guiar l'estratègia, les recomanacions concretes per als propers anys i la visió a llarg termini. Cada bloc és independent i pot llegir-se per separat, però la lògica del conjunt és acumulativa.
 
 ## Sobre el procés de redacció
 
