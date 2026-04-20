@@ -180,30 +180,34 @@ def build_index(
     # Generate mkdocs.yml
     mkdocs_template = ROOT / "templates" / "mkdocs.yml"
     mkdocs_output = ROOT / "mkdocs.yml"
+
+    def yaml_quote(s: str) -> str:
+        return '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"'
+
     nav_lines = ["", "nav:", "  - Inici: index.md"]
     for fm in front_matter:
-        nav_lines.append(f"  - {chapter_title(fm)}: {fm.name}")
+        nav_lines.append(f"  - {yaml_quote(chapter_title(fm))}: {fm.name}")
     for ch in chapter_files:
-        nav_lines.append(f"  - {chapter_title(ch)}: {ch.name}")
+        nav_lines.append(f"  - {yaml_quote(chapter_title(ch))}: {ch.name}")
 
     appendix = strings.get("appendix", {})
-    nav_lines.append(f"  - {appendix.get('title', 'Annex')}:")
-    nav_lines.append(f"    - {appendix.get('license_title', 'Llicència')}: license.md")
+    nav_lines.append(f"  - {yaml_quote(appendix.get('title', 'Annex'))}:")
+    nav_lines.append(f"    - {yaml_quote(appendix.get('license_title', 'Llicència'))}: license.md")
 
     about_author_file = CANONICAL_DIR / "about-author.md"
     if about_author_file.exists():
         about_nav_title = appendix.get("about_author_title", "Sobre l'autor")
-        nav_lines.append(f"    - {about_nav_title}: about-author.md")
+        nav_lines.append(f"    - {yaml_quote(about_nav_title)}: about-author.md")
 
     contributing_file = ROOT / "CONTRIBUTING.md"
     if contributing_file.exists():
         shutil.copy(contributing_file, CANONICAL_DIR / "contributing.md")
         contributing_nav = appendix.get("contributing_title", "Contribucions")
-        nav_lines.append(f"    - {contributing_nav}: contributing.md")
+        nav_lines.append(f"    - {yaml_quote(contributing_nav)}: contributing.md")
     if CHANGELOG_FILE.exists():
         shutil.copy(CHANGELOG_FILE, CANONICAL_DIR / "changelog.md")
         changelog = strings.get("changelog", {})
-        nav_lines.append(f"    - {changelog.get('title', 'Registre de canvis')}: changelog.md")
+        nav_lines.append(f"    - {yaml_quote(changelog.get('title', 'Registre de canvis'))}: changelog.md")
 
     mkdocs_output.write_text(mkdocs_template.read_text() + "\n".join(nav_lines) + "\n")
 
