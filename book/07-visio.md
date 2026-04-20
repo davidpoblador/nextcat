@@ -26,7 +26,7 @@ La pissarra en blanc és el nord magnètic. El camí és incremental i ha de pri
 
 **Pas 4: Infraestructura de serveis compartits.** Construir o adaptar plataformes de notificació, pagament i autenticació reutilitzables per tots els departaments. Eliminar la proliferació de solucions departamentals a mida que fan el mateix de manera diferent.
 
-**Pas 5: IA pública nadiva en català.** Pilotar un servei d'atenció ciutadana d'alt volum (orientació tributària, gestió de permisos) amb un assistent virtual en català construït sobre els models AINA. Mesurar l'impacte en satisfacció de l'usuari, temps de resolució i cost per transacció. Publicar els resultats en obert.
+**Pas 5: IA pública nativa en català.** Pilotar un servei d'atenció ciutadana d'alt volum (orientació tributària, gestió de permisos) amb un assistent virtual en català construït sobre els models AINA. Mesurar l'impacte en satisfacció de l'usuari, temps de resolució i cost per transacció. Publicar els resultats en obert.
 
 ## Catalunya com a laboratori europeu
 
