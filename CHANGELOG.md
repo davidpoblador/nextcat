@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/davidpoblador/xarter/compare/v0.0.3...v0.0.4) (2026-04-20)
+
+
+### Bug Fixes
+
+* revert punt volat tightening, language corrections, deps bump ([#38](https://github.com/davidpoblador/xarter/issues/38)) ([f7edfd2](https://github.com/davidpoblador/xarter/commit/f7edfd28b3338716fc6748df078e0af521159c20))
+
 ## [0.0.3](https://github.com/davidpoblador/xarter/compare/v0.0.2...v0.0.3) (2026-04-20)
 
 
