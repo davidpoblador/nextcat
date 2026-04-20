@@ -1,8 +1,8 @@
 lang = "ca"
 
 [document]
-title = "Xàrter"
-subtitle = "Agència de Programari"
+title = "Estratègia Digital de Catalunya"
+subtitle = "Guia per a responsables de política i administració pública"
 
 [title_page]
 version_label = "Versió"
@@ -22,7 +22,7 @@ contributors_title = "Contribuïdors"
 
 [changelog]
 title = "Registre de canvis"
-intro = "Aquesta secció recull els canvis introduïts al xàrter i a les eines del repositori en cada versió. Les entrades es mantenen en anglès seguint les convencions habituals de desenvolupament de programari."
+intro = "Aquesta secció recull els canvis introduïts al document en cada versió. Les entrades es mantenen en anglès seguint les convencions habituals de desenvolupament de programari."
 version_label = "Versió"
 
 [site]
