@@ -18,7 +18,7 @@ Foundational document for a Catalan software agency, built from Markdown sources
 
 `just pdf` runs `uv run python -m scripts.build` (generates `.typ` files in `build/`) then compiles them with `typst`. The intermediate `.typ` file is deleted after compilation. Output: `build/xarter-{version}.{lang}.pdf`.
 
-`just site` builds the MkDocs website (`uv run --group docs mkdocs build`). The build script generates `mkdocs.yml` (from template + nav) and `book/index.md` (from chapters + strings).
+`just site` builds the MkDocs website (`uv run mkdocs build`). The build script generates `mkdocs.yml` (from template + nav) and `book/index.md` (from chapters + strings).
 
 Both `mkdocs.yml` and `book/index.md` are generated artifacts (gitignored).
 
@@ -38,7 +38,7 @@ Uses dunamai for git-aware versions: `0.1.3` on a tagged commit, `0.1.3.post2.de
 
 ## Dependencies
 
-Runtime deps (typer, babel, dunamai) in `[project] dependencies`. MkDocs in `[dependency-groups] docs`. Install all with `uv sync --group docs`.
+All deps (typer, babel, dunamai, mkdocs-material) live in `[dependency-groups] dev` in pyproject.toml. `[project] dependencies` is empty. Install with `uv sync`.
 
 ## CI/CD
 
