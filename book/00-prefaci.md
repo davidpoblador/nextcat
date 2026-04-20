@@ -2,6 +2,18 @@
 
 ## Sobre aquest document
 
-*Xàrter* és una paraula catalana que designa els vols de tipus xàrter (charter). Hem escollit aquest nom perquè *charter* en anglès també significa carta fundacional, i és exactament el que és aquest document: la carta fundacional de la nostra agència de programari.
+Aquest document és una carta estratègica per al futur digital de Catalunya. No és un pla de govern exhaustiu ni un full de ruta tècnic detallat: és un marc de referència per a responsables de política i administració pública que volen entendre el moment en què estem, on som com a país i quines decisions preses ara tindran un impacte decisiu en les properes dècades.
 
-Aquest document defineix qui som, com treballem, quins serveis oferim i quines tecnologies fem servir. Serveix com a referència tant per als membres de l'equip com per als clients i col·laboradors que volen entendre la nostra manera de fer.
+Escrivim des de la convicció que Catalunya té tots els ingredients per convertir-se en un referent europeu de transformació digital: talent de primer nivell, infraestructura de recerca de classe mundial, una llengua pròpia amb identitat forta i un ecosistema emprenedor en plena ebullició. El que li falta no és capacitat: és voluntat política i una estratègia clara.
+
+## Per a qui és aquest document
+
+Per a consellers i directors generals amb responsabilitat en digitalització, economia, educació o recerca. Per a tècnics de l'administració que volen arguments sòlids per impulsar canvis. Per a emprenedors i investigadors que volen entendre el marc en el qual treballen. I per a tothom que creu que el sector públic pot ser un agent actiu de transformació digital, no un consumidor passiu de les tendències del mercat.
+
+## Com llegir-lo
+
+El document s'organitza en sis blocs: el context tecnològic global, el diagnòstic de la situació actual de Catalunya, els referents internacionals dels quals podem aprendre, els principis que hauria de guiar l'estratègia, les recomanacions concretes per als propers anys i la visió a llarg termini. Cada bloc és independent i pot llegir-se per separat, però la lògica del conjunt és acumulativa.
+
+## Sobre el procés de redacció
+
+Aquest document ha estat elaborat amb suport d'eines d'intel·ligència artificial, incorporant dades i fonts actualitzades al 2026. Tota la informació estadística inclou les fonts originals per facilitar la verificació independent. El document es publica amb llicència oberta i es convida a qualsevol persona a proposar correccions, ampliacions o traduccions.
