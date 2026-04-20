@@ -42,6 +42,14 @@
   set text(font: font-body, size: font-size, lang: lang)
   set par(justify: true, leading: 0.65em)
 
+  // Catalan punt volat (geminated l·l / L·L): the Unicode middle dot
+  // renders with wide default spacing in most serif fonts. Tighten it
+  // when it sits between two L's.
+  show regex("[lL]·[lL]"): it => {
+    let parts = it.text.split("·")
+    box[#parts.at(0)#h(-0.08em)·#h(-0.08em)#parts.at(1)]
+  }
+
   // Link styling
   show link: it => underline(text(fill: color-link, it))
 

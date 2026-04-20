@@ -22,7 +22,7 @@ contributors_title = "Contribuïdors"
 
 [changelog]
 title = "Registre de canvis"
-intro = "Aquesta secció recull els canvis introduïts al document en cada versió. Les entrades es mantenen en anglès seguint les convencions habituals de desenvolupament de programari."
+intro = "Aquesta secció recull els canvis introduïts al document i també a les eines que el generen (scripts de compilació, plantilles, configuració de publicació) en cada versió. Les entrades es mantenen en anglès seguint les convencions habituals de desenvolupament de programari."
 version_label = "Versió"
 
 [site]
