@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.4](https://github.com/davidpoblador/nextcat/compare/v0.0.3...v0.0.4) (2026-04-21)
+
+
+### Bug Fixes
+
+* **book:** Catalan polish across recent additions ([#58](https://github.com/davidpoblador/nextcat/issues/58)) ([c8ed212](https://github.com/davidpoblador/nextcat/commit/c8ed212b32a4bebd9cc25c9bbfdded782fdd4e57))
+
+
+### CI/CD
+
+* grant actions:write to deploy-site so it can dispatch Pages ([#60](https://github.com/davidpoblador/nextcat/issues/60)) ([7b3b483](https://github.com/davidpoblador/nextcat/commit/7b3b483435ad3026b3213dece3f578c347a82ac2))
+
 ## [0.0.3](https://github.com/davidpoblador/nextcat/compare/v0.0.2...v0.0.3) (2026-04-21)
 
 
