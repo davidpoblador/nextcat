@@ -1,4 +1,4 @@
-# ABOUTME: Task runner for the Xarter document pipeline.
+# ABOUTME: Task runner for the NextCat document pipeline.
 # ABOUTME: Builds PDFs for all languages and the website from Markdown sources.
 
 default: pdf
