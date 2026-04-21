@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.5](https://github.com/davidpoblador/nextcat/compare/v0.0.4...v0.0.5) (2026-04-21)
+
+
+### Features
+
+* rename project to nextcat, host on nextcat.poblador.cat ([#42](https://github.com/davidpoblador/nextcat/issues/42)) ([d068c1b](https://github.com/davidpoblador/nextcat/commit/d068c1b032f64cba336ef2d95ba99bf22fc80afa))
+* swap to Libertinus Serif, embed compiler, split slim/full PDFs ([#40](https://github.com/davidpoblador/nextcat/issues/40)) ([8d1490c](https://github.com/davidpoblador/nextcat/commit/8d1490cbfe2d91dba270147a994c2ed3f6b27d77))
+
 ## [0.0.4](https://github.com/davidpoblador/xarter/compare/v0.0.3...v0.0.4) (2026-04-20)
 
 
