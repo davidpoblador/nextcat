@@ -17,7 +17,7 @@ VERSION_FILE = ROOT / "VERSION"
 AUTHORS_FILE = ROOT / "AUTHORS"
 CHANGELOG_FILE = ROOT / "CHANGELOG.md"
 BUILD_DIR = ROOT / "build"
-EXCLUDED_MD = {"index.md", "license.md", "about-author.md", "changelog.md", "contributing.md"}
+EXCLUDED_MD = {"index.md", "license.md", "about-author.md", "changelog.md", "contributing.md", "conceptes-clau.md"}
 
 
 def load_toml(path: Path) -> dict:
@@ -227,6 +227,16 @@ def build_typst(
     license_file = content_dir / "license.md"
     license_path = f"../{license_file.relative_to(ROOT)}" if license_file.exists() else "../LICENSE"
     parts.append(f'   render(read("{license_path}"), h1-level: 3)')
+
+    concepts_file = content_dir / "conceptes-clau.md"
+    if not concepts_file.exists():
+        concepts_file = CANONICAL_DIR / "conceptes-clau.md"
+    if concepts_file.exists():
+        concepts_title = escape_typst(appendix.get("concepts_title", "Conceptes clau per a lectors no tècnics"))
+        rel_path = f"../{concepts_file.relative_to(ROOT)}"
+        parts.append(f'   heading(level: 2)[{concepts_title}]')
+        parts.append(f'   render(read("{rel_path}"), h1-level: 3)')
+        parts.append("")
 
     about_author_file = content_dir / "about-author.md"
     if not about_author_file.exists():

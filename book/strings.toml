@@ -1,7 +1,7 @@
 lang = "ca"
 
 [document]
-title = "Estratègia Digital de Catalunya"
+title = "Apunts per a una estratègia digital de Catalunya"
 subtitle = "Guia per a responsables de política i administració pública"
 
 [title_page]
@@ -14,6 +14,7 @@ title = "Continguts"
 
 [appendix]
 title = "Annex"
+concepts_title = "Conceptes clau per a lectors no tècnics"
 license_title = "Llicència"
 about_author_title = "Sobre l'autor"
 contributing_title = "Feu-hi contribucions"

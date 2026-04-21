@@ -121,6 +121,13 @@ def build() -> None:
     license_file = CANONICAL_DIR / "license.md"
     if license_file.exists():
         appendix_specs.append(("license", license_file, appendix_strings.get("license_title", "Llicència")))
+    concepts_file = CANONICAL_DIR / "conceptes-clau.md"
+    if concepts_file.exists():
+        appendix_specs.append((
+            "concepts",
+            concepts_file,
+            appendix_strings.get("concepts_title", "Conceptes clau per a lectors no tècnics"),
+        ))
     about_file = CANONICAL_DIR / "about-author.md"
     if about_file.exists():
         appendix_specs.append(("about", about_file, appendix_strings.get("about_author_title", "Sobre l'autor")))

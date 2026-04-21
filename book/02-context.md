@@ -35,6 +35,12 @@ La conseqüència d'aquests canvis és fonamental per a qualsevol estratègia de
 
 Per a l'administració pública, això té implicacions directes. Els contractes de programari basats en el preu per hora han quedat obsolets. Les solucions que ahir costaven milions i requerien anys d'implementació es poden construir en setmanes. Però si l'administració no adapta els seus processos de contractació, gestió de projectes i avaluació del resultat, no podrà capturar aquests guanys d'eficiència, i continuarà pagant preus del passat per productes del present.
 
+## Europa al punt de partida
+
+Aquesta transformació no passa en el buit. La Comissió Europea ha fixat objectius ambiciosos per al 2030 a través del programa de la Dècada Digital: competències digitals bàsiques per al **80% dels adults europeus** (avui al 55,6%), **20 milions d'especialistes TIC** (avui 9,76 milions), el **75% de les empreses** adoptant tecnologies avançades (núvol, IA, dades massives) i el **100% dels serveis públics clau** accessibles en línia. Els estats membres han compromès **288.600 milions d'euros** (1,14% del PIB de la UE) per assolir aquests objectius. [Font: [State of the Digital Decade 2025, Comissió Europea](https://digital-strategy.ec.europa.eu/en/library/state-digital-decade-2025-report)]
+
+La bretxa entre aquests objectius i la situació actual és, de fet, una oportunitat. Les regions que accelerin la seva transformació digital ara no competiran contra socis europeus que ja hagin acabat, sinó contra els qui són al mateix punt de partida. I el finançament europeu (Horitzó Europa, Programa Europa Digital) prioritza explícitament projectes que contribueixin als objectius de la Dècada Digital.
+
 ## Per què ara és el moment de decidir
 
 Les transformacions tecnològiques no esperen els qui arriben tard. Les decisions que es prenen en els primers anys d'una nova era tecnològica determinen quins actors es posicionen com a referents i quins queden com a usuaris passius dels productes d'altri. L'aparició d'internet va crear noves indústries i en va destruir d'altres; va determinar quins països atreien talent i inversió; va definir quines empreses van créixer fins a dominar sectors sencers. La transició actual no serà diferent, però sí més ràpida.
