@@ -40,6 +40,7 @@ class Page:
     title: str
     source: Path | None
     number: int | None = None
+    kind: str | None = None
 
 
 _LEADING_H1 = re.compile(r"\A\s*#\s+[^\n]+\n+", re.MULTILINE)
@@ -55,12 +56,11 @@ def _render_markdown(md_text: str, strip_leading_h1: bool = True) -> str:
     )
 
 
-def _slug(path: Path) -> str:
-    stem = path.stem
-    # Strip the leading "NN-" chapter prefix for friendlier URLs.
-    if len(stem) > 3 and stem[:2].isdigit() and stem[2] == "-":
-        return stem[3:]
-    return stem
+def _write_page(slug: str, html: str) -> None:
+    """Write `html` so it's served at /{slug} (directory with index.html inside)."""
+    target = PUBLIC_DIR / slug
+    target.mkdir(parents=True, exist_ok=True)
+    (target / "index.html").write_text(html)
 
 
 @app.command()
@@ -100,68 +100,45 @@ def build() -> None:
     if cname_src.exists():
         shutil.copy(cname_src, PUBLIC_DIR / "CNAME")
 
-    # Build page list
-    front_pages: list[Page] = [
-        Page(href=f"{_slug(p)}.html", title=chapter_title(p), source=p)
-        for p in front_matter_files
-    ]
-    chapter_pages: list[Page] = [
-        Page(href=f"{_slug(p)}.html", title=chapter_title(p), source=p, number=i + 1)
-        for i, p in enumerate(chapter_files)
-    ]
+    # Stable, language-agnostic URL slugs:
+    #   /cap0 .. /capN  — front matter + chapters (continuous TOC numbering)
+    #   /annex1 .. /annexN — appendix items
+    #   /colophon — colofó
+    front_pages: list[Page] = []
+    chapter_pages: list[Page] = []
+    toc_index = 0
+    for p in front_matter_files:
+        front_pages.append(Page(href=f"/cap{toc_index}", title=chapter_title(p), source=p))
+        toc_index += 1
+    for i, p in enumerate(chapter_files):
+        chapter_pages.append(
+            Page(href=f"/cap{toc_index}", title=chapter_title(p), source=p, number=i + 1)
+        )
+        toc_index += 1
 
     # Appendix pages (order matches the PDF annex)
-    appendix_pages: list[Page] = []
+    appendix_specs: list[tuple[str, Path | None, str]] = []
     license_file = CANONICAL_DIR / "license.md"
     if license_file.exists():
-        appendix_pages.append(
-            Page(
-                href="license.html",
-                title=appendix_strings.get("license_title", "Llicència"),
-                source=license_file,
-            )
-        )
+        appendix_specs.append(("license", license_file, appendix_strings.get("license_title", "Llicència")))
     about_file = CANONICAL_DIR / "about-author.md"
     if about_file.exists():
-        appendix_pages.append(
-            Page(
-                href="about-author.html",
-                title=appendix_strings.get("about_author_title", "Sobre l'autor"),
-                source=about_file,
-            )
-        )
+        appendix_specs.append(("about", about_file, appendix_strings.get("about_author_title", "Sobre l'autor")))
     if appendix_strings.get("contributing_title") and appendix_strings.get("contributing_text"):
-        appendix_pages.append(
-            Page(
-                href="contributing-notes.html",
-                title=appendix_strings["contributing_title"],
-                source=None,
-            )
-        )
+        appendix_specs.append(("contributing", None, appendix_strings["contributing_title"]))
     if AUTHORS_FILE.exists():
-        appendix_pages.append(
-            Page(
-                href="contributors.html",
-                title=appendix_strings.get("contributors_title", "Contribuïdors"),
-                source=None,
-            )
-        )
+        appendix_specs.append(("contributors", None, appendix_strings.get("contributors_title", "Contribuïdors")))
     if CHANGELOG_FILE.exists():
-        appendix_pages.append(
-            Page(
-                href="changelog.html",
-                title=changelog_strings.get("title", "Registre de canvis"),
-                source=CHANGELOG_FILE,
-            )
-        )
+        appendix_specs.append(("changelog", CHANGELOG_FILE, changelog_strings.get("title", "Registre de canvis")))
+
+    appendix_pages: list[Page] = [
+        Page(href=f"/annex{i}", title=title, source=source, kind=kind)
+        for i, (kind, source, title) in enumerate(appendix_specs, start=1)
+    ]
 
     # Colophon: annex-level row after all appendix items
     colophon_strings = strings.get("colophon", {})
-    colophon_page = Page(
-        href="colophon.html",
-        title=colophon_strings.get("title", "Colofó"),
-        source=None,
-    )
+    colophon_page = Page(href="/colophon", title=colophon_strings.get("title", "Colofó"), source=None)
 
     all_pages = front_pages + chapter_pages + appendix_pages + [colophon_page]
 
@@ -198,22 +175,23 @@ def build() -> None:
         colophon={"href": colophon_page.href, "title": colophon_page.title},
     )
     (PUBLIC_DIR / "index.html").write_text(index_html)
-    console.print(f"  [dim]→[/dim] public/index.html")
+    console.print(f"  [dim]→[/dim] /")
 
-    # Chapter pages
+    # Chapter pages — each one goes into /{slug}/index.html so URLs stay extension-less
     chapter_template = env.get_template("chapter.html")
     for idx, page in enumerate(all_pages):
         prev_p, next_p = neighbours(idx)
-        if page.href == "changelog.html":
+        kind = page.kind
+        if kind == "changelog":
             intro = changelog_strings.get("intro", "")
             body = _render_markdown(CHANGELOG_FILE.read_text())
             body_html = (f'<p class="lede">{intro}</p>\n' if intro else "") + body
-        elif page.href == "contributing-notes.html":
+        elif kind == "contributing":
             raw = appendix_strings["contributing_text"].format(repo=repo_url)
             body_html = _render_markdown(raw, strip_leading_h1=False)
-        elif page.href == "contributors.html":
-            body_html = _synthetic_body(page)
-        elif page.href == "colophon.html":
+        elif kind == "contributors":
+            body_html = _contributors_body()
+        elif page is colophon_page:
             body_html = _render_colophon(
                 config, version, strings, last_modified_date(chapter_files + front_matter_files + [CONFIG_FILE])
             )
@@ -234,27 +212,25 @@ def build() -> None:
             next={"href": next_p.href, "title": next_p.title} if next_p else None,
             toc_title=toc_strings["title"],
         )
-        (PUBLIC_DIR / page.href).write_text(html)
-        console.print(f"  [dim]→[/dim] public/{page.href}")
+        _write_page(page.href.lstrip("/"), html)
+        console.print(f"  [dim]→[/dim] {page.href}")
 
     console.print(f"\n[green bold]Done.[/green bold] Open [cyan]file://{PUBLIC_DIR}/index.html[/cyan]")
 
 
-def _synthetic_body(page: Page) -> str:
+def _contributors_body() -> str:
     """Render the contributors list from AUTHORS."""
-    if page.href == "contributors.html":
-        items = []
-        for line in AUTHORS_FILE.read_text().splitlines():
-            line = line.strip()
-            if not line:
-                continue
-            m = re.match(r"^(.+?)\s+<(.+?)>\s*$", line)
-            if m:
-                items.append(f'<li><a href="{m.group(2)}">{m.group(1)}</a></li>')
-            else:
-                items.append(f"<li>{line}</li>")
-        return "<ul>\n" + "\n".join(items) + "\n</ul>"
-    return ""
+    items = []
+    for line in AUTHORS_FILE.read_text().splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        m = re.match(r"^(.+?)\s+<(.+?)>\s*$", line)
+        if m:
+            items.append(f'<li><a href="{m.group(2)}">{m.group(1)}</a></li>')
+        else:
+            items.append(f"<li>{line}</li>")
+    return "<ul>\n" + "\n".join(items) + "\n</ul>"
 
 
 def _render_colophon(config: dict, version: str, strings: dict, modified_text: str) -> str:
