@@ -1,6 +1,6 @@
 [project]
 name = "nextcat"
-version = "0.0.1"
+version = "0.0.0"
 description = "Carta fundacional de l'agència de programari NextCat"
 readme = "README.md"
 requires-python = ">=3.14"
