@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.0.2](https://github.com/davidpoblador/nextcat/compare/v0.0.1...v0.0.2) (2026-04-21)
+
+
+### Features
+
+* **book:** soften title, add Conway's Law, Digital Toolkit, dogfooding and key-concepts glossary ([#55](https://github.com/davidpoblador/nextcat/issues/55)) ([99921a9](https://github.com/davidpoblador/nextcat/commit/99921a982519116a7691bf4489a3bec8ee8ac549))
+
+
+### CI/CD
+
+* deploy Pages only when release-please cuts a real release ([#53](https://github.com/davidpoblador/nextcat/issues/53)) ([c36d4d5](https://github.com/davidpoblador/nextcat/commit/c36d4d5c43d5b06cffe3e8db57d1088da704bc3c))
+
 ## [0.0.1](https://github.com/davidpoblador/nextcat/compare/v0.0.0...v0.0.1) (2026-04-21)
 
 
