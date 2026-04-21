@@ -1,35 +1,36 @@
 # NextCat
 
-Foundational document for a Catalan software agency, built from Markdown sources into PDF (via Typst) and a website (via MkDocs).
+Foundational document for a Catalan digital strategy, rendered from Markdown sources into a PDF (via Typst) and a static HTML reader (via Jinja2 + Python-Markdown).
 
 ## Architecture
 
-- `book/` -- Canonical Catalan content: markdown chapters, config.toml, strings.toml, license.md
+- `book/` -- Canonical Catalan content: markdown chapters, strings.toml, license.md, about-author.md, CNAME
 - `translations/<lang>/` -- Translated content (future): strings.toml, chapter .md files, license.md
 - `templates/template.typ` -- Typst template with design tokens (LaTeX-style)
-- `templates/mkdocs.yml` -- MkDocs template (nav is generated)
-- `scripts/build.py` -- Typer CLI entrypoint (`uv run python -m scripts.build`)
-- `scripts/generate.py` -- Document generation logic (typst, index, changelog)
+- `templates/site/` -- Jinja2 templates + CSS for the HTML reader
+- `scripts/build.py` -- PDF builder entrypoint (`uv run python -m scripts.build`)
+- `scripts/site.py` -- HTML reader builder (`uv run python -m scripts.site`)
+- `scripts/generate.py` -- Shared helpers (chapter resolution, Typst document assembly, changelog parsing)
+- `fonts/` -- Libertinus Serif (SIL OFL, checked into the repo)
+- `config.toml` -- Non-translatable metadata (author, email, url, repo)
 - `AUTHORS` -- Author list in `Name <url>` format
 - `VERSION` -- Managed by release-please
 - `CHANGELOG.md` -- Managed by release-please
 
 ## Build pipeline
 
-`just pdf` runs `uv run python -m scripts.build` (generates `.typ` files in `build/`) then compiles them with the `typst` Python binding (no `typst` CLI needed). Fonts are loaded from `fonts/` via `font_paths`. Each language emits two artifacts: `build/nextcat-{version}.{lang}.pdf` (reader edition, no changelog) and `build/nextcat-{version}.{lang}-full.pdf` (archival edition, with changelog appendix). Intermediate `.typ` files are deleted after compilation.
+`just pdf` runs `uv run python -m scripts.build`, which generates `.typ` files in `build/` then compiles them with the `typst` Python binding (no `typst` CLI needed). Fonts are loaded from `fonts/` via `font_paths`. Each language emits two artifacts: `build/nextcat-{version}.{lang}.pdf` (reader edition, no changelog) and `build/nextcat-{version}.{lang}-full.pdf` (archival edition). Intermediate `.typ` files are deleted after compilation.
 
-`just site` builds the MkDocs website (`uv run mkdocs build`). The build script generates `mkdocs.yml` (from template + nav) and `book/index.md` (from chapters + strings).
-
-Both `mkdocs.yml` and `book/index.md` are generated artifacts (gitignored).
+`just site` (alias `just book`) runs `uv run python -m scripts.site`, which renders each chapter through Python-Markdown into a Jinja2 template. Output lives under `public/` (gitignored): one HTML page per chapter, plus index/cover, appendix (license, about-author, contributing notes, contributors, changelog) and colophon. The stylesheet and Libertinus Serif fonts are copied alongside; `book/CNAME` is copied to `public/CNAME` so GitHub Pages picks up the custom domain.
 
 ## Key conventions
 
-- Files prefixed `00-` are front matter (unnumbered, not in TOC)
+- Files prefixed `00-` are front matter (unnumbered; in the HTML reader they're listed as chapter 0)
 - Chapters are numbered by filename prefix (`01-`, `02-`, etc.)
-- `license.md` in content dir is the localized license for the PDF annex
+- `license.md` in content dir is the localized license for the PDF annex / HTML appendix
 - All translatable UI strings live in `strings.toml`, not in code or templates
 - Non-translatable metadata (author, email, repo) lives in `config.toml`
-- Design values (colors, sizes, margins) are tokens at the top of `template.typ`
+- Design values (colors, sizes, margins) are tokens at the top of `template.typ` and in `templates/site/style.css`
 - TOML values are escaped before interpolation into Typst (security)
 
 ## Version strings
@@ -38,34 +39,32 @@ Uses dunamai for git-aware versions: `0.1.3` on a tagged commit, `0.1.3.post2.de
 
 ## Dependencies
 
-All deps (typer, babel, dunamai, mkdocs-material, typst) live in `[dependency-groups] dev` in pyproject.toml. `[project] dependencies` is empty. Install with `uv sync`. The `typst` Python package bundles the compiler, so no separate Typst install is required. Libertinus Serif OTFs in `fonts/` are checked into the repo and passed to the compiler via `font_paths`.
+All deps (typer, babel, dunamai, jinja2, markdown, typst) live in `[dependency-groups] dev` in pyproject.toml. `[project] dependencies` is empty. Install with `uv sync`. The `typst` Python package bundles the compiler, so no separate Typst install is required. Libertinus Serif OTFs in `fonts/` are checked into the repo and passed to the compiler via `font_paths`.
 
 ## CI/CD
 
-- `.github/workflows/release.yml` -- release-please + PDF build + attach to GitHub releases
-- `.github/workflows/pages.yml` -- build PDF + MkDocs site, deploy to GitHub Pages
+- `.github/workflows/release.yml` -- release-please + PDF build + attach to GitHub releases (stable `nextcat.{lang}.pdf` alias uploaded alongside versioned artifacts)
+- `.github/workflows/pages.yml` -- build the static HTML reader and deploy to GitHub Pages (custom domain via `book/CNAME`)
 - Conventional commits drive versioning: `feat:` bumps minor, `fix:` bumps patch
 
 ## Adding a chapter
 
 1. Create `book/NN-slug.md` with a `# Title` heading
-2. Run `just pdf` -- it appears automatically in TOC, nav, and index
+2. Run `just pdf` (and/or `just site`) — it appears automatically in both outputs
 
-## Keeping PDF and website in sync
+## Keeping PDF and HTML reader in sync
 
-The PDF and website are generated from the same markdown sources but have different structures for the annex. When changing the document structure:
+Both are generated from the same markdown sources but assemble the annex differently.
 
-- **Chapters** (`book/NN-*.md`): Automatically picked up by both PDF and website. No extra work needed.
+- **Chapters** (`book/NN-*.md`): Automatically picked up by both. No extra work needed.
 - **Front matter** (`book/00-*.md`): Automatically picked up by both.
-- **Annex sections** (license, about-author, contributors, changelog): These are assembled by `scripts/build.py`. The PDF generates them from multiple sources (LICENSE, AUTHORS, CHANGELOG.md, about-author.md). The website nav is generated separately in `build_index()`. If you add a new annex section, update both:
-  1. The appendix block in `build()` (for the PDF)
-  2. The nav generation in `build_index()` (for the website)
-- **Colophon**: Generated by the build script, not a markdown file. Only appears in the PDF.
-- **Excluded files**: `index.md`, `license.md`, and `about-author.md` in `book/` are excluded from the chapter list. If you add a new non-chapter markdown file, add it to the `excluded` set in `build()`.
+- **Annex sections** (license, about-author, contributing notes, contributors, changelog): assembled by the two build scripts. The PDF appendix lives in `scripts/generate.py → build_typst()`; the HTML appendix lives in `scripts/site.py → build()`. When adding a new annex section, update both.
+- **Colophon**: Generated by both build scripts — `build_typst` in generate.py for the PDF, `_render_colophon` in site.py for the HTML reader.
+- **Excluded files**: `index.md`, `license.md`, and `about-author.md` in `book/` are excluded from the chapter list.
 
 ## Translation (future)
 
-Create `translations/<lang>/` with `strings.toml` (translated strings including a `[translation] notice` field), chapter .md files, and `license.md`. The build script will need a `--lang` flag to select the content directory.
+Create `translations/<lang>/` with `strings.toml` (translated strings including a `[translation] notice` field), chapter .md files, and `license.md`. The PDF build script already handles translations; the HTML reader currently builds only the canonical language (to be extended).
 
 ## Contributing
 
@@ -75,7 +74,7 @@ See `CONTRIBUTING.md` for the full guide. Key points for agents:
 - Use conventional commits in English (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `ci:`)
 - PR titles must also follow conventional commit syntax (they become the squash commit message)
 - Run `just clean && just pdf && just site` before opening a PR
-- Content changes go in `book/*.md`, never edit generated files (`mkdocs.yml`, `book/index.md`, `build/`)
+- Content changes go in `book/*.md`, never edit generated files (`build/`, `public/`)
 - Strings and labels go in `strings.toml`, not hardcoded in templates or scripts
 - Do not edit `VERSION`, `CHANGELOG.md`, or `.release-please-manifest.json` manually
 - Always include a `Co-Authored-By` trailer when AI tools are used to generate content or code

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+<article class="chapter-head">
+  {% if chapter_number %}<div class="chapnum">{{ chapter_label }} {{ chapter_number }}</div>{% endif %}
+  <h1>{{ title }}</h1>
+</article>
+
+<div class="{{ body_class }}" style="counter-reset: chapter {{ chapter_number or 0 }};">
+{{ body_html | safe }}
+</div>
+
+<nav class="pager">
+  {% if prev %}<a class="prev" href="{{ prev.href }}" title="{{ prev.title }}"><span class="arrow">←</span><span class="label">{{ prev.title }}</span></a>{% else %}<span></span>{% endif %}
+  <a class="toc-link" href="index.html">{{ toc_title }}</a>
+  {% if next %}<a class="next" href="{{ next.href }}" title="{{ next.title }}"><span class="label">{{ next.title }}</span><span class="arrow">→</span></a>{% else %}<span></span>{% endif %}
+</nav>
+{% endblock %}

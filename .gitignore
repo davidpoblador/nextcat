@@ -1,6 +1,5 @@
-build/
-site/
-mkdocs.yml
+/build/
+/public/
 book/index.md
 book/changelog.md
 book/contributing.md

@@ -55,7 +55,7 @@ Exemples:
 feat: add security chapter
 fix: correct Catalan spelling in methodology chapter
 docs: update translation instructions in README
-chore: update mkdocs-material to 9.8
+chore: bump typst to 0.15
 ```
 
 Release-please genera automàticament el changelog i les versions a partir d'aquests commits. Commits que no segueixen la convenció no apareixen al changelog.
@@ -110,9 +110,8 @@ Nom Complet <https://elsiteweb.example/>
 
 No editis manualment:
 
-- `mkdocs.yml` (generat per `scripts/build.py`)
-- `book/index.md` (generat per `scripts/build.py`)
-- `build/` (artefactes de compilació)
+- `build/` (PDFs generats)
+- `public/` (lloc web estàtic generat)
 - `VERSION` (gestionat per release-please)
 - `CHANGELOG.md` (gestionat per release-please)
 - `.release-please-manifest.json` (gestionat per release-please)

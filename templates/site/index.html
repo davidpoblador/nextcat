@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="cover">
+  <h1>{{ title }}</h1>
+  <p class="subtitle">{{ subtitle }}</p>
+  <p class="author">{{ author }}</p>
+  <p class="meta">{{ version_label }} {{ version }} · {{ cover_date }}</p>
+</div>
+
+<div class="toc">
+  <h2>{{ toc_title }}</h2>
+  <ol>
+    {% for item in front_matter %}
+    <li><a href="{{ item.href }}">{{ item.title }}</a></li>
+    {% endfor %}
+    {% for item in chapters %}
+    <li><a href="{{ item.href }}">{{ item.title }}</a></li>
+    {% endfor %}
+    {% if appendix %}
+    <li class="annex-heading"><span>{{ appendix_title }}</span></li>
+    {% for item in appendix %}
+    <li class="annex-item"><a href="{{ item.href }}">{{ item.title }}</a></li>
+    {% endfor %}
+    {% endif %}
+    {% if colophon %}
+    <li class="annex-heading"><a href="{{ colophon.href }}">{{ colophon.title }}</a></li>
+    {% endif %}
+  </ol>
+</div>
+{% endblock %}

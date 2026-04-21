@@ -27,22 +27,14 @@ jobs:
 
       - uses: extractions/setup-just@v4
 
-      - name: Build PDF
+      - name: Build site
         run: |
           uv sync
-          just pdf
-
-      - name: Copy PDF to site
-        run: |
-          mkdir -p book/downloads
-          cp build/*.pdf book/downloads/
-
-      - name: Build site
-        run: uv run mkdocs build
+          just site
 
       - uses: actions/upload-pages-artifact@v5
         with:
-          path: site
+          path: public
 
   deploy:
     needs: build

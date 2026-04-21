@@ -15,7 +15,6 @@ from scripts.generate import (
     CONFIG_FILE,
     ROOT,
     TRANSLATIONS_DIR,
-    build_index,
     build_typst,
     get_version,
     load_toml,
@@ -65,18 +64,6 @@ def build(
     canonical_lang = canonical_strings["lang"]
 
     console.print(f"[bold cyan][{canonical_lang}][/bold cyan] Canonical · {len(canonical_ch)} chapters")
-
-    # Website assets (always from canonical)
-    index_path, mkdocs_path = build_index(
-        canonical_strings["document"],
-        canonical_strings,
-        canonical_strings.get("site", {}),
-        config["document"]["repo"],
-        canonical_fm,
-        canonical_ch,
-    )
-    console.print(f"  [dim]→[/dim] {index_path.relative_to(ROOT)}")
-    console.print(f"  [dim]→[/dim] {mkdocs_path.relative_to(ROOT)}")
 
     # Collect (typ_file, lang, suffix) across languages and variants
     builds: list[tuple[Path, str, str]] = []

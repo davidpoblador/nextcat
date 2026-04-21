@@ -11,14 +11,13 @@ pdf:
 lang LANG:
     uv run python -m scripts.build {{LANG}}
 
-# Build the website
+# Build the static HTML reader into public/
 site: pdf
-    uv run mkdocs build
+    uv run python -m scripts.site
 
-# Serve the website locally
-serve: pdf
-    uv run mkdocs serve
+# Build the book (alias for `site`)
+book: site
 
 # Remove all generated files
 clean:
-    rm -rf build/ site/ book/index.md book/changelog.md book/contributing.md mkdocs.yml
+    rm -rf build/ public/

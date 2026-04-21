@@ -2,7 +2,6 @@
 # ABOUTME: Typst document generation, index/nav generation, changelog parsing.
 
 import re
-import shutil
 import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
@@ -146,74 +145,6 @@ def _typst_param(key: str, value: str) -> str:
     return f'  {key}: "{escape_typst(value)}",'
 
 
-def build_index(
-    doc_strings: dict,
-    strings: dict,
-    site: dict,
-    repo: str,
-    front_matter: list[Path],
-    chapter_files: list[Path],
-) -> tuple[Path, Path]:
-    """Generate index.md and mkdocs.yml. Returns (index_path, mkdocs_path)."""
-    lines = [
-        f"# {doc_strings['title']}",
-        "",
-        f"*{doc_strings['subtitle']}*",
-        "",
-    ]
-
-    for fm in front_matter:
-        lines.append(f"- [{chapter_title(fm)}]({fm.name})")
-    for ch in chapter_files:
-        lines.append(f"1. [{chapter_title(ch)}]({ch.name})")
-    lines.append("")
-    lines.append("---")
-    lines.append("")
-    lines.append(site["downloads_text"].format(repo=repo))
-    lines.append("")
-    lines.append(site["license_text"])
-    lines.append("")
-
-    index_file = CANONICAL_DIR / "index.md"
-    index_file.write_text("\n".join(lines))
-
-    # Generate mkdocs.yml
-    mkdocs_template = ROOT / "templates" / "mkdocs.yml"
-    mkdocs_output = ROOT / "mkdocs.yml"
-
-    def yaml_quote(s: str) -> str:
-        return '"' + s.replace('\\', '\\\\').replace('"', '\\"') + '"'
-
-    nav_lines = ["", "nav:", "  - Inici: index.md"]
-    for fm in front_matter:
-        nav_lines.append(f"  - {yaml_quote(chapter_title(fm))}: {fm.name}")
-    for ch in chapter_files:
-        nav_lines.append(f"  - {yaml_quote(chapter_title(ch))}: {ch.name}")
-
-    appendix = strings.get("appendix", {})
-    nav_lines.append(f"  - {yaml_quote(appendix.get('title', 'Annex'))}:")
-    nav_lines.append(f"    - {yaml_quote(appendix.get('license_title', 'Llicència'))}: license.md")
-
-    about_author_file = CANONICAL_DIR / "about-author.md"
-    if about_author_file.exists():
-        about_nav_title = appendix.get("about_author_title", "Sobre l'autor")
-        nav_lines.append(f"    - {yaml_quote(about_nav_title)}: about-author.md")
-
-    contributing_file = ROOT / "CONTRIBUTING.md"
-    if contributing_file.exists():
-        shutil.copy(contributing_file, CANONICAL_DIR / "contributing.md")
-        contributing_nav = appendix.get("contributing_title", "Contribucions")
-        nav_lines.append(f"    - {yaml_quote(contributing_nav)}: contributing.md")
-    if CHANGELOG_FILE.exists():
-        shutil.copy(CHANGELOG_FILE, CANONICAL_DIR / "changelog.md")
-        changelog = strings.get("changelog", {})
-        nav_lines.append(f"    - {yaml_quote(changelog.get('title', 'Registre de canvis'))}: changelog.md")
-
-    mkdocs_output.write_text(mkdocs_template.read_text() + "\n".join(nav_lines) + "\n")
-
-    return index_file, mkdocs_output
-
-
 def build_typst(
     content_dir: Path,
     strings: dict,
@@ -311,8 +242,9 @@ def build_typst(
     contributing_title = appendix.get("contributing_title")
     contributing_text = appendix.get("contributing_text")
     if contributing_title and contributing_text:
+        formatted = contributing_text.format(repo=doc["repo"])
         parts.append(f'   heading(level: 2)[{escape_typst(contributing_title)}]')
-        parts.append(f"   [{escape_typst(contributing_text)}]")
+        parts.append(f'   render("{escape_typst(formatted)}")')
         parts.append("")
 
     if AUTHORS_FILE.exists():

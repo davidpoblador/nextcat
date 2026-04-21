@@ -17,7 +17,7 @@ title = "Annex"
 license_title = "Llicència"
 about_author_title = "Sobre l'autor"
 contributing_title = "Feu-hi contribucions"
-contributing_text = "Aquest document és obert a contribucions. Si voleu proposar canvis, correccions o traduccions, consulteu la guia de contribucions al repositori del projecte."
+contributing_text = "Aquest document és obert a contribucions. Si voleu proposar canvis, correccions o traduccions, consulteu la guia de contribucions al [repositori del projecte]({repo})."
 contributors_title = "Contribuïdors"
 
 [changelog]

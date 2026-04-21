@@ -8,7 +8,7 @@ Ara bé, la transformació no és uniforme. Els territoris, les institucions i l
 
 ## Per a Catalunya, una oportunitat concreta
 
-Catalunya no parteix de zero. Compta amb actius que molts territoris europeus envegen: talent tecnològic de primer nivell, infraestructura de supercomputació de referència mundial, un ecosistema d'startups en plena maduresa i, fet rarament destacat, el primer gran model de llengua (LLM) de codi obert d'una llengua cooficial sense estatus europeu: Salamandra, produït per la BSC i el Projecte AINA.
+Catalunya no parteix de zero. Compta amb actius que molts territoris europeus envegen: talent tecnològic de primer nivell, infraestructura de supercomputació de referència mundial, un ecosistema d'startups en plena maduresa i, fet rarament destacat, el primer gran model de llengua (LLM) de codi obert d'una llengua cooficial sense estatus europeu: Salamandra, produït per la [BSC](https://www.bsc.es/) i el [Projecte AINA](https://projecteaina.cat/).
 
 La pregunta que aquest document vol respondre no és "quina tecnologia ha d'adoptar la Generalitat?". La tecnologia canviarà. La pregunta és: **quines decisions estructurals cal prendre ara perquè Catalunya es posicioni com un referent europeu de transformació digital, atregui i retingui talent i inversió, i construeixi una administració pública que serveixi els ciutadans amb l'eficiència que la tecnologia actual permet?**
 
