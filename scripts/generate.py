@@ -1,4 +1,4 @@
-# ABOUTME: Document generation logic for the Xarter pipeline.
+# ABOUTME: Document generation logic for the NextCat pipeline.
 # ABOUTME: Typst document generation, index/nav generation, changelog parsing.
 
 import re

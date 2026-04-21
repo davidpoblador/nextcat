@@ -1,4 +1,4 @@
-# ABOUTME: CLI entrypoint for the Xarter document pipeline.
+# ABOUTME: CLI entrypoint for the NextCat document pipeline.
 # ABOUTME: Orchestrates PDF builds for all languages using typer and rich.
 
 from concurrent.futures import ThreadPoolExecutor
@@ -35,7 +35,7 @@ console = Console()
 
 def _compile_typst(typ_file: Path, version: str, lang: str, suffix: str) -> Path:
     """Compile a .typ file to PDF and remove the intermediate file."""
-    pdf_file = BUILD_DIR / f"xarter-{version}.{lang}{suffix}.pdf"
+    pdf_file = BUILD_DIR / f"nextcat-{version}.{lang}{suffix}.pdf"
     label = f"{lang}{suffix}"
     try:
         compiler = typst.Compiler(

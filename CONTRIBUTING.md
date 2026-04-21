@@ -1,4 +1,4 @@
-# Contribuir a Xarter
+# Contribuir a NextCat
 
 Gràcies per l'interès en contribuir al xàrter. Aquesta guia explica com fer-ho.
 

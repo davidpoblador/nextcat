@@ -1,14 +1,15 @@
-# ABOUTME: MkDocs configuration for the Xarter website.
+# ABOUTME: MkDocs configuration for the NextCat website.
 # ABOUTME: Serves the same markdown chapters used to build the PDF.
 
-site_name: Xarter
-site_description: Carta fundacional de l'agència de programari Xarter
-site_url: https://davidpoblador.github.io/xarter/
-repo_url: https://github.com/davidpoblador/xarter
-repo_name: davidpoblador/xarter
+site_name: NextCat
+site_description: Carta fundacional de l'agència de programari NextCat
+site_url: https://nextcat.poblador.cat/
+repo_url: https://github.com/davidpoblador/nextcat
+repo_name: davidpoblador/nextcat
 
 theme:
   name: material
+  custom_dir: overrides
   language: ca
   palette:
     - scheme: default

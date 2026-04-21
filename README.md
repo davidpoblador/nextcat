@@ -1,8 +1,8 @@
-# Xarter
+# NextCat
 
-Document fundacional de l'agència de programari Xarter.
+Document fundacional de l'agència de programari NextCat.
 
-Disponible en PDF i en línia a [davidpoblador.github.io/xarter](https://davidpoblador.github.io/book/).
+Disponible en PDF i en línia a [davidpoblador.github.io/nextcat](https://davidpoblador.github.io/book/).
 
 ## Requisits
 
@@ -14,7 +14,7 @@ El compilador [Typst](https://typst.app/) i la família Libertinus Serif s'insta
 ## Ús
 
 ```
-just pdf       # Genera PDFs per a tots els idiomes (build/xarter-{versió}.{lang}[-full].pdf)
+just pdf       # Genera PDFs per a tots els idiomes (build/nextcat-{versió}.{lang}[-full].pdf)
 just lang ca   # Genera el PDF només per a un idioma
 just site      # Genera el lloc web (site/)
 just serve     # Serveix el lloc web localment

@@ -1,4 +1,4 @@
-# Xarter
+# NextCat
 
 Foundational document for a Catalan software agency, built from Markdown sources into PDF (via Typst) and a website (via MkDocs).
 
@@ -16,7 +16,7 @@ Foundational document for a Catalan software agency, built from Markdown sources
 
 ## Build pipeline
 
-`just pdf` runs `uv run python -m scripts.build` (generates `.typ` files in `build/`) then compiles them with the `typst` Python binding (no `typst` CLI needed). Fonts are loaded from `fonts/` via `font_paths`. Each language emits two artifacts: `build/xarter-{version}.{lang}.pdf` (reader edition, no changelog) and `build/xarter-{version}.{lang}-full.pdf` (archival edition, with changelog appendix). Intermediate `.typ` files are deleted after compilation.
+`just pdf` runs `uv run python -m scripts.build` (generates `.typ` files in `build/`) then compiles them with the `typst` Python binding (no `typst` CLI needed). Fonts are loaded from `fonts/` via `font_paths`. Each language emits two artifacts: `build/nextcat-{version}.{lang}.pdf` (reader edition, no changelog) and `build/nextcat-{version}.{lang}-full.pdf` (archival edition, with changelog appendix). Intermediate `.typ` files are deleted after compilation.
 
 `just site` builds the MkDocs website (`uv run mkdocs build`). The build script generates `mkdocs.yml` (from template + nav) and `book/index.md` (from chapters + strings).
 

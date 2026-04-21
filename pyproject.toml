@@ -1,12 +1,12 @@
 [project]
-name = "xarter"
+name = "nextcat"
 version = "0.0.4"
-description = "Carta fundacional de l'agència de programari Xarter"
+description = "Carta fundacional de l'agència de programari NextCat"
 readme = "README.md"
 requires-python = ">=3.14"
 license = "CC-BY-SA-4.0"
 authors = [
-    { name = "David Poblador i Garcia", email = "xarter@poblador.com" },
+    { name = "David Poblador i Garcia", email = "nextcat@poblador.com" },
 ]
 dependencies = []
 
