@@ -1,7 +1,7 @@
 [project]
 name = "nextcat"
-version = "0.0.3"
-description = "Carta fundacional de l'agència de programari NextCat"
+version = "0.0.0"
+description = "Apunts per a una estratègia digital de Catalunya: guia per a responsables de política i administració pública"
 readme = "README.md"
 requires-python = ">=3.14"
 license = "CC-BY-SA-4.0"
