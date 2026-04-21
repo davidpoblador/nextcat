@@ -24,21 +24,11 @@ La metodologia del GDS es basa en principis simples: **equips multidisciplinaris
 
 ## França DINUM: el programari públic com a infraestructura
 
-La Direction interministérielle du numérique (DINUM) de França ha demostrat que un govern pot ser un **productor** de programari, no només un consumidor. La seva aposta més visible és **La Suite Numérique**: un conjunt complet d'eines de col·laboració (documents, missatgeria, videoconferència) per a tota l'administració pública francesa, construïdes sobre programari lliure i publicades amb llicència MIT. El projecte es va codesenvolupar amb els Països Baixos i Alemanya, i és un exemple de model de sobirania digital europea compartida. [Fonts: [La Suite Numérique a GitHub](https://github.com/suitenumerique); [La Suite, code.gouv.fr](https://code.gouv.fr/en/lasuite/)]
-
-La DINUM gestiona també [code.gouv.fr](https://code.gouv.fr/), un índex públic i cercable de tot el codi font del sector públic francès. Qualsevol ciutadà pot consultar quin programari ha finançat el contribuent, auditar-lo i reutilitzar-lo.
+La Direction interministérielle du numérique (DINUM) francesa ha demostrat que un govern pot ser productor de programari, no només consumidor. **La Suite Numérique** —un conjunt complet d'eines de col·laboració (documents, missatgeria, videoconferència) per a tota l'administració francesa, publicat amb llicència MIT i codesenvolupat amb els Països Baixos i Alemanya— és un exemple de sobirania digital europea compartida, i [code.gouv.fr](https://code.gouv.fr/) exposa com a índex públic cercable tot el codi font del sector públic francès, auditable i reutilitzable per qualsevol ciutadà. [Fonts: [La Suite Numérique a GitHub](https://github.com/suitenumerique); [code.gouv.fr](https://code.gouv.fr/en/lasuite/)]
 
 ## Els EUA: el US Digital Service
 
-Barack Obama va crear el United States Digital Service (USDS) el 2014 com a resposta al fracàs de Healthcare.gov, el portal d'inscripció a l'assegurança mèdica que va col·lapsar al seu llançament. El USDS és una agència federal de tecnologia que contracta enginyers, dissenyadors i gestors de producte del sector privat per a períodes de 6 a 24 mesos, i els incorpora als departaments federals per transformar serveis des de dins. [Font: [Fact Sheet: Improving and Simplifying Digital Services, The White House, agost 2014](https://obamawhitehouse.archives.gov/the-press-office/2014/08/11/fact-sheet-improving-and-simplifying-digital-services)]
-
-El model és políticament incòmode per als funcionaris tradicionals (genera tensions reals sobre qui té l'autoritat sobre els sistemes), però els resultats han estat sistemàticament positius pel que fa a reducció de costos, millora de l'experiència d'usuari i eliminació de deute tecnològic.
-
-## La Dècada Digital de la UE: context i oportunitat
-
-La Comissió Europea ha fixat objectius ambiciosos per al 2030 a través del programa de la Dècada Digital: competències digitals bàsiques per al **80% dels adults europeus** (avui al 55,6%), **20 milions d'especialistes TIC** (avui 9,76 milions), el **75% de les empreses** adoptant tecnologies avançades (núvol, IA, dades massives) i el **100% dels serveis públics clau** accessibles en línia. Els estats membres han compromès **288.600 milions d'euros** (1,14% del PIB de la UE) per assolir aquests objectius. [Font: [State of the Digital Decade 2025, Comissió Europea](https://digital-strategy.ec.europa.eu/en/library/state-digital-decade-2025-report)]
-
-La bretxa entre els objectius i la situació actual és, de fet, una oportunitat per a Catalunya: les regions que accelerin la seva transformació digital ara no competiran contra socis europeus que ja hagin acabat, sinó contra els qui són al mateix punt de partida. I el finançament europeu (Horitzó Europa, Programa Europa Digital) prioritza explícitament projectes que contribueixin als objectius de la Dècada Digital.
+Barack Obama va crear el United States Digital Service (USDS) el 2014 arran del col·lapse de Healthcare.gov: una agència federal que contracta enginyers, dissenyadors i gestors de producte del sector privat per períodes de 6 a 24 mesos i els incorpora als departaments per transformar serveis des de dins. El model és políticament incòmode —desplaça l'autoritat tècnica dels circuits habituals—, però els resultats han estat sistemàticament positius en reducció de costos, millora de l'experiència d'usuari i eliminació de deute tecnològic. [Font: [Fact Sheet: Improving and Simplifying Digital Services, The White House, agost 2014](https://obamawhitehouse.archives.gov/the-press-office/2014/08/11/fact-sheet-improving-and-simplifying-digital-services)]
 
 ## Lliçons comunes
 
