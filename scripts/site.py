@@ -1,6 +1,7 @@
 # ABOUTME: Static HTML reader for the NextCat book.
 # ABOUTME: Renders markdown chapters to a LaTeX-styled HTML site under public/.
 
+import hashlib
 import re
 import shutil
 from dataclasses import dataclass
@@ -88,8 +89,11 @@ def build() -> None:
         shutil.rmtree(PUBLIC_DIR)
     PUBLIC_DIR.mkdir(parents=True)
 
-    # Copy assets
-    shutil.copy(SITE_TEMPLATES / "style.css", PUBLIC_DIR / "style.css")
+    # Copy assets. The CSS gets a content-hash query string in the <link>
+    # tag below so browsers re-fetch it when (and only when) it changes.
+    css_source = SITE_TEMPLATES / "style.css"
+    shutil.copy(css_source, PUBLIC_DIR / "style.css")
+    css_version = hashlib.sha256(css_source.read_bytes()).hexdigest()[:10]
     public_fonts = PUBLIC_DIR / "fonts"
     public_fonts.mkdir()
     for otf in FONTS_DIR.glob("*.otf"):
@@ -162,6 +166,7 @@ def build() -> None:
         "repo_url": repo_url,
         "pdf_url": pdf_url,
         "assets": "",
+        "css_version": css_version,
     }
 
     # Index
