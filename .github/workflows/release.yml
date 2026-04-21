@@ -68,6 +68,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
+    permissions:
+      actions: write
     steps:
       - name: Dispatch Pages deploy
         env:
