@@ -1,18 +1,17 @@
 # ABOUTME: CLI entrypoint for the Xarter document pipeline.
 # ABOUTME: Orchestrates PDF builds for all languages using typer and rich.
 
-import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Optional
 
 import typer
+import typst
 from rich.console import Console
 
 from scripts.generate import (
     BUILD_DIR,
     CANONICAL_DIR,
-    CHANGELOG_FILE,
     CONFIG_FILE,
     ROOT,
     TRANSLATIONS_DIR,
@@ -23,23 +22,33 @@ from scripts.generate import (
     resolve_chapters,
 )
 
+FONTS_DIR = ROOT / "fonts"
+
+VARIANTS: list[tuple[str, bool]] = [
+    ("", False),
+    ("-full", True),
+]
+
 app = typer.Typer(help="Xarter document pipeline.")
 console = Console()
 
 
-def _compile_typst(typ_file: Path, version: str, lang: str) -> Path:
+def _compile_typst(typ_file: Path, version: str, lang: str, suffix: str) -> Path:
     """Compile a .typ file to PDF and remove the intermediate file."""
-    pdf_file = BUILD_DIR / f"xarter-{version}.{lang}.pdf"
-    result = subprocess.run(
-        ["typst", "compile", "--root", str(ROOT), str(typ_file), str(pdf_file)],
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        console.print(f"  [red]✗[/red] [{lang}] {result.stderr.strip()}")
-    else:
-        console.print(f"  [green]✓[/green] [{lang}] {pdf_file.relative_to(ROOT)}")
-    typ_file.unlink()
+    pdf_file = BUILD_DIR / f"xarter-{version}.{lang}{suffix}.pdf"
+    label = f"{lang}{suffix}"
+    try:
+        compiler = typst.Compiler(
+            input=typ_file,
+            root=ROOT,
+            font_paths=[FONTS_DIR],
+        )
+        compiler.compile(output=pdf_file)
+        console.print(f"  [green]✓[/green] [{label}] {pdf_file.relative_to(ROOT)}")
+    except typst.TypstError as exc:
+        console.print(f"  [red]✗[/red] [{label}] {exc.message}")
+    finally:
+        typ_file.unlink()
     return pdf_file
 
 
@@ -69,12 +78,27 @@ def build(
     console.print(f"  [dim]→[/dim] {index_path.relative_to(ROOT)}")
     console.print(f"  [dim]→[/dim] {mkdocs_path.relative_to(ROOT)}")
 
-    # Collect languages
-    builds: list[tuple[Path, str]] = []
+    # Collect (typ_file, lang, suffix) across languages and variants
+    builds: list[tuple[Path, str, str]] = []
+
+    def queue(content_dir: Path, strings: dict, fm, ch, notice: str = "") -> None:
+        trans_lang = strings["lang"]
+        for suffix, include_changelog in VARIANTS:
+            typ_file = build_typst(
+                content_dir,
+                strings,
+                config,
+                version,
+                fm,
+                ch,
+                notice,
+                include_changelog=include_changelog,
+                variant_suffix=suffix,
+            )
+            builds.append((typ_file, trans_lang, suffix))
 
     if lang is None or lang == canonical_lang:
-        typ_file = build_typst(CANONICAL_DIR, canonical_strings, config, version, canonical_fm, canonical_ch)
-        builds.append((typ_file, canonical_lang))
+        queue(CANONICAL_DIR, canonical_strings, canonical_fm, canonical_ch)
 
     if TRANSLATIONS_DIR.exists():
         for lang_dir in sorted(TRANSLATIONS_DIR.iterdir()):
@@ -92,9 +116,7 @@ def build(
             fm, ch = resolve_chapters(lang_dir, CANONICAL_DIR)
 
             console.print(f"[bold cyan][{trans_lang}][/bold cyan] Translation · {len(ch)} chapters")
-
-            typ_file = build_typst(lang_dir, lang_strings, config, version, fm, ch, translation_notice)
-            builds.append((typ_file, trans_lang))
+            queue(lang_dir, lang_strings, fm, ch, translation_notice)
 
     if not builds:
         console.print(f"[yellow]No matching language found: {lang}[/yellow]")
@@ -102,7 +124,7 @@ def build(
 
     console.print(f"\nCompiling [bold]{len(builds)}[/bold] PDF(s)...")
     with ThreadPoolExecutor() as pool:
-        pool.map(lambda args: _compile_typst(args[0], version, args[1]), builds)
+        pool.map(lambda args: _compile_typst(args[0], version, args[1], args[2]), builds)
 
     console.print("\n[green bold]Done.[/green bold]")
 

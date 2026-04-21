@@ -16,4 +16,5 @@ dev = [
     "dunamai>=1.26.1",
     "mkdocs-material>=9.7.6",
     "typer>=0.24.1",
+    "typst>=0.14.8",
 ]

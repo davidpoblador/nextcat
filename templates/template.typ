@@ -2,7 +2,7 @@
 // ABOUTME: Defines page layout, fonts, heading styles, and title page.
 
 // Design tokens
-#let font-body = "New Computer Modern"
+#let font-body = "Libertinus Serif"
 #let font-size = 11pt
 #let color-body = rgb("#000")
 #let color-muted = rgb("#555")

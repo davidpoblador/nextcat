@@ -7,13 +7,14 @@ Disponible en PDF i en línia a [davidpoblador.github.io/xarter](https://davidpo
 ## Requisits
 
 - [uv](https://docs.astral.sh/uv/)
-- [typst](https://typst.app/)
 - [just](https://just.systems/)
+
+El compilador [Typst](https://typst.app/) i la família Libertinus Serif s'instal-len automàticament via `uv sync` i `fonts/`.
 
 ## Ús
 
 ```
-just pdf       # Genera PDFs per a tots els idiomes (build/xarter-{versió}.{lang}.pdf)
+just pdf       # Genera PDFs per a tots els idiomes (build/xarter-{versió}.{lang}[-full].pdf)
 just lang ca   # Genera el PDF només per a un idioma
 just site      # Genera el lloc web (site/)
 just serve     # Serveix el lloc web localment

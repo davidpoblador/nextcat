@@ -222,6 +222,9 @@ def build_typst(
     front_matter: list[Path],
     chapter_files: list[Path],
     translation_notice: str = "",
+    *,
+    include_changelog: bool = True,
+    variant_suffix: str = "",
 ) -> Path:
     """Generate a Typst document for one language. Returns the .typ file path."""
     doc = config["document"]
@@ -328,7 +331,7 @@ def build_typst(
                 parts.append(f"   [- {escape_typst(line)}]")
         parts.append("")
 
-    if CHANGELOG_FILE.exists():
+    if include_changelog and CHANGELOG_FILE.exists():
         changelog_title = escape_typst(changelog["title"])
         changelog_intro = escape_typst(changelog.get("intro", ""))
         cl_version_label = escape_typst(changelog.get("version_label", "Versió"))
@@ -383,6 +386,6 @@ def build_typst(
     parts.append("")
 
     BUILD_DIR.mkdir(exist_ok=True)
-    output_file = BUILD_DIR / f"document.{lang}.typ"
+    output_file = BUILD_DIR / f"document.{lang}{variant_suffix}.typ"
     output_file.write_text("\n".join(parts))
     return output_file
