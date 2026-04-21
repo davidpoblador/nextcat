@@ -1,0 +1,230 @@
+/* ABOUTME: LaTeX-adjacent stylesheet for the NextCat HTML reader.
+   ABOUTME: Libertinus Serif body, justified text, numbered headings via counters. */
+
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("fonts/LibertinusSerif-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("fonts/LibertinusSerif-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("fonts/LibertinusSerif-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("fonts/LibertinusSerif-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --body: #000;
+  --muted: #555;
+  --light: #777;
+  --faint: #999;
+  --rule: #bbb;
+  --link: #2244aa;
+  --bg: #fbfaf6;
+  --measure: 36rem;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  font-size: 18px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--body);
+  font-family: "Libertinus Serif", "Linux Libertine", "Times New Roman", serif;
+  font-feature-settings: "liga", "onum";
+  line-height: 1.55;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+main {
+  max-width: var(--measure);
+  margin: 4rem auto 6rem;
+  padding: 0 1.5rem;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+p { margin: 0 0 1em; text-indent: 1.5em; }
+p:first-of-type, h1 + p, h2 + p, h3 + p, blockquote > p:first-child { text-indent: 0; }
+
+a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Cover-like opening block on the index */
+.cover { text-align: center; margin: 6rem 0 4rem; }
+.cover h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+}
+.cover .subtitle {
+  font-size: 1.25rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+}
+.cover .author { margin-top: 2.5rem; color: var(--muted); }
+.cover .meta { margin-top: 0.3rem; color: var(--faint); font-size: 0.85rem; }
+
+/* Chapter opening (nav chip + title) */
+.chapter-head {
+  margin: 0 0 2.5rem;
+  border-bottom: 0.5px solid var(--rule);
+  padding-bottom: 1rem;
+}
+.chapter-head .chapnum {
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.chapter-head h1 {
+  font-size: 1.75rem;
+  margin: 0.3rem 0 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Numbered headings, LaTeX-style.
+   Only chapter-body sections participate in numbering. */
+.chapter-body { counter-reset: h2; }
+.chapter-body h2 {
+  counter-increment: h2;
+  counter-reset: h3;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 2.5em 0 0.75em;
+}
+.chapter-body h2::before {
+  content: counter(chapter) "." counter(h2) "  ";
+}
+.chapter-body h3 {
+  counter-increment: h3;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 2em 0 0.5em;
+}
+.chapter-body h3::before {
+  content: counter(chapter) "." counter(h2) "." counter(h3) "  ";
+}
+
+/* Front matter (prefaci etc.) skips numbering */
+.front-body h2 { font-size: 1.25rem; font-weight: 700; margin: 2.5em 0 0.75em; }
+.front-body h3 { font-size: 1.1rem;  font-weight: 700; margin: 2em 0 0.5em; }
+
+/* Blockquotes */
+blockquote {
+  margin: 1.5em 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  border-left: 2px solid var(--rule);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Lists */
+ul, ol { padding-left: 1.8em; }
+li { margin-bottom: 0.3em; }
+li > p { text-indent: 0; margin: 0 0 0.4em; }
+
+/* Tables */
+table {
+  width: 100%;
+  margin: 1.5em 0;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+th, td {
+  padding: 0.5em 0.75em;
+  border-bottom: 0.5px solid var(--rule);
+  text-align: left;
+}
+th { font-weight: 700; border-bottom: 1px solid var(--body); }
+
+/* Code */
+code, pre, kbd, samp {
+  font-family: "Libertinus Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-feature-settings: normal;
+}
+code {
+  background: #eee8d5;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+pre {
+  background: #eee8d5;
+  padding: 1em 1.25em;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.45;
+  border-radius: 3px;
+  margin: 1.5em 0;
+}
+pre code { background: transparent; padding: 0; font-size: inherit; }
+
+/* Horizontal rule */
+hr { border: 0; border-top: 0.5px solid var(--rule); margin: 2em 0; }
+
+/* TOC on index */
+.toc { margin: 3rem 0; }
+.toc h2 {
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  font-variant: small-caps;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+}
+.toc ol { list-style: none; padding: 0; counter-reset: ch; }
+.toc ol li { counter-increment: ch; margin: 0.4em 0; display: flex; align-items: baseline; }
+.toc ol li::before {
+  content: counter(ch) ".";
+  min-width: 2.2em;
+  color: var(--muted);
+}
+.toc ol li a { flex: 1; text-decoration: none; color: var(--body); }
+.toc ol li a:hover { text-decoration: underline; }
+.toc .front { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.toc .front li { margin: 0.4em 0; padding-left: 2.2em; }
+.toc .front li a { text-decoration: none; color: var(--body); font-style: italic; }
+.toc .front li a:hover { text-decoration: underline; }
+
+/* Prev/next footer nav */
+.pager {
+  margin-top: 5rem;
+  padding-top: 1.5rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+.pager a { color: var(--muted); text-decoration: none; max-width: 45%; }
+.pager a:hover { color: var(--link); text-decoration: underline; }
+.pager .prev::before { content: "← "; }
+.pager .next::after  { content: " →"; }
+.pager .spacer { flex: 1; }

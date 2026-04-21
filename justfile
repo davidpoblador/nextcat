@@ -19,6 +19,11 @@ site: pdf
 serve: pdf
     uv run mkdocs serve
 
+# Build the HTML reader (standalone, LaTeX-styled) into public/
+book:
+    uv run python -m scripts.site
+    @echo "Open: file://$(pwd)/public/index.html"
+
 # Remove all generated files
 clean:
-    rm -rf build/ site/ book/index.md book/changelog.md book/contributing.md mkdocs.yml
+    rm -rf build/ site/ public/ book/index.md book/changelog.md book/contributing.md mkdocs.yml
