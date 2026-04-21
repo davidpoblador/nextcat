@@ -32,8 +32,6 @@ jobs:
 
       - uses: astral-sh/setup-uv@v7
 
-      - uses: typst-community/setup-typst@v5
-
       - uses: extractions/setup-just@v4
 
       - name: Build PDF

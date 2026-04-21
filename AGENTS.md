@@ -16,7 +16,7 @@ Foundational document for a Catalan software agency, built from Markdown sources
 
 ## Build pipeline
 
-`just pdf` runs `uv run python -m scripts.build` (generates `.typ` files in `build/`) then compiles them with `typst`. The intermediate `.typ` file is deleted after compilation. Output: `build/xarter-{version}.{lang}.pdf`.
+`just pdf` runs `uv run python -m scripts.build` (generates `.typ` files in `build/`) then compiles them with the `typst` Python binding (no `typst` CLI needed). Fonts are loaded from `fonts/` via `font_paths`. Each language emits two artifacts: `build/xarter-{version}.{lang}.pdf` (reader edition, no changelog) and `build/xarter-{version}.{lang}-full.pdf` (archival edition, with changelog appendix). Intermediate `.typ` files are deleted after compilation.
 
 `just site` builds the MkDocs website (`uv run mkdocs build`). The build script generates `mkdocs.yml` (from template + nav) and `book/index.md` (from chapters + strings).
 
@@ -38,7 +38,7 @@ Uses dunamai for git-aware versions: `0.1.3` on a tagged commit, `0.1.3.post2.de
 
 ## Dependencies
 
-All deps (typer, babel, dunamai, mkdocs-material) live in `[dependency-groups] dev` in pyproject.toml. `[project] dependencies` is empty. Install with `uv sync`.
+All deps (typer, babel, dunamai, mkdocs-material, typst) live in `[dependency-groups] dev` in pyproject.toml. `[project] dependencies` is empty. Install with `uv sync`. The `typst` Python package bundles the compiler, so no separate Typst install is required. Libertinus Serif OTFs in `fonts/` are checked into the repo and passed to the compiler via `font_paths`.
 
 ## CI/CD
 

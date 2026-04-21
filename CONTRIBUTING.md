@@ -5,8 +5,9 @@ Gràcies per l'interès en contribuir al xàrter. Aquesta guia explica com fer-h
 ## Requisits
 
 - [uv](https://docs.astral.sh/uv/) (gestor de paquets Python)
-- [typst](https://typst.app/) (compilador de documents)
 - [just](https://just.systems/) (executor de tasques)
+
+El compilador [Typst](https://typst.app/) s'instal-la automàticament com a paquet Python i les fonts Libertinus Serif viuen al directori `fonts/`, així que no cal cap instal-lació addicional.
 
 Instal-la les dependències:
 
