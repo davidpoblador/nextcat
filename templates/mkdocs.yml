@@ -9,6 +9,7 @@ repo_name: davidpoblador/nextcat
 
 theme:
   name: material
+  custom_dir: overrides
   language: ca
   palette:
     - scheme: default
