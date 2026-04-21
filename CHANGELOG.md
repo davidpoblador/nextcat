@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/davidpoblador/nextcat/compare/v0.0.2...v0.0.3) (2026-04-21)
+
+
+### CI/CD
+
+* pass --repo to gh when dispatching Pages deploy ([#56](https://github.com/davidpoblador/nextcat/issues/56)) ([d5d39fe](https://github.com/davidpoblador/nextcat/commit/d5d39fec2ac5ddd8e8adc419db5e6103892734dc))
+
 ## [0.0.2](https://github.com/davidpoblador/nextcat/compare/v0.0.1...v0.0.2) (2026-04-21)
 
 
