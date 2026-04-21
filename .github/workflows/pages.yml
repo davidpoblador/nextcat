@@ -1,8 +1,12 @@
 name: Deploy site
 
 on:
-  push:
+  # Run after the Release workflow finishes on main, so any tag that
+  # release-please creates is present when dunamai derives the version.
+  workflow_run:
+    workflows: ["Release"]
     branches: [main]
+    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -16,12 +20,14 @@ concurrency:
 
 jobs:
   build:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           fetch-tags: true
+          ref: main
 
       - uses: astral-sh/setup-uv@v7
 
