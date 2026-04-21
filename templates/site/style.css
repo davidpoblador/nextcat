@@ -38,7 +38,36 @@
   --rule: #bbb;
   --link: #2244aa;
   --bg: #fbfaf6;
+  --code-bg: var(--code-bg);
   --measure: 36rem;
+}
+
+/* Dark theme: explicitly set OR system dark while theme=system */
+html[data-theme="dark"],
+html[data-theme="system"]:where(:root) {
+  /* default for system = light; overridden below via media query */
+}
+html[data-theme="dark"] {
+  --body: #e8e4d8;
+  --muted: #b3ab94;
+  --light: #958e78;
+  --faint: #6a6552;
+  --rule: #3a372e;
+  --link: #9cb4ff;
+  --bg: #1c1b17;
+  --code-bg: #26251e;
+}
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] {
+    --body: #e8e4d8;
+    --muted: #b3ab94;
+    --light: #958e78;
+    --faint: #6a6552;
+    --rule: #3a372e;
+    --link: #9cb4ff;
+    --bg: #1c1b17;
+    --code-bg: #26251e;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -59,13 +88,104 @@ body {
   -webkit-hyphens: auto;
 }
 
+::selection {
+  background: color-mix(in srgb, var(--link) 28%, transparent);
+  color: var(--body);
+}
+
 main {
+  display: block;
   max-width: var(--measure);
-  margin: 4rem auto 6rem;
-  padding: 0 1.5rem;
+  margin: 3rem auto 6rem;
+  padding: 0 1.5rem 2.25rem;
+}
+
+main p,
+main li,
+main blockquote {
   text-align: justify;
   text-justify: inter-word;
 }
+
+/* Footer pinned to the viewport bottom */
+.pagefoot {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 10;
+  padding: 0.4rem 1.25rem;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(1.2) blur(8px);
+  -webkit-backdrop-filter: saturate(1.2) blur(8px);
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--light);
+  white-space: nowrap;
+}
+.pagefoot a { color: var(--light); text-decoration: none; }
+.pagefoot a:hover { color: var(--link); text-decoration: underline; }
+
+/* Header */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(1.2) blur(8px);
+  -webkit-backdrop-filter: saturate(1.2) blur(8px);
+  border-bottom: 0.5px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
+}
+.topbar .brand {
+  color: var(--muted);
+  text-decoration: none;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+}
+.topbar .brand:hover { color: var(--body); }
+
+.tools { display: inline-flex; gap: 0.15rem; align-items: center; }
+
+.icon-btn {
+  background: none;
+  border: 0;
+  padding: 0.35rem;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: color 0.15s, background-color 0.15s;
+}
+.icon-btn:hover {
+  color: var(--body);
+  background: color-mix(in srgb, var(--body) 8%, transparent);
+}
+.icon-btn .icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linejoin: round;
+}
+.icon-btn .icon-solid {
+  fill: currentColor;
+  stroke: none;
+}
+.theme-toggle .icon { display: none; }
+html[data-theme="light"]  .theme-toggle .icon-sun    { display: block; }
+html[data-theme="dark"]   .theme-toggle .icon-moon   { display: block; }
+html[data-theme="system"] .theme-toggle .icon-system { display: block; }
 
 p { margin: 0 0 1em; text-indent: 1.5em; }
 p:first-of-type, h1 + p, h2 + p, h3 + p, blockquote > p:first-child { text-indent: 0; }
@@ -87,8 +207,15 @@ a:hover { text-decoration-thickness: 2px; }
   font-style: italic;
   margin: 0;
 }
+.cover p { margin: 0; text-indent: 0; text-align: center; }
 .cover .author { margin-top: 2.5rem; color: var(--muted); }
-.cover .meta { margin-top: 0.3rem; color: var(--faint); font-size: 0.85rem; }
+.cover .meta { margin-top: 0.2rem; color: var(--faint); font-size: 0.85rem; }
+
+/* Colophon: plain metadata block, no first-line indent */
+.colophon { margin-top: 1.5em; }
+.colophon p { text-indent: 0; margin: 0 0 0.8em; }
+.colophon .colophon-text { color: var(--muted); margin-bottom: 1.5em; }
+.colophon .colophon-license { color: var(--faint); font-size: 0.85rem; margin-top: 1.5em; }
 
 /* Chapter opening (nav chip + title) */
 .chapter-head {
@@ -170,13 +297,13 @@ code, pre, kbd, samp {
   font-feature-settings: normal;
 }
 code {
-  background: #eee8d5;
+  background: var(--code-bg);
   padding: 0.1em 0.3em;
   border-radius: 3px;
   font-size: 0.9em;
 }
 pre {
-  background: #eee8d5;
+  background: var(--code-bg);
   padding: 1em 1.25em;
   overflow-x: auto;
   font-size: 0.85em;
@@ -199,32 +326,89 @@ hr { border: 0; border-top: 0.5px solid var(--rule); margin: 2em 0; }
   font-weight: 700;
   margin: 0 0 1.5rem;
 }
-.toc ol { list-style: none; padding: 0; counter-reset: ch; }
-.toc ol li { counter-increment: ch; margin: 0.4em 0; display: flex; align-items: baseline; }
-.toc ol li::before {
+.toc ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: ch -1 letters 0;
+}
+.toc ol > li {
+  margin: 0.4em 0;
+  display: flex;
+  align-items: baseline;
+}
+.toc ol > li a { flex: 1; text-decoration: none; color: var(--body); }
+.toc ol > li a:hover { text-decoration: underline; }
+
+/* Numbered chapter rows (default) */
+.toc ol > li:not(.annex-heading):not(.annex-item) {
+  counter-increment: ch;
+}
+.toc ol > li:not(.annex-heading):not(.annex-item)::before {
   content: counter(ch) ".";
   min-width: 2.2em;
   color: var(--muted);
 }
-.toc ol li a { flex: 1; text-decoration: none; color: var(--body); }
-.toc ol li a:hover { text-decoration: underline; }
-.toc .front { list-style: none; padding: 0; margin: 0 0 1.5rem; }
-.toc .front li { margin: 0.4em 0; padding-left: 2.2em; }
-.toc .front li a { text-decoration: none; color: var(--body); font-style: italic; }
-.toc .front li a:hover { text-decoration: underline; }
 
-/* Prev/next footer nav */
-.pager {
-  margin-top: 5rem;
-  padding-top: 1.5rem;
-  border-top: 0.5px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: 0.9rem;
+/* Annex & Colofó headings: unnumbered, muted, spaced from the previous row */
+.toc ol > li.annex-heading {
+  margin-top: 1.2em;
+  color: var(--muted);
 }
-.pager a { color: var(--muted); text-decoration: none; max-width: 45%; }
-.pager a:hover { color: var(--link); text-decoration: underline; }
-.pager .prev::before { content: "← "; }
-.pager .next::after  { content: " →"; }
-.pager .spacer { flex: 1; }
+.toc ol > li.annex-heading::before {
+  content: "";
+  min-width: 2.2em;
+}
+.toc ol > li.annex-heading a { color: var(--body); }
+
+/* Annex items: letter-numbered (A, B, C, …), indented under the Annex label */
+.toc ol > li.annex-item {
+  counter-increment: letters;
+  margin: 0.15em 0;
+  padding-left: 2.2em;
+}
+.toc ol > li.annex-item::before {
+  content: counter(letters, upper-alpha) ".";
+  min-width: 2.2em;
+  color: var(--muted);
+}
+.toc ol > li.annex-heading + .annex-item { margin-top: 0.3em; }
+
+/* Prev/next nav at the bottom of every chapter */
+.pager {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  gap: 2rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.pager > a {
+  color: var(--muted);
+  text-decoration: none;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  width: 100%;
+}
+.pager > a:hover { color: var(--link); }
+.pager > a:hover .label { text-decoration: underline; }
+.pager > a:hover .arrow { color: var(--faint); }
+.pager .prev     { justify-content: flex-start; }
+.pager .next     { justify-content: flex-end; text-align: right; }
+.pager .toc-link { justify-self: center; width: auto; font-variant: small-caps; letter-spacing: 0.08em; font-size: 0.8rem; }
+.pager .label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+}
+.pager .arrow {
+  flex: 0 0 auto;
+  color: var(--faint);
+  pointer-events: none;
+}

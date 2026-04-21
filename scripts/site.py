@@ -19,7 +19,9 @@ from scripts.generate import (
     ROOT,
     chapter_title,
     cover_date,
+    generation_date,
     get_version,
+    last_modified_date,
     load_toml,
     resolve_chapters,
 )
@@ -93,6 +95,11 @@ def build() -> None:
     for otf in FONTS_DIR.glob("*.otf"):
         shutil.copy(otf, public_fonts / otf.name)
 
+    # GitHub Pages custom domain
+    cname_src = CANONICAL_DIR / "CNAME"
+    if cname_src.exists():
+        shutil.copy(cname_src, PUBLIC_DIR / "CNAME")
+
     # Build page list
     front_pages: list[Page] = [
         Page(href=f"{_slug(p)}.html", title=chapter_title(p), source=p)
@@ -103,7 +110,7 @@ def build() -> None:
         for i, p in enumerate(chapter_files)
     ]
 
-    # Synthetic appendix pages (license, authors, changelog)
+    # Appendix pages (order matches the PDF annex)
     appendix_pages: list[Page] = []
     license_file = CANONICAL_DIR / "license.md"
     if license_file.exists():
@@ -123,6 +130,14 @@ def build() -> None:
                 source=about_file,
             )
         )
+    if appendix_strings.get("contributing_title") and appendix_strings.get("contributing_text"):
+        appendix_pages.append(
+            Page(
+                href="contributing-notes.html",
+                title=appendix_strings["contributing_title"],
+                source=None,
+            )
+        )
     if AUTHORS_FILE.exists():
         appendix_pages.append(
             Page(
@@ -140,16 +155,34 @@ def build() -> None:
             )
         )
 
-    all_pages = front_pages + chapter_pages + appendix_pages
+    # Colophon: annex-level row after all appendix items
+    colophon_strings = strings.get("colophon", {})
+    colophon_page = Page(
+        href="colophon.html",
+        title=colophon_strings.get("title", "Colofó"),
+        source=None,
+    )
+
+    all_pages = front_pages + chapter_pages + appendix_pages + [colophon_page]
 
     def neighbours(idx: int) -> tuple[Page | None, Page | None]:
         prev_p = all_pages[idx - 1] if idx > 0 else None
         next_p = all_pages[idx + 1] if idx + 1 < len(all_pages) else None
         return prev_p, next_p
 
+    repo_url = config["document"]["repo"].rstrip("/")
+    pdf_url = f"{repo_url}/releases/latest/download/nextcat.{lang}.pdf"
+    common_ctx = {
+        "lang": lang,
+        "site_title": doc["title"],
+        "repo_url": repo_url,
+        "pdf_url": pdf_url,
+        "assets": "",
+    }
+
     # Index
     index_html = env.get_template("index.html").render(
-        lang=lang,
+        **common_ctx,
         page_title=doc["title"],
         title=doc["title"],
         subtitle=doc["subtitle"],
@@ -158,10 +191,11 @@ def build() -> None:
         version_label=title_page.get("version_label", "Versió"),
         cover_date=cover_date(lang),
         toc_title=toc_strings["title"],
+        appendix_title=appendix_strings.get("title", "Annex"),
         front_matter=[{"href": p.href, "title": p.title} for p in front_pages],
         chapters=[{"href": p.href, "title": p.title} for p in chapter_pages],
         appendix=[{"href": p.href, "title": p.title} for p in appendix_pages],
-        assets="",
+        colophon={"href": colophon_page.href, "title": colophon_page.title},
     )
     (PUBLIC_DIR / "index.html").write_text(index_html)
     console.print(f"  [dim]→[/dim] public/index.html")
@@ -170,13 +204,26 @@ def build() -> None:
     chapter_template = env.get_template("chapter.html")
     for idx, page in enumerate(all_pages):
         prev_p, next_p = neighbours(idx)
-        if page.source is not None and page.source.suffix == ".md":
+        if page.href == "changelog.html":
+            intro = changelog_strings.get("intro", "")
+            body = _render_markdown(CHANGELOG_FILE.read_text())
+            body_html = (f'<p class="lede">{intro}</p>\n' if intro else "") + body
+        elif page.href == "contributing-notes.html":
+            raw = appendix_strings["contributing_text"].format(repo=repo_url)
+            body_html = _render_markdown(raw, strip_leading_h1=False)
+        elif page.href == "contributors.html":
+            body_html = _synthetic_body(page)
+        elif page.href == "colophon.html":
+            body_html = _render_colophon(
+                config, version, strings, last_modified_date(chapter_files + front_matter_files + [CONFIG_FILE])
+            )
+        elif page.source is not None and page.source.suffix == ".md":
             body_html = _render_markdown(page.source.read_text())
         else:
-            body_html = _synthetic_body(page, changelog_strings)
+            body_html = ""
 
         html = chapter_template.render(
-            lang=lang,
+            **common_ctx,
             page_title=f"{page.title} — {doc['title']}",
             title=page.title,
             chapter_number=page.number,
@@ -186,7 +233,6 @@ def build() -> None:
             prev={"href": prev_p.href, "title": prev_p.title} if prev_p else None,
             next={"href": next_p.href, "title": next_p.title} if next_p else None,
             toc_title=toc_strings["title"],
-            assets="",
         )
         (PUBLIC_DIR / page.href).write_text(html)
         console.print(f"  [dim]→[/dim] public/{page.href}")
@@ -194,28 +240,44 @@ def build() -> None:
     console.print(f"\n[green bold]Done.[/green bold] Open [cyan]file://{PUBLIC_DIR}/index.html[/cyan]")
 
 
-def _synthetic_body(page: Page, changelog_strings: dict) -> str:
-    """Render pages that aren't plain markdown (contributors list, changelog)."""
+def _synthetic_body(page: Page) -> str:
+    """Render the contributors list from AUTHORS."""
     if page.href == "contributors.html":
         items = []
-        import re as _re
         for line in AUTHORS_FILE.read_text().splitlines():
             line = line.strip()
             if not line:
                 continue
-            m = _re.match(r"^(.+?)\s+<(.+?)>\s*$", line)
+            m = re.match(r"^(.+?)\s+<(.+?)>\s*$", line)
             if m:
                 items.append(f'<li><a href="{m.group(2)}">{m.group(1)}</a></li>')
             else:
                 items.append(f"<li>{line}</li>")
         return "<ul>\n" + "\n".join(items) + "\n</ul>"
-
-    if page.href == "changelog.html":
-        intro = changelog_strings.get("intro", "")
-        body = _render_markdown(CHANGELOG_FILE.read_text())
-        return (f"<p>{intro}</p>\n" if intro else "") + body
-
     return ""
+
+
+def _render_colophon(config: dict, version: str, strings: dict, modified_text: str) -> str:
+    """Render the colophon: muted intro + version, dates, URLs (matches the PDF)."""
+    doc = config["document"]
+    colophon = strings.get("colophon", {})
+    title_page = strings["title_page"]
+    version_label = title_page.get("version_label", "Versió")
+    modified_label = title_page["modified"]
+    generated_label = title_page["generated"]
+    text = colophon.get("text", "")
+    return (
+        f'<div class="colophon">\n'
+        f'  <p class="colophon-text">{text}</p>\n'
+        f'  <p>{version_label}: {version}</p>\n'
+        f'  <p>{modified_label}: {modified_text}<br>\n'
+        f'  {generated_label}: {generation_date()}</p>\n'
+        f'  <p><a href="{doc["url"]}">{doc["url"]}</a><br>\n'
+        f'  <a href="mailto:{doc["email"]}">{doc["email"]}</a></p>\n'
+        f'  <p><a href="{doc["repo"]}">{doc["repo"]}</a></p>\n'
+        f'  <p class="colophon-license">CC BY-SA 4.0</p>\n'
+        f'</div>\n'
+    )
 
 
 if __name__ == "__main__":

@@ -50,4 +50,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Stable alias per language for the reader edition so the site
+          # header can link to /releases/latest/download/nextcat.{lang}.pdf.
+          for f in build/nextcat-*.pdf; do
+            base=$(basename "$f")
+            case "$base" in
+              *-full.pdf) ;;  # archival edition keeps its versioned name only
+              *)
+                lang=$(echo "$base" | sed -E 's/^nextcat-.+\.([^.]+)\.pdf$/\1/')
+                cp "$f" "build/nextcat.${lang}.pdf"
+                ;;
+            esac
+          done
           gh release upload "${{ needs.release-please.outputs.tag_name }}" build/*.pdf

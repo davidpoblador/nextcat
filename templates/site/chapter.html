@@ -10,10 +10,8 @@
 </div>
 
 <nav class="pager">
-  {% if prev %}<a class="prev" href="{{ prev.href }}">{{ prev.title }}</a>{% else %}<span></span>{% endif %}
-  <span class="spacer"></span>
-  <a href="index.html">{{ toc_title }}</a>
-  <span class="spacer"></span>
-  {% if next %}<a class="next" href="{{ next.href }}">{{ next.title }}</a>{% else %}<span></span>{% endif %}
+  {% if prev %}<a class="prev" href="{{ prev.href }}" title="{{ prev.title }}"><span class="arrow">←</span><span class="label">{{ prev.title }}</span></a>{% else %}<span></span>{% endif %}
+  <a class="toc-link" href="index.html">{{ toc_title }}</a>
+  {% if next %}<a class="next" href="{{ next.href }}" title="{{ next.title }}"><span class="label">{{ next.title }}</span><span class="arrow">→</span></a>{% else %}<span></span>{% endif %}
 </nav>
 {% endblock %}

@@ -8,27 +8,23 @@
 </div>
 
 <div class="toc">
-  {% if front_matter %}
-  <ul class="front">
+  <h2>{{ toc_title }}</h2>
+  <ol>
     {% for item in front_matter %}
     <li><a href="{{ item.href }}">{{ item.title }}</a></li>
     {% endfor %}
-  </ul>
-  {% endif %}
-
-  <h2>{{ toc_title }}</h2>
-  <ol>
     {% for item in chapters %}
     <li><a href="{{ item.href }}">{{ item.title }}</a></li>
     {% endfor %}
-  </ol>
-
-  {% if appendix %}
-  <ul class="front">
+    {% if appendix %}
+    <li class="annex-heading"><span>{{ appendix_title }}</span></li>
     {% for item in appendix %}
-    <li><a href="{{ item.href }}">{{ item.title }}</a></li>
+    <li class="annex-item"><a href="{{ item.href }}">{{ item.title }}</a></li>
     {% endfor %}
-  </ul>
-  {% endif %}
+    {% endif %}
+    {% if colophon %}
+    <li class="annex-heading"><a href="{{ colophon.href }}">{{ colophon.title }}</a></li>
+    {% endif %}
+  </ol>
 </div>
 {% endblock %}
