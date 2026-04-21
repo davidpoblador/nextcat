@@ -2,7 +2,7 @@
 
 ## Sobre aquest document
 
-Aquest document és uns apunts per a una estratègia digital de Catalunya. No pretén ser l'estratègia del país ni un pla de govern exhaustiu: és una proposta concreta —una entre les que poden i han d'existir— adreçada a responsables de política i administració pública que volen entendre el moment en què estem, on som com a país i quines decisions preses ara tindran un impacte decisiu en les properes dècades. El títol és deliberadament modest perquè el document s'ofereix com a punt de partida per al debat, no com a conclusió.
+Aquest document és un recull d'apunts per a una estratègia digital de Catalunya. No pretén ser l'estratègia del país ni un pla de govern exhaustiu: és una proposta concreta —una entre les que poden i haurien d'existir— adreçada a responsables de política i administració pública que volen entendre el moment en què estem, on som com a país i quines decisions preses ara tindran un impacte decisiu en les properes dècades. El títol és deliberadament modest: el document s'ofereix com a punt de partida per al debat, no com a conclusió.
 
 Escrivim des de la convicció que Catalunya té tots els ingredients per convertir-se en un referent europeu de transformació digital: talent de primer nivell, infraestructura de recerca de classe mundial, una llengua pròpia amb identitat forta i un ecosistema emprenedor en plena ebullició. El que li falta no és capacitat: és voluntat política i una estratègia clara.
 
