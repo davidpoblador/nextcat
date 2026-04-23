@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.2](https://github.com/davidpoblador/nextcat/compare/v0.0.1...v0.0.2) (2026-04-23)
+
+
+### Features
+
+* add EPUB builder, chapter openings, site download menu ([#71](https://github.com/davidpoblador/nextcat/issues/71)) ([785495a](https://github.com/davidpoblador/nextcat/commit/785495a584feee49d26d78309f98872ef173727c))
+* redesign TOC as a minimal numbered list ([#70](https://github.com/davidpoblador/nextcat/issues/70)) ([184ba74](https://github.com/davidpoblador/nextcat/commit/184ba749feff06080a2edb06710e5efeb2595f13))
+
+
+### Miscellaneous Chores
+
+* **deps:** update astral-sh/setup-uv action to v8 ([#67](https://github.com/davidpoblador/nextcat/issues/67)) ([1b15552](https://github.com/davidpoblador/nextcat/commit/1b155527a292b7be4c7c99f5cf757ad018644270))
+* **deps:** update googleapis/release-please-action action to v5 ([#69](https://github.com/davidpoblador/nextcat/issues/69)) ([573e722](https://github.com/davidpoblador/nextcat/commit/573e722be716765dc6f0888f92ccf0e05bf079a1))
+
 ## [0.0.1](https://github.com/davidpoblador/nextcat/compare/v0.0.0...v0.0.1) (2026-04-21)
 
 
