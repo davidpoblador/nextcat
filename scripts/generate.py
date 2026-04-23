@@ -172,7 +172,7 @@ def build_typst(
 
     parts: list[str] = [
         '#import "@preview/cmarker:0.1.8": render',
-        '#import "../templates/template.typ": project',
+        '#import "../templates/template.typ": project, plain-links',
         "",
         "#show: project.with(",
         _typst_param("title", doc_strings["title"]),
@@ -197,8 +197,8 @@ def build_typst(
 
     toc_title = escape_typst(toc["title"])
     parts.append("// TOC (custom layout: numbered rows for chapters, lettered rows for annex)")
+    parts.append("#plain-links.update(true)")
     parts.append("#page(numbering: none)[")
-    parts.append("  #show link: it => it.body")
     parts.append("  #v(1.5cm)")
     parts.append("  #align(center)[")
     parts.append(
@@ -267,6 +267,7 @@ def build_typst(
     parts.append("    }")
     parts.append("  }")
     parts.append("]")
+    parts.append("#plain-links.update(false)")
     parts.append("")
     parts.append('#set page(numbering: "1", number-align: center)')
     parts.append("#counter(page).update(1)")

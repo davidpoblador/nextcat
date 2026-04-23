@@ -18,6 +18,10 @@
 #let size-colophon = 10pt
 #let size-meta = 8pt
 
+// When true, link show rule renders plain (body color, no underline)
+// while keeping the link clickable. Used on the TOC page.
+#let plain-links = state("plain-links", false)
+
 #let project(
   title: "",
   subtitle: "",
@@ -42,8 +46,10 @@
   set text(font: font-body, size: font-size, lang: lang)
   set par(justify: true, leading: 0.65em)
 
-  // Link styling
-  show link: it => underline(text(fill: color-link, it))
+  // Link styling (plain-links state bypasses styling but keeps clickability)
+  show link: it => context {
+    if plain-links.get() { it } else { underline(text(fill: color-link, it)) }
+  }
 
   // Cover
   // Stick short function words (de, a, i, la, el, als...) to the
