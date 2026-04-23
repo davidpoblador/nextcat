@@ -195,6 +195,83 @@ def build_typst(
         "",
     ]
 
+    toc_title = escape_typst(toc["title"])
+    parts.append("// TOC (custom layout: numbered rows for chapters, lettered rows for annex)")
+    parts.append("#page(numbering: none)[")
+    parts.append("  #show link: it => it.body")
+    parts.append("  #v(1.5cm)")
+    parts.append("  #align(center)[")
+    parts.append(
+        f'    #text(size: 20pt, weight: "bold", tracking: 0.12em, hyphenate: false)[#smallcaps([{toc_title}])]'
+    )
+    parts.append("  ]")
+    parts.append("  #v(2.5em)")
+    parts.append("  #context {")
+    parts.append("    let fm = query(heading.where(level: 2).before(<tg-main-start>))")
+    parts.append(
+        "    let chs = query(heading.where(level: 1).after(<tg-main-start>).before(<tg-annex-start>))"
+    )
+    parts.append(
+        "    let annex = query(heading.where(level: 1).after(<tg-annex-start>).before(<tg-colo-start>))"
+    )
+    parts.append(
+        "    let subs = query(heading.where(level: 2).after(<tg-annex-start>).before(<tg-colo-start>))"
+    )
+    parts.append("    let colo = query(heading.where(level: 1).after(<tg-colo-start>))")
+    parts.append("")
+    parts.append('    let num(s) = text(fill: rgb("#555"))[#s]')
+    parts.append("    let row(n, body, loc) = (num(n), link(loc)[#body])")
+    parts.append("")
+    parts.append("    let rows = ()")
+    parts.append("    let i = 0")
+    parts.append("    for h in fm {")
+    parts.append('      rows += row(str(i) + ".", h.body, h.location())')
+    parts.append("      i += 1")
+    parts.append("    }")
+    parts.append("    for h in chs {")
+    parts.append('      rows += row(str(i) + ".", h.body, h.location())')
+    parts.append("      i += 1")
+    parts.append("    }")
+    parts.append("")
+    parts.append("    grid(")
+    parts.append("      columns: (2.5em, 1fr),")
+    parts.append("      column-gutter: 0.4em,")
+    parts.append("      row-gutter: 1em,")
+    parts.append("      ..rows,")
+    parts.append("    )")
+    parts.append("")
+    parts.append("    if annex.len() > 0 {")
+    parts.append("      v(1.6em)")
+    parts.append(
+        '      link(annex.at(0).location())[#text(fill: rgb("#777"))[#annex.at(0).body]]'
+    )
+    parts.append("      v(1em)")
+    parts.append("")
+    parts.append("      let sub-rows = ()")
+    parts.append("      let j = 1")
+    parts.append("      for h in subs {")
+    parts.append('        sub-rows += row(numbering("A.", j), h.body, h.location())')
+    parts.append("        j += 1")
+    parts.append("      }")
+    parts.append("      grid(")
+    parts.append("        columns: (2.5em, 1fr),")
+    parts.append("        column-gutter: 0.4em,")
+    parts.append("        row-gutter: 1em,")
+    parts.append("        ..sub-rows,")
+    parts.append("      )")
+    parts.append("    }")
+    parts.append("")
+    parts.append("    if colo.len() > 0 {")
+    parts.append("      v(1.6em)")
+    parts.append("      link(colo.at(0).location())[#colo.at(0).body]")
+    parts.append("    }")
+    parts.append("  }")
+    parts.append("]")
+    parts.append("")
+    parts.append('#set page(numbering: "1", number-align: center)')
+    parts.append("#counter(page).update(1)")
+    parts.append("")
+
     if front_matter:
         parts.append("// Front matter (unnumbered)")
         parts.append("#{ set heading(numbering: none, outlined: false)")
@@ -204,10 +281,7 @@ def build_typst(
         parts.append("}")
         parts.append("")
 
-    toc_title = escape_typst(toc["title"])
-    parts.append(f'#outline(title: "{toc_title}", depth: 2, indent: 1.5em)')
-    parts.append("")
-    parts.append('#set page(numbering: "1", number-align: center)')
+    parts.append("#[#metadata(none) <tg-main-start>]")
     parts.append("")
 
     for chapter_file in chapter_files:
@@ -219,10 +293,15 @@ def build_typst(
     # Appendix
     appendix = strings.get("appendix", {})
     appendix_title = escape_typst(appendix.get("title", "Annex"))
-    parts.append(f'#{{ set heading(numbering: "A.1.")')
-    parts.append(f'   counter(heading).update(0)')
+    parts.append("#[#metadata(none) <tg-annex-start>]")
+    parts.append("#{ set heading(numbering: (..nums) => {")
+    parts.append("     let n = nums.pos()")
+    parts.append('     if n.len() == 1 { return [] }')
+    parts.append('     numbering("A.1.", ..n.slice(1))')
+    parts.append("   })")
+    parts.append("   counter(heading).update(0)")
     license_title = escape_typst(appendix.get("license_title", "Llicència"))
-    parts.append(f'   heading(level: 1)[{appendix_title}]')
+    parts.append(f'   heading(level: 1, numbering: none)[{appendix_title}]')
     parts.append(f'   heading(level: 2)[{license_title}]')
     license_file = content_dir / "license.md"
     license_path = f"../{license_file.relative_to(ROOT)}" if license_file.exists() else "../LICENSE"
@@ -291,6 +370,7 @@ def build_typst(
     colophon_text = escape_typst(colophon["text"])
     version_label = escape_typst(title_page.get("version_label", "Versió"))
     parts.append("#pagebreak()")
+    parts.append("#[#metadata(none) <tg-colo-start>]")
     parts.append("#v(1fr)")
     parts.append("#align(center)[")
     parts.append("#{ set heading(numbering: none)")
