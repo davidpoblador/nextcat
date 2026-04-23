@@ -371,18 +371,17 @@ hr { border: 0; border-top: 0.5px solid var(--rule); margin: 2em 0; }
 }
 .toc ol > li.annex-heading a { color: var(--body); }
 
-/* Annex items: letter-numbered (A, B, C, …), indented under the Annex label */
+/* Annex items: letter-numbered (A, B, C, …), aligned with main chapter rows */
 .toc ol > li.annex-item {
   counter-increment: letters;
-  margin: 0.15em 0;
-  padding-left: 2.2em;
+  margin: 0.4em 0;
 }
 .toc ol > li.annex-item::before {
   content: counter(letters, upper-alpha) ".";
   min-width: 2.2em;
   color: var(--muted);
 }
-.toc ol > li.annex-heading + .annex-item { margin-top: 0.3em; }
+.toc ol > li.annex-heading + .annex-item { margin-top: 0.6em; }
 
 /* Prev/next nav at the bottom of every chapter */
 .pager {

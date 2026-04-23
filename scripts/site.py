@@ -42,6 +42,7 @@ class Page:
     source: Path | None
     number: int | None = None
     kind: str | None = None
+    letter: str | None = None  # "A", "B", ... for appendix subsections
 
 
 _LEADING_H1 = re.compile(r"\A\s*#\s+[^\n]+\n+", re.MULTILINE)
@@ -143,7 +144,13 @@ def build() -> None:
         appendix_specs.append(("changelog", CHANGELOG_FILE, changelog_strings.get("title", "Registre de canvis")))
 
     appendix_pages: list[Page] = [
-        Page(href=f"/annex{i}", title=title, source=source, kind=kind)
+        Page(
+            href=f"/annex{i}",
+            title=title,
+            source=source,
+            kind=kind,
+            letter=chr(ord("A") + i - 1),
+        )
         for i, (kind, source, title) in enumerate(appendix_specs, start=1)
     ]
 
@@ -212,16 +219,23 @@ def build() -> None:
         else:
             body_html = ""
 
+        display_title = f"{page.letter}. {page.title}" if page.letter else page.title
+        prev_display = (
+            f"{prev_p.letter}. {prev_p.title}" if prev_p and prev_p.letter else (prev_p.title if prev_p else None)
+        )
+        next_display = (
+            f"{next_p.letter}. {next_p.title}" if next_p and next_p.letter else (next_p.title if next_p else None)
+        )
         html = chapter_template.render(
             **common_ctx,
-            page_title=f"{page.title} — {doc['title']}",
-            title=page.title,
+            page_title=f"{display_title} — {doc['title']}",
+            title=display_title,
             chapter_number=page.number,
             chapter_label=chapter_label,
             body_html=body_html,
             body_class="chapter-body" if page.number else "front-body",
-            prev={"href": prev_p.href, "title": prev_p.title} if prev_p else None,
-            next={"href": next_p.href, "title": next_p.title} if next_p else None,
+            prev={"href": prev_p.href, "title": prev_display} if prev_p else None,
+            next={"href": next_p.href, "title": next_display} if next_p else None,
             toc_title=toc_strings["title"],
         )
         _write_page(page.href.lstrip("/"), html)
