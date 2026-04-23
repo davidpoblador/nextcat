@@ -18,9 +18,19 @@
 <header class="topbar">
   <a class="brand" href="/">{{ site_title }}</a>
   <div class="tools">
-    <a class="icon-btn" href="{{ pdf_url }}" title="Descarregar l'última versió en PDF" aria-label="Descarregar l'última versió en PDF">
-      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><title>Descarregar l'última versió en PDF</title><path d="M12 3v12" stroke-linecap="round"/><path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke-linecap="round"/></svg>
+    <a class="icon-btn" href="{{ pdf_url }}" title="{{ pdf_tooltip }}" aria-label="{{ pdf_tooltip }}">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><title>{{ pdf_tooltip }}</title><path d="M12 3v12" stroke-linecap="round"/><path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke-linecap="round"/></svg>
     </a>
+    <div class="download-menu">
+      <button id="download-menu-button" class="icon-btn download-menu-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="download-menu-list" title="{{ download_menu.tooltip }}" aria-label="{{ download_menu.tooltip }}">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><title>{{ download_menu.tooltip }}</title><path d="M12 3v12" stroke-linecap="round"/><path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke-linecap="round"/><path d="M17 6l3 3" stroke-linecap="round"/></svg>
+      </button>
+      <ul id="download-menu-list" class="download-menu-list" role="menu" aria-labelledby="download-menu-button" hidden>
+        {% for item in download_menu.entries %}
+        <li role="none"><a role="menuitem" href="{{ item.href }}">{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
     <a class="icon-btn" href="{{ repo_url }}" title="Veure el codi a GitHub" aria-label="Veure el codi a GitHub">
       <svg class="icon icon-solid" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><title>Veure el codi a GitHub</title><path d="M12 .5a11.5 11.5 0 0 0-3.63 22.41c.57.11.78-.25.78-.56v-2c-3.19.69-3.86-1.37-3.86-1.37-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.14.08 1.75 1.17 1.75 1.17 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.27-5.23-5.66 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.15 1.17a10.94 10.94 0 0 1 5.73 0c2.18-1.48 3.14-1.17 3.14-1.17.62 1.57.23 2.73.11 3.02.73.8 1.17 1.82 1.17 3.07 0 4.4-2.69 5.37-5.25 5.65.41.35.77 1.04.77 2.1v3.11c0 .31.21.67.79.56A11.5 11.5 0 0 0 12 .5z"/></svg>
     </a>
@@ -62,6 +72,38 @@
       var current = root.getAttribute("data-theme") || "system";
       var next = order[(order.indexOf(current) + 1) % order.length];
       apply(next);
+    });
+  })();
+</script>
+<script>
+  (function () {
+    var trigger = document.getElementById("download-menu-button");
+    var menu = document.getElementById("download-menu-list");
+    if (!trigger || !menu) return;
+    function close() {
+      menu.hidden = true;
+      trigger.setAttribute("aria-expanded", "false");
+      document.removeEventListener("click", onDocClick, true);
+      document.removeEventListener("keydown", onKey);
+    }
+    function open() {
+      menu.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+      document.addEventListener("click", onDocClick, true);
+      document.addEventListener("keydown", onKey);
+    }
+    function onDocClick(e) {
+      if (!menu.contains(e.target) && e.target !== trigger && !trigger.contains(e.target)) close();
+    }
+    function onKey(e) {
+      if (e.key === "Escape") { close(); trigger.focus(); }
+    }
+    trigger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (menu.hidden) open(); else close();
+    });
+    menu.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") close();
     });
   })();
 </script>

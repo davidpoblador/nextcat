@@ -1,0 +1,230 @@
+/* ABOUTME: Stylesheet for the NextCat EPUB edition.
+   ABOUTME: Libertinus Serif body, justified prose, chapter/annex/colophon layout. */
+
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../fonts/LibertinusSerif-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../fonts/LibertinusSerif-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../fonts/LibertinusSerif-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Libertinus Serif";
+  src: url("../fonts/LibertinusSerif-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+body {
+  font-family: "Libertinus Serif", "Linux Libertine", "Times New Roman", serif;
+  line-height: 1.55;
+  margin: 0;
+  padding: 0 1em;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -epub-hyphens: auto;
+}
+
+p {
+  margin: 0 0 1em;
+  text-indent: 1.5em;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+p:first-of-type,
+h1 + p,
+h2 + p,
+h3 + p,
+blockquote > p:first-child,
+li > p,
+.colophon p,
+.cover p {
+  text-indent: 0;
+}
+
+a { color: inherit; text-decoration: underline; }
+
+/* Cover / title page */
+.cover {
+  text-align: center;
+  margin: 4em 0 2em;
+  page-break-after: always;
+}
+.cover h1 {
+  font-size: 2em;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+  hyphens: none;
+}
+.cover .subtitle {
+  font-size: 1.2em;
+  font-style: italic;
+  margin: 0;
+  hyphens: none;
+}
+.cover .author { margin-top: 2em; }
+.cover .cover-date { margin-top: 0.3em; font-size: 0.95em; color: #555; }
+.cover .cover-version { margin-top: 0.2em; font-size: 0.8em; color: #999; }
+
+/* Imprint / metadata page (mirrors PDF's verso before the TOC) */
+.imprint {
+  margin: 4em 0 2em;
+  text-align: right;
+  page-break-after: always;
+}
+.imprint p { text-indent: 0; margin: 0 0 0.8em; }
+.imprint .imprint-title { margin-bottom: 1.5em; }
+.imprint .imprint-subtitle { color: #555; }
+.imprint .imprint-license { color: #999; font-size: 0.85em; margin-top: 1.5em; }
+
+.chapter-head {
+  margin: 0 0 2em;
+  border-bottom: 0.5px solid #bbb;
+  padding-bottom: 0.8em;
+  page-break-after: avoid;
+}
+.chapter-head .chapnum {
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  font-size: 0.85em;
+  color: #555;
+}
+.chapter-head h1 {
+  font-size: 1.6em;
+  margin: 0.3em 0 0;
+  font-weight: 700;
+  line-height: 1.2;
+  hyphens: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  -webkit-column-break-after: avoid;
+  adobe-hyphenate: none;
+  orphans: 3;
+  widows: 3;
+}
+
+.chapter-body h2,
+.front-body h2,
+.annex-body h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 2em 0 0.6em;
+  page-break-before: auto;
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.chapter-body h3,
+.front-body h3,
+.annex-body h3 {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin: 1.6em 0 0.4em;
+  page-break-after: avoid;
+  break-after: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Keep the first paragraph after a heading attached to it — this is what
+   actually prevents orphaned section titles at the foot of a page in most
+   e-readers, since `page-break-after: avoid` alone is widely ignored. */
+h2 + p, h3 + p, h4 + p,
+h2 + ul, h3 + ul, h2 + ol, h3 + ol {
+  page-break-before: avoid;
+  break-before: avoid;
+}
+
+p, li, blockquote { orphans: 2; widows: 2; }
+
+/* Blockquotes */
+blockquote {
+  margin: 1.2em 0;
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 2px solid #bbb;
+  color: #555;
+  font-style: italic;
+}
+
+/* Lists */
+ul, ol { padding-left: 1.8em; }
+li { margin-bottom: 0.3em; }
+
+/* Changelog — tighter spacing so each release's bullets read like a compact
+   list rather than prose paragraphs. */
+.changelog ul { margin: 0.4em 0 1em; }
+.changelog li {
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+.changelog h3 { margin: 1.2em 0 0.3em; }
+
+/* Tables */
+table {
+  width: 100%;
+  margin: 1.2em 0;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+th, td {
+  padding: 0.4em 0.6em;
+  border-bottom: 0.5px solid #bbb;
+  text-align: left;
+}
+th { font-weight: 700; border-bottom: 1px solid #000; }
+
+/* Code */
+code, pre, kbd, samp {
+  font-family: "Libertinus Mono", monospace;
+}
+code { font-size: 0.9em; }
+pre {
+  padding: 0.8em 1em;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.45;
+  margin: 1.2em 0;
+  white-space: pre-wrap;
+}
+
+hr { border: 0; border-top: 0.5px solid #bbb; margin: 1.5em 0; }
+
+/* Colophon */
+.colophon { margin-top: 1.5em; text-align: center; }
+.colophon p { margin: 0 0 0.8em; }
+.colophon .colophon-text { color: #555; margin-bottom: 1.5em; font-style: italic; }
+.colophon .colophon-license { color: #777; font-size: 0.85em; margin-top: 1.5em; }
+
+/* Each section already lives in its own xhtml spine item, so readers page-break
+   between them naturally. Forcing an extra page-break-before on the top-level
+   wrappers made readers (Apple Books, Kindle) insert a phantom blank page. */
+
+.annex-intro {
+  margin: 4em 0;
+  text-align: center;
+}
+.annex-intro h1 {
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-variant: small-caps;
+  margin: 0;
+}

@@ -166,12 +166,33 @@ def build() -> None:
         return prev_p, next_p
 
     repo_url = config["document"]["repo"].rstrip("/")
-    pdf_url = f"{repo_url}/releases/latest/download/nextcat.{lang}.pdf"
+    release_base = f"{repo_url}/releases/latest/download"
+    pdf_url = f"{release_base}/nextcat.{lang}.pdf"
+    site_strings = strings.get("site", {})
+    download_menu = {
+        "tooltip": site_strings.get("download_menu_tooltip", "Altres formats"),
+        "entries": [
+            {
+                "label": site_strings.get("download_pdf_full_label", "PDF complet"),
+                "href": f"{release_base}/nextcat.{lang}-full.pdf",
+            },
+            {
+                "label": site_strings.get("download_pdf_reader_label", "PDF"),
+                "href": pdf_url,
+            },
+            {
+                "label": site_strings.get("download_epub_label", "EPUB"),
+                "href": f"{release_base}/nextcat.{lang}.epub",
+            },
+        ],
+    }
     common_ctx = {
         "lang": lang,
         "site_title": doc["title"],
         "repo_url": repo_url,
         "pdf_url": pdf_url,
+        "pdf_tooltip": site_strings.get("download_pdf_tooltip", "Descarregar l'última versió en PDF"),
+        "download_menu": download_menu,
         "assets": "",
         "css_version": css_version,
     }
