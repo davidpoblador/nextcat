@@ -1,15 +1,22 @@
 # ABOUTME: Task runner for the NextCat document pipeline.
-# ABOUTME: Builds PDFs for all languages and the website from Markdown sources.
+# ABOUTME: Builds PDFs, EPUBs and the website from Markdown sources.
 
-default: pdf
+default: all
 
-# Build PDFs for all languages
+# Build every artifact (PDFs, EPUBs, HTML reader)
+all: pdf epub site
+
+# Build PDFs for all languages (reader + full variants)
 pdf:
     uv run python -m scripts.build
 
 # Build PDF for a single language (e.g. just lang ca)
 lang LANG:
     uv run python -m scripts.build {{LANG}}
+
+# Build EPUBs (reader + full variants)
+epub:
+    uv run python -m scripts.epub
 
 # Build the static HTML reader into public/
 site: pdf

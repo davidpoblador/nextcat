@@ -155,6 +155,39 @@ main blockquote {
 
 .tools { display: inline-flex; gap: 0.15rem; align-items: center; }
 
+/* Download menu — secondary "other formats" dropdown next to the PDF icon */
+.download-menu { position: relative; display: inline-flex; }
+.download-menu-list {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  min-width: 16rem;
+  margin: 0;
+  padding: 0.35rem 0;
+  list-style: none;
+  background: var(--bg);
+  border: 0.5px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px -8px color-mix(in srgb, var(--body) 35%, transparent);
+  z-index: 20;
+  font-size: 0.9rem;
+}
+.download-menu-list[hidden] { display: none; }
+.download-menu-list li { margin: 0; }
+.download-menu-list a {
+  display: block;
+  padding: 0.45rem 0.9rem;
+  color: var(--body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.download-menu-list a:hover,
+.download-menu-list a:focus-visible {
+  background: color-mix(in srgb, var(--body) 8%, transparent);
+  color: var(--body);
+  outline: none;
+}
+
 .icon-btn {
   background: none;
   border: 0;

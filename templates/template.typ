@@ -34,6 +34,7 @@
   url: "",
   repo: "",
   toc-title: "",
+  chapter-label: "Capítol",
   generated-text: "",
   modified-text: "",
   generated-label: "",
@@ -129,11 +130,25 @@
   // Heading styles
   set heading(numbering: "1.1.")
 
-  show heading.where(level: 1): it => {
+  // Chapter opening: "Capítol N" label above the title, then a thin rule.
+  // Unnumbered level-1 headings (Annex intro, colophon) keep the plain look.
+  show heading.where(level: 1): it => context {
     pagebreak(weak: true)
     v(2em)
-    text(size: size-h1, weight: "bold")[#it]
-    v(1em)
+    if it.numbering != none {
+      let n = counter(heading).at(it.location()).at(0)
+      text(size: size-meta, fill: color-muted, tracking: 0.15em)[
+        #smallcaps([#chapter-label #n])
+      ]
+      v(0.6em)
+      text(size: size-h1, weight: "bold")[#it.body]
+      v(0.8em)
+      line(length: 100%, stroke: 0.5pt + color-faint)
+      v(1.2em)
+    } else {
+      text(size: size-h1, weight: "bold")[#it.body]
+      v(1em)
+    }
   }
 
   show heading.where(level: 2): it => {

@@ -31,6 +31,11 @@ downloads = "Descarregar PDF"
 downloads_text = "La versió PDF més recent es pot descarregar des de les [versions publicades del projecte]({repo}/releases)."
 license = "Llicència"
 license_text = "Aquesta obra està subjecta a la llicència [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.ca)."
+download_pdf_tooltip = "Descarregar l'última versió en PDF"
+download_menu_tooltip = "Altres formats"
+download_pdf_reader_label = "PDF"
+download_pdf_full_label = "PDF complet (amb registre de canvis)"
+download_epub_label = "EPUB"
 
 [colophon]
 title = "Colofó"

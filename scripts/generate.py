@@ -181,6 +181,7 @@ def build_typst(
         _typst_param("email", doc["email"]),
         _typst_param("lang", lang),
         _typst_param("toc-title", toc["title"]),
+        _typst_param("chapter-label", toc.get("chapter_label", "Capítol")),
         _typst_param("version", version),
         _typst_param("version-label", title_page.get("version_label", "Versió")),
         _typst_param("cover-date", cover_date(lang)),
