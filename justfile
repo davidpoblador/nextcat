@@ -18,6 +18,10 @@ site: pdf
 # Build the book (alias for `site`)
 book: site
 
+# Serve the built site locally (default port 8765, IPv4 only)
+serve PORT="8765": site
+    cd public && uv run python -m http.server --bind 127.0.0.1 {{PORT}}
+
 # Remove all generated files
 clean:
     rm -rf build/ public/
