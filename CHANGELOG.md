@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/davidpoblador/nextcat/compare/v0.0.2...v0.0.3) (2026-04-24)
+
+
+### Features
+
+* **epub:** add typographic cover and full-changelog download ([#72](https://github.com/davidpoblador/nextcat/issues/72)) ([9a62456](https://github.com/davidpoblador/nextcat/commit/9a6245653dffe4cf9981d46d5c0f68519f01cf9e))
+
 ## [0.0.2](https://github.com/davidpoblador/nextcat/compare/v0.0.1...v0.0.2) (2026-04-23)
 
 
