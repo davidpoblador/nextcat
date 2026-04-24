@@ -36,6 +36,7 @@ download_menu_tooltip = "Altres formats"
 download_pdf_reader_label = "PDF"
 download_pdf_full_label = "PDF complet (amb registre de canvis)"
 download_epub_label = "EPUB"
+download_epub_full_label = "EPUB complet (amb registre de canvis)"
 
 [colophon]
 title = "Colofó"

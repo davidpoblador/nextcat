@@ -124,4 +124,5 @@ Abans d'obrir un PR:
 just clean
 just pdf       # Verifica que el PDF es genera correctament
 just site      # Verifica que el lloc web es genera correctament
+just epub      # Verifica que l'EPUB es genera correctament
 ```

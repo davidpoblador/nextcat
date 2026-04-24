@@ -49,34 +49,11 @@ h2 + p,
 h3 + p,
 blockquote > p:first-child,
 li > p,
-.colophon p,
-.cover p {
+.colophon p {
   text-indent: 0;
 }
 
 a { color: inherit; text-decoration: underline; }
-
-/* Cover / title page */
-.cover {
-  text-align: center;
-  margin: 4em 0 2em;
-  page-break-after: always;
-}
-.cover h1 {
-  font-size: 2em;
-  line-height: 1.15;
-  margin: 0 0 0.4em;
-  hyphens: none;
-}
-.cover .subtitle {
-  font-size: 1.2em;
-  font-style: italic;
-  margin: 0;
-  hyphens: none;
-}
-.cover .author { margin-top: 2em; }
-.cover .cover-date { margin-top: 0.3em; font-size: 0.95em; color: #555; }
-.cover .cover-version { margin-top: 0.2em; font-size: 0.8em; color: #999; }
 
 /* Imprint / metadata page (mirrors PDF's verso before the TOC) */
 .imprint {

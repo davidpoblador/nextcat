@@ -14,9 +14,10 @@ dependencies = []
 dev = [
     "babel>=2.18.0",
     "dunamai>=1.26.1",
-    "ebooklib>=0.19",
+    "ebooklib>=0.20",
     "jinja2>=3.1.6",
     "markdown>=3.10.2",
-    "typer>=0.24.1",
+    "resvg-py>=0.3.1",
+    "typer>=0.24.2",
     "typst>=0.14.8",
 ]
