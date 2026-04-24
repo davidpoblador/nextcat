@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- NextCat EPUB cover. Rendered to PNG by scripts/epub.py via resvg. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2560" viewBox="0 0 1600 2560">
+  <rect width="1600" height="2560" fill="#ffffff"/>
+  <g font-family="Libertinus Serif">
+    <text text-anchor="middle" font-weight="bold" font-size="112" fill="#000000">
+      <tspan x="800" y="{{ title_y }}">{{ title_lines[0] }}</tspan>
+      {%- for line in title_lines[1:] %}
+      <tspan x="800" dy="132">{{ line }}</tspan>
+      {%- endfor %}
+    </text>
+    <text text-anchor="middle" font-size="70" fill="#555555">
+      <tspan x="800" y="{{ subtitle_y }}">{{ subtitle_lines[0] }}</tspan>
+      {%- for line in subtitle_lines[1:] %}
+      <tspan x="800" dy="90">{{ line }}</tspan>
+      {%- endfor %}
+    </text>
+    <line x1="1100" y1="2220" x2="1440" y2="2220" stroke="#bbbbbb" stroke-width="1"/>
+    <text text-anchor="end" x="1440" y="2282" font-size="58" fill="#000000">{{ author }}</text>
+    <text text-anchor="end" x="1440" y="2340" font-size="38" fill="#777777">{{ cover_date }}</text>
+    <text text-anchor="end" x="1440" y="2390" font-size="28" fill="#999999">{{ version }}</text>
+  </g>
+</svg>

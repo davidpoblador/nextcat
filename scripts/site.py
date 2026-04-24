@@ -181,6 +181,10 @@ def build() -> None:
                 "href": pdf_url,
             },
             {
+                "label": site_strings.get("download_epub_full_label", "EPUB complet"),
+                "href": f"{release_base}/nextcat.{lang}-full.epub",
+            },
+            {
                 "label": site_strings.get("download_epub_label", "EPUB"),
                 "href": f"{release_base}/nextcat.{lang}.epub",
             },

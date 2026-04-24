@@ -6,8 +6,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import markdown
+import resvg_py
 import typer
 from ebooklib import epub
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from rich.console import Console
 
 from scripts.generate import (
@@ -135,17 +137,62 @@ def _colophon_body(config: dict, version: str, strings: dict, modified_text: str
     )
 
 
-def _cover_body(strings: dict, config: dict, version: str, lang: str) -> str:
+# Catalan function words that should not orphan at line ends on the cover.
+# Keeps the typographic feel of the Typst cover's stick-short rule.
+_COVER_STICK_WORDS = {
+    "de", "a", "i", "la", "el", "els", "les", "al", "als",
+    "del", "dels", "per", "en",
+}
+
+
+def _wrap_cover_lines(text: str, budget: int) -> list[str]:
+    """Greedy word wrap; then pull trailing stick-words onto the next line."""
+    words = text.split()
+    lines: list[list[str]] = [[]]
+    for w in words:
+        candidate = " ".join([*lines[-1], w])
+        if lines[-1] and len(candidate) > budget:
+            lines.append([w])
+        else:
+            lines[-1].append(w)
+    # Avoid a short function word ending any line but the last.
+    for i in range(len(lines) - 1):
+        while len(lines[i]) > 1 and lines[i][-1].lower() in _COVER_STICK_WORDS:
+            moved = lines[i].pop()
+            lines[i + 1].insert(0, moved)
+    return [" ".join(words) for words in lines]
+
+
+def _render_cover_png(strings: dict, config: dict, version: str, lang: str) -> bytes:
+    """Render the cover SVG template and rasterize it to a PNG via resvg."""
     doc = strings["document"]
-    return (
-        f'<div class="cover">\n'
-        f'  <h1>{doc["title"]}</h1>\n'
-        f'  <p class="subtitle">{doc["subtitle"]}</p>\n'
-        f'  <p class="author">{config["document"]["author"]}</p>\n'
-        f'  <p class="cover-date">{cover_date(lang)}</p>\n'
-        f'  <p class="cover-version">{version}</p>\n'
-        f'</div>\n'
+    title_lines = _wrap_cover_lines(doc["title"], budget=24)
+    subtitle_lines = _wrap_cover_lines(doc["subtitle"], budget=34)
+
+    title_y = 880
+    subtitle_y = title_y + (len(title_lines) - 1) * 132 + 160
+
+    env = Environment(
+        loader=FileSystemLoader(EPUB_TEMPLATES),
+        autoescape=select_autoescape(["svg", "xml"]),
     )
+    svg = env.get_template("cover.svg").render(
+        title_lines=title_lines,
+        subtitle_lines=subtitle_lines,
+        title_y=title_y,
+        subtitle_y=subtitle_y,
+        author=config["document"]["author"],
+        cover_date=cover_date(lang),
+        version=version,
+    )
+
+    return bytes(resvg_py.svg_to_bytes(
+        svg_string=svg,
+        font_dirs=[str(FONTS_DIR)],
+        skip_system_fonts=True,
+        width=1600,
+        height=2560,
+    ))
 
 
 def _metadata_body(strings: dict, config: dict, version: str, modified_text: str) -> str:
@@ -222,19 +269,15 @@ def _build_one(
             )
         )
 
+    # Cover image — rendered from templates/epub/cover.svg via resvg. ebooklib
+    # creates the cover.xhtml page automatically and wires up the cover-image
+    # metadata so library thumbnails (Apple Books, Calibre, …) pick it up.
+    book.set_cover("cover.png", _render_cover_png(strings, config, version, lang))
+
     # Build the list of sections, in spine order.
     sections: list[Section] = []
 
-    # 1. Cover / title page
-    sections.append(Section(
-        file_name="cover.xhtml",
-        title=doc["title"],
-        body_html=_cover_body(strings, config, version, lang),
-        body_class="cover-body",
-        include_in_nav=False,
-    ))
-
-    # 2. Imprint / metadata page (mirrors the PDF's metadata verso before the TOC)
+    # 1. Imprint / metadata page (mirrors the PDF's metadata verso before the TOC)
     sections.append(Section(
         file_name="imprint.xhtml",
         title=doc["title"],
@@ -397,14 +440,15 @@ def _build_one(
     book.add_item(epub.EpubNav())
 
     # Spine order mirrors the PDF: cover → imprint → nav (TOC) → front matter
-    # → chapters → annex → colophon. The nav document also lives in the reading
-    # order, matching the PDF's "Continguts" page that sits after the imprint.
+    # → chapters → annex → colophon. "cover" is the auto-generated page that
+    # set_cover attached; the nav document sits after the imprint to match the
+    # PDF's "Continguts" page.
     imprint_index = next(
         i for i, s in enumerate(sections) if s.file_name == "imprint.xhtml"
     )
     head = chapters[: imprint_index + 1]
     tail = chapters[imprint_index + 1 :]
-    book.spine = [*head, "nav", *tail]
+    book.spine = ["cover", *head, "nav", *tail]
 
     BUILD_DIR.mkdir(exist_ok=True)
     output_file = BUILD_DIR / f"nextcat-{version}.{lang}{variant_suffix}.epub"
