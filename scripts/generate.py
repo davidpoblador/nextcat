@@ -14,6 +14,7 @@ CANONICAL_DIR = ROOT / "book"
 TRANSLATIONS_DIR = CANONICAL_DIR / "translations"
 CONFIG_FILE = ROOT / "config.toml"
 VERSION_FILE = ROOT / "VERSION"
+EDITION_FILE = ROOT / "EDITION"
 AUTHORS_FILE = ROOT / "AUTHORS"
 CHANGELOG_FILE = ROOT / "CHANGELOG.md"
 BUILD_DIR = ROOT / "build"
@@ -62,6 +63,18 @@ def get_version() -> str:
         return Version.from_git().serialize(style=Style.Pep440)
     except RuntimeError:
         return VERSION_FILE.read_text().strip()
+
+
+def get_edition() -> int:
+    """Read the human-managed edition number from EDITION (defaults to 1)."""
+    if not EDITION_FILE.exists():
+        return 1
+    return int(EDITION_FILE.read_text().strip())
+
+
+def edition_phrase(edition: int, strings: dict) -> str:
+    """Localised edition phrase (e.g. 'Edició 1')."""
+    return strings["edition"]["phrase"].format(n=edition)
 
 
 def parse_changelog(path: Path) -> list[tuple[str, list[str]]]:
@@ -150,6 +163,7 @@ def build_typst(
     strings: dict,
     config: dict,
     version: str,
+    edition: int,
     front_matter: list[Path],
     chapter_files: list[Path],
     translation_notice: str = "",
@@ -165,6 +179,7 @@ def build_typst(
     changelog = strings["changelog"]
     colophon = strings["colophon"]
     lang = strings["lang"]
+    edition_text = edition_phrase(edition, strings)
 
     content_files = [*front_matter, *chapter_files, CONFIG_FILE]
     generated_text = f'{title_page["generated"]}: {generation_date()}'
@@ -184,6 +199,7 @@ def build_typst(
         _typst_param("chapter-label", toc.get("chapter_label", "Capítol")),
         _typst_param("version", version),
         _typst_param("version-label", title_page.get("version_label", "Versió")),
+        _typst_param("edition-phrase", edition_text),
         _typst_param("cover-date", cover_date(lang)),
         _typst_param("url", doc["url"]),
         _typst_param("repo", doc["repo"]),
@@ -369,7 +385,7 @@ def build_typst(
 
     # Colophon
     colophon_title = escape_typst(colophon["title"])
-    colophon_text = escape_typst(colophon["text"])
+    colophon_text = escape_typst(colophon["text_pdf"])
     version_label = escape_typst(title_page.get("version_label", "Versió"))
     parts.append("#pagebreak()")
     parts.append("#[#metadata(none) <tg-colo-start>]")
@@ -385,6 +401,7 @@ def build_typst(
     parts.append(f'  #text(fill: rgb("#555"))[{colophon_text}]')
     parts.append("")
     parts.append(f"  #v(1.5em)")
+    parts.append(f'  {escape_typst(edition_text)} \\')
     parts.append(f'  {version_label}: {escape_typst(version)}')
     parts.append("")
     parts.append(f"  #v(1.5em)")

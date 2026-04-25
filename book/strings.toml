@@ -9,6 +9,9 @@ version_label = "Versió"
 generated = "Generat"
 modified = "Darrera revisió"
 
+[edition]
+phrase = "Edició {n}"
+
 [toc]
 title = "Continguts"
 
@@ -40,4 +43,6 @@ download_epub_full_label = "EPUB complet (amb registre de canvis)"
 
 [colophon]
 title = "Colofó"
-text = "PDF generat a partir dels fitxers Markdown del repositori mitjançant Typst."
+text_pdf = "PDF generat a partir dels fitxers Markdown del repositori mitjançant Typst."
+text_epub = "EPUB generat a partir dels fitxers Markdown del repositori mitjançant ebooklib."
+text_html = "Lloc web generat a partir dels fitxers Markdown del repositori mitjançant Python-Markdown."

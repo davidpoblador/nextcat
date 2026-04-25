@@ -30,6 +30,7 @@
   lang: "ca",
   version: "",
   version-label: "Versió",
+  edition-phrase: "",
   cover-date: "",
   url: "",
   repo: "",
@@ -75,7 +76,7 @@
       #text(size: size-h2)[#author] \
       #text(size: font-size, fill: color-light)[#cover-date]
       #v(0.5em)
-      #text(size: size-meta, fill: color-faint)[#version]
+      #text(size: size-meta, fill: color-faint)[#edition-phrase]
     ]
   ]
 
@@ -95,6 +96,7 @@
         #text(fill: color-muted)[#subtitle]
 
         #v(1.5em)
+        #edition-phrase \
         #version-label: #version
 
         #v(1.5em)
