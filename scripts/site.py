@@ -296,7 +296,7 @@ def _render_colophon(config: dict, version: str, edition: int, strings: dict, mo
     version_label = title_page.get("version_label", "Versió")
     modified_label = title_page["modified"]
     generated_label = title_page["generated"]
-    text = colophon.get("text", "")
+    text = colophon["text_html"]
     return (
         f'<div class="colophon">\n'
         f'  <p class="colophon-text">{text}</p>\n'

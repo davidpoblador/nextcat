@@ -123,7 +123,7 @@ def _colophon_body(config: dict, version: str, edition: int, strings: dict, modi
     version_label = title_page.get("version_label", "Versió")
     modified_label = title_page["modified"]
     generated_label = title_page["generated"]
-    text = colophon.get("text", "")
+    text = colophon["text_epub"]
     return (
         f'<div class="colophon">\n'
         f'  <h1>{colophon.get("title", "Colofó")}</h1>\n'

@@ -385,7 +385,7 @@ def build_typst(
 
     # Colophon
     colophon_title = escape_typst(colophon["title"])
-    colophon_text = escape_typst(colophon["text"])
+    colophon_text = escape_typst(colophon["text_pdf"])
     version_label = escape_typst(title_page.get("version_label", "Versió"))
     parts.append("#pagebreak()")
     parts.append("#[#metadata(none) <tg-colo-start>]")
