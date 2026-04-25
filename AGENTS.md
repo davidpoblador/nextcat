@@ -43,9 +43,9 @@ Uses dunamai for git-aware versions: `0.1.3` on a tagged commit, `0.1.3.post2.de
 Two independent identifiers travel through every artifact:
 
 - **Version** (engineering build identifier): the dunamai/`VERSION` string above. Changes on every release-please cut and on every dev rebuild between tags. Surfaced on the metadata page and colophon as `Versió: x.y.z`.
-- **Edition** (public-facing reissue counter): an integer in `EDITION`, managed by hand. Bump it with `just bump-edition` before each public reissue (e.g. a new KDP upload). Localised to a phrase like `Primera edició` via the `[edition]` table in `strings.toml` and surfaced on the cover, metadata page and colophon. The EPUB also writes the integer to OPF metadata as `<meta property="schema:bookEdition">`.
+- **Edition** (public-facing reissue counter): an integer in `EDITION`, managed by hand. Bump it with `just bump-edition` before each public reissue (e.g. a new KDP upload). Localised to a phrase like `Edició 1` via the `[edition]` table in `strings.toml` (`phrase = "Edició {n}"`) and surfaced on the cover, metadata page and colophon. The EPUB also writes the integer to OPF metadata as `<meta property="schema:bookEdition">`.
 
-The version reflects "what code built this"; the edition reflects "which public release this is". Translations supply their own gendered ordinals and phrase template under `[edition]` in `translations/<lang>/strings.toml`. The ordinals table is the single source of truth — there is no numeric fallback, so extend it before bumping `EDITION` past its current length.
+The version reflects "what code built this"; the edition reflects "which public release this is". Translations supply their own phrase template under `[edition]` in `translations/<lang>/strings.toml` (e.g. `"Edición {n}"`, `"Edition {n}"`). Spelled-out ordinals were considered and dropped — see GitHub issue #74 for the rationale and revisit triggers.
 
 ## Dependencies
 

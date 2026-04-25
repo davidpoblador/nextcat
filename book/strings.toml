@@ -10,21 +10,7 @@ generated = "Generat"
 modified = "Darrera revisió"
 
 [edition]
-# Feminine ordinals (edició is feminine in Catalan). Extend the table when
-# the EDITION counter would exceed it — there is no numeric fallback.
-phrase = "{ordinal} edició"
-ordinals = [
-    "primera",
-    "segona",
-    "tercera",
-    "quarta",
-    "cinquena",
-    "sisena",
-    "setena",
-    "vuitena",
-    "novena",
-    "desena",
-]
+phrase = "Edició {n}"
 
 [toc]
 title = "Continguts"
