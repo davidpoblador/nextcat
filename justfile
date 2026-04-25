@@ -29,6 +29,10 @@ book: site
 serve PORT="8765": site
     cd public && uv run python -m http.server --bind 127.0.0.1 {{PORT}}
 
+# Increment the human-managed edition number in EDITION
+bump-edition:
+    uv run python -c "from pathlib import Path; p = Path('EDITION'); p.write_text(f'{int(p.read_text().strip()) + 1}\n')"
+
 # Remove all generated files
 clean:
     rm -rf build/ public/

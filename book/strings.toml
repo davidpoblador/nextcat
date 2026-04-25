@@ -9,6 +9,25 @@ version_label = "Versió"
 generated = "Generat"
 modified = "Darrera revisió"
 
+[edition]
+# Phrase templates use {ordinal} for the spelled-out ordinal and {n} for the integer.
+# `ordinals` is feminine (edició is feminine in Catalan); extend the table beyond
+# the tenth edition rather than relying on the numeric fallback.
+phrase = "{ordinal} edició"
+fallback = "edició {n}"
+ordinals = [
+    "primera",
+    "segona",
+    "tercera",
+    "quarta",
+    "cinquena",
+    "sisena",
+    "setena",
+    "vuitena",
+    "novena",
+    "desena",
+]
+
 [toc]
 title = "Continguts"
 

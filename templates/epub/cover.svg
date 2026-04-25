@@ -18,6 +18,6 @@
     <line x1="1100" y1="2220" x2="1440" y2="2220" stroke="#bbbbbb" stroke-width="1"/>
     <text text-anchor="end" x="1440" y="2282" font-size="58" fill="#000000">{{ author }}</text>
     <text text-anchor="end" x="1440" y="2340" font-size="38" fill="#777777">{{ cover_date }}</text>
-    <text text-anchor="end" x="1440" y="2390" font-size="28" fill="#999999">{{ version }}</text>
+    <text text-anchor="end" x="1440" y="2390" font-size="28" fill="#999999">{{ edition_phrase }}</text>
   </g>
 </svg>

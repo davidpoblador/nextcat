@@ -21,7 +21,9 @@ from scripts.generate import (
     ROOT,
     chapter_title,
     cover_date,
+    edition_phrase,
     generation_date,
+    get_edition,
     get_version,
     last_modified_date,
     load_toml,
@@ -114,7 +116,7 @@ def _changelog_body(intro: str, version_label: str) -> str:
     return "\n".join(parts)
 
 
-def _colophon_body(config: dict, version: str, strings: dict, modified_text: str) -> str:
+def _colophon_body(config: dict, version: str, edition: int, strings: dict, modified_text: str) -> str:
     doc = config["document"]
     colophon = strings.get("colophon", {})
     title_page = strings["title_page"]
@@ -126,7 +128,8 @@ def _colophon_body(config: dict, version: str, strings: dict, modified_text: str
         f'<div class="colophon">\n'
         f'  <h1>{colophon.get("title", "Colofó")}</h1>\n'
         f'  <p class="colophon-text">{text}</p>\n'
-        f'  <p>{version_label}: {version}</p>\n'
+        f'  <p>{edition_phrase(edition, strings)}<br/>\n'
+        f'  {version_label}: {version}</p>\n'
         f'  <p>{modified_label}: {modified_text}<br/>\n'
         f'  {generated_label}: {generation_date()}</p>\n'
         f'  <p><a href="{doc["url"]}">{doc["url"]}</a><br/>\n'
@@ -163,7 +166,7 @@ def _wrap_cover_lines(text: str, budget: int) -> list[str]:
     return [" ".join(words) for words in lines]
 
 
-def _render_cover_png(strings: dict, config: dict, version: str, lang: str) -> bytes:
+def _render_cover_png(strings: dict, config: dict, edition: int, lang: str) -> bytes:
     """Render the cover SVG template and rasterize it to a PNG via resvg."""
     doc = strings["document"]
     title_lines = _wrap_cover_lines(doc["title"], budget=24)
@@ -183,7 +186,7 @@ def _render_cover_png(strings: dict, config: dict, version: str, lang: str) -> b
         subtitle_y=subtitle_y,
         author=config["document"]["author"],
         cover_date=cover_date(lang),
-        version=version,
+        edition_phrase=edition_phrase(edition, strings),
     )
 
     return bytes(resvg_py.svg_to_bytes(
@@ -195,7 +198,7 @@ def _render_cover_png(strings: dict, config: dict, version: str, lang: str) -> b
     ))
 
 
-def _metadata_body(strings: dict, config: dict, version: str, modified_text: str) -> str:
+def _metadata_body(strings: dict, config: dict, version: str, edition: int, modified_text: str) -> str:
     """Imprint page — mirrors the PDF's metadata verso before the TOC."""
     doc = strings["document"]
     title_page = strings["title_page"]
@@ -207,7 +210,8 @@ def _metadata_body(strings: dict, config: dict, version: str, modified_text: str
         f'<div class="imprint">\n'
         f'  <p class="imprint-title"><strong>{doc["title"]}</strong><br/>\n'
         f'  <span class="imprint-subtitle">{doc["subtitle"]}</span></p>\n'
-        f'  <p>{version_label}: {version}</p>\n'
+        f'  <p>{edition_phrase(edition, strings)}<br/>\n'
+        f'  {version_label}: {version}</p>\n'
         f'  <p>{modified_label}: {modified_text}<br/>\n'
         f'  {generated_label}: {generation_date()}</p>\n'
         f'  <p><a href="{cfg["url"]}">{cfg["url"]}</a><br/>\n'
@@ -223,6 +227,7 @@ def _build_one(
     config: dict,
     strings: dict,
     version: str,
+    edition: int,
     include_changelog: bool,
     variant_suffix: str,
 ) -> Path:
@@ -247,6 +252,9 @@ def _build_one(
     book.add_metadata("DC", "description", doc["subtitle"])
     book.add_metadata("DC", "publisher", config["document"]["url"])
     book.add_metadata("DC", "rights", "CC BY-SA 4.0")
+    book.add_metadata(
+        None, "meta", str(edition), {"property": "schema:bookEdition"}
+    )
 
     # Stylesheet
     css = epub.EpubItem(
@@ -272,7 +280,7 @@ def _build_one(
     # Cover image — rendered from templates/epub/cover.svg via resvg. ebooklib
     # creates the cover.xhtml page automatically and wires up the cover-image
     # metadata so library thumbnails (Apple Books, Calibre, …) pick it up.
-    book.set_cover("cover.png", _render_cover_png(strings, config, version, lang))
+    book.set_cover("cover.png", _render_cover_png(strings, config, edition, lang))
 
     # Build the list of sections, in spine order.
     sections: list[Section] = []
@@ -281,7 +289,7 @@ def _build_one(
     sections.append(Section(
         file_name="imprint.xhtml",
         title=doc["title"],
-        body_html=_metadata_body(strings, config, version, modified_text),
+        body_html=_metadata_body(strings, config, version, edition, modified_text),
         body_class="imprint-body",
         include_in_nav=False,
     ))
@@ -391,7 +399,7 @@ def _build_one(
     sections.append(Section(
         file_name="colophon.xhtml",
         title=strings.get("colophon", {}).get("title", "Colofó"),
-        body_html=_colophon_body(config, version, strings, modified_text),
+        body_html=_colophon_body(config, version, edition, strings, modified_text),
         body_class="colophon-body",
     ))
 
@@ -463,6 +471,7 @@ def build() -> None:
     config = load_toml(CONFIG_FILE)
     strings = load_toml(CANONICAL_DIR / "strings.toml")
     version = get_version()
+    edition = get_edition()
     lang = strings["lang"]
     console.print(f"[bold cyan][{lang}][/bold cyan] EPUB · {len(VARIANTS)} variants")
     for suffix, include_changelog in VARIANTS:
@@ -470,6 +479,7 @@ def build() -> None:
             config=config,
             strings=strings,
             version=version,
+            edition=edition,
             include_changelog=include_changelog,
             variant_suffix=suffix,
         )

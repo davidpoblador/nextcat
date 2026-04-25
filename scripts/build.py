@@ -16,6 +16,7 @@ from scripts.generate import (
     ROOT,
     TRANSLATIONS_DIR,
     build_typst,
+    get_edition,
     get_version,
     load_toml,
     resolve_chapters,
@@ -58,6 +59,7 @@ def build(
     """Build PDFs for all available languages, or a single one."""
     config = load_toml(CONFIG_FILE)
     version = get_version()
+    edition = get_edition()
 
     canonical_strings = load_toml(CANONICAL_DIR / "strings.toml")
     canonical_fm, canonical_ch = resolve_chapters(CANONICAL_DIR, CANONICAL_DIR)
@@ -76,6 +78,7 @@ def build(
                 strings,
                 config,
                 version,
+                edition,
                 fm,
                 ch,
                 notice,

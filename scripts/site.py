@@ -20,7 +20,9 @@ from scripts.generate import (
     ROOT,
     chapter_title,
     cover_date,
+    edition_phrase,
     generation_date,
+    get_edition,
     get_version,
     last_modified_date,
     load_toml,
@@ -71,6 +73,7 @@ def build() -> None:
     config = load_toml(CONFIG_FILE)
     strings = load_toml(CANONICAL_DIR / "strings.toml")
     version = get_version()
+    edition = get_edition()
     lang = strings["lang"]
     doc = strings["document"]
     title_page = strings["title_page"]
@@ -237,7 +240,8 @@ def build() -> None:
             body_html = _contributors_body()
         elif page is colophon_page:
             body_html = _render_colophon(
-                config, version, strings, last_modified_date(chapter_files + front_matter_files + [CONFIG_FILE])
+                config, version, edition, strings,
+                last_modified_date(chapter_files + front_matter_files + [CONFIG_FILE]),
             )
         elif page.source is not None and page.source.suffix == ".md":
             body_html = _render_markdown(page.source.read_text())
@@ -284,7 +288,7 @@ def _contributors_body() -> str:
     return "<ul>\n" + "\n".join(items) + "\n</ul>"
 
 
-def _render_colophon(config: dict, version: str, strings: dict, modified_text: str) -> str:
+def _render_colophon(config: dict, version: str, edition: int, strings: dict, modified_text: str) -> str:
     """Render the colophon: muted intro + version, dates, URLs (matches the PDF)."""
     doc = config["document"]
     colophon = strings.get("colophon", {})
@@ -296,7 +300,8 @@ def _render_colophon(config: dict, version: str, strings: dict, modified_text: s
     return (
         f'<div class="colophon">\n'
         f'  <p class="colophon-text">{text}</p>\n'
-        f'  <p>{version_label}: {version}</p>\n'
+        f'  <p>{edition_phrase(edition, strings)}<br>\n'
+        f'  {version_label}: {version}</p>\n'
         f'  <p>{modified_label}: {modified_text}<br>\n'
         f'  {generated_label}: {generation_date()}</p>\n'
         f'  <p><a href="{doc["url"]}">{doc["url"]}</a><br>\n'
