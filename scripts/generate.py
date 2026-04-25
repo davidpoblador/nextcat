@@ -73,14 +73,15 @@ def get_edition() -> int:
 
 
 def edition_phrase(edition: int, strings: dict) -> str:
-    """Localised edition phrase, sentence-cased (e.g. 'Primera edició')."""
-    spec = strings.get("edition", {})
-    ordinals = spec.get("ordinals", [])
-    if 1 <= edition <= len(ordinals):
-        phrase = spec.get("phrase", "{ordinal}").format(ordinal=ordinals[edition - 1])
-    else:
-        phrase = spec.get("fallback", "{n}").format(n=edition)
-    return phrase[:1].upper() + phrase[1:] if phrase else phrase
+    """Localised edition phrase, sentence-cased (e.g. 'Primera edició').
+
+    Raises IndexError if `edition` exceeds the ordinals table — extend the
+    table in strings.toml rather than letting a numeric form slip through.
+    """
+    spec = strings["edition"]
+    ordinal = spec["ordinals"][edition - 1]
+    phrase = spec["phrase"].format(ordinal=ordinal)
+    return phrase[:1].upper() + phrase[1:]
 
 
 def parse_changelog(path: Path) -> list[tuple[str, list[str]]]:

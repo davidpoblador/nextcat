@@ -10,11 +10,9 @@ generated = "Generat"
 modified = "Darrera revisió"
 
 [edition]
-# Phrase templates use {ordinal} for the spelled-out ordinal and {n} for the integer.
-# `ordinals` is feminine (edició is feminine in Catalan); extend the table beyond
-# the tenth edition rather than relying on the numeric fallback.
+# Feminine ordinals (edició is feminine in Catalan). Extend the table when
+# the EDITION counter would exceed it — there is no numeric fallback.
 phrase = "{ordinal} edició"
-fallback = "edició {n}"
 ordinals = [
     "primera",
     "segona",
