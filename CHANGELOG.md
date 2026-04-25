@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/davidpoblador/nextcat/compare/v0.0.3...v0.0.4) (2026-04-25)
+
+
+### Features
+
+* add edition number and per-format colophon strings ([#75](https://github.com/davidpoblador/nextcat/issues/75)) ([2cb2c25](https://github.com/davidpoblador/nextcat/commit/2cb2c255401f8677a3d3f10f844ad176cbf741bf))
+
 ## [0.0.3](https://github.com/davidpoblador/nextcat/compare/v0.0.2...v0.0.3) (2026-04-24)
 
 

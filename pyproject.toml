@@ -1,6 +1,6 @@
 [project]
 name = "nextcat"
-version = "0.0.3"
+version = "0.0.4"
 description = "Apunts per a una estratègia digital de Catalunya: guia per a responsables de política i administració pública"
 readme = "README.md"
 requires-python = ">=3.14"
