@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.4](https://github.com/davidpoblador/nextcat/compare/v0.0.3...v0.0.4) (2026-05-03)
+
+
+### Features
+
+* add edition number and per-format colophon strings ([#75](https://github.com/davidpoblador/nextcat/issues/75)) ([2cb2c25](https://github.com/davidpoblador/nextcat/commit/2cb2c255401f8677a3d3f10f844ad176cbf741bf))
+
+
+### CI/CD
+
+* allow revert as a conventional PR title type ([#79](https://github.com/davidpoblador/nextcat/issues/79)) ([147070c](https://github.com/davidpoblador/nextcat/commit/147070c5049b5130ab0183317b55606d571c373e))
+* validate PR titles as conventional commits ([#78](https://github.com/davidpoblador/nextcat/issues/78)) ([ed0c9c1](https://github.com/davidpoblador/nextcat/commit/ed0c9c13d87dfe00228531b9eb2b788430237c1e))
+
 ## [0.0.3](https://github.com/davidpoblador/nextcat/compare/v0.0.2...v0.0.3) (2026-04-24)
 
 
