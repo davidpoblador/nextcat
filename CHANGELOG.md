@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.0.5](https://github.com/davidpoblador/nextcat/compare/v0.0.4...v0.0.5) (2026-08-21)
+
+
+### Features
+
+* **site:** publish through the fleet's registry instead of GitHub Pages ([#84](https://github.com/davidpoblador/nextcat/issues/84)) ([cac60cf](https://github.com/davidpoblador/nextcat/commit/cac60cf6262059a17409b26791bd1c0b36f65e7b))
+
+
+### Documentation
+
+* **agents:** point at publish-site.yml, not the deleted pages.yml ([#87](https://github.com/davidpoblador/nextcat/issues/87)) ([08fea72](https://github.com/davidpoblador/nextcat/commit/08fea72f96b2a65a70485ffe036063760a9aa01b))
+
+
+### Miscellaneous Chores
+
+* drop the GitHub Pages workflow ([#86](https://github.com/davidpoblador/nextcat/issues/86)) ([7c46b1a](https://github.com/davidpoblador/nextcat/commit/7c46b1a988bcf08cb1adad89890ac8a1bcf58b11))
+* remove the inert GitHub Pages CNAME ([#88](https://github.com/davidpoblador/nextcat/issues/88)) ([b081158](https://github.com/davidpoblador/nextcat/commit/b08115827b1fd3c19796b89238b8f3791a55282f))
+
 ## [0.0.4](https://github.com/davidpoblador/nextcat/compare/v0.0.3...v0.0.4) (2026-05-03)
 
 
