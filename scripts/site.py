@@ -103,11 +103,6 @@ def build() -> None:
     for otf in FONTS_DIR.glob("*.otf"):
         shutil.copy(otf, public_fonts / otf.name)
 
-    # GitHub Pages custom domain
-    cname_src = CANONICAL_DIR / "CNAME"
-    if cname_src.exists():
-        shutil.copy(cname_src, PUBLIC_DIR / "CNAME")
-
     # Stable, language-agnostic URL slugs:
     #   /cap0 .. /capN  — front matter + chapters (continuous TOC numbering)
     #   /annex1 .. /annexN — appendix items
