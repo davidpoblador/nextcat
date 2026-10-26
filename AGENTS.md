@@ -22,7 +22,7 @@ Foundational document for a Catalan digital strategy, rendered from Markdown sou
 
 `just pdf` runs `uv run python -m scripts.build`, which generates `.typ` files in `build/` then compiles them with the `typst` Python binding (no `typst` CLI needed). Fonts are loaded from `fonts/` via `font_paths`. Each language emits two artifacts: `build/nextcat-{version}.{lang}.pdf` (reader edition, no changelog) and `build/nextcat-{version}.{lang}-full.pdf` (archival edition). Intermediate `.typ` files are deleted after compilation.
 
-`just site` (alias `just book`) runs `uv run python -m scripts.site`, which renders each chapter through Python-Markdown into a Jinja2 template. Output lives under `public/` (gitignored): one HTML page per chapter, plus index/cover, appendix (license, key concepts glossary, about-author, contributing notes, contributors, changelog) and colophon. The stylesheet and Libertinus Serif fonts are copied alongside, as is `book/CNAME` — a GitHub Pages leftover that has no effect on where the site is served from.
+`just site` (alias `just book`) runs `uv run python -m scripts.site`, which renders each chapter through Python-Markdown into a Jinja2 template. Output lives under `public/` (gitignored): one HTML page per chapter, plus index/cover, appendix (license, key concepts glossary, about-author, contributing notes, contributors, changelog) and colophon. The stylesheet and Libertinus Serif fonts are copied alongside.
 
 ## Key conventions
 
@@ -53,8 +53,8 @@ All deps (typer, babel, dunamai, jinja2, markdown, typst) live in `[dependency-g
 
 ## CI/CD
 
-- `.github/workflows/release.yml` -- release-please + PDF build + attach to GitHub releases (stable `nextcat.{lang}.pdf` alias uploaded alongside versioned artifacts)
-- `.github/workflows/publish-site.yml` -- build the static HTML reader and attach it to the current GitHub Release as `site.tar.gz`. The fleet's site publisher syncs that asset into the bucket serving nextcat.poblador.cat; nothing here holds a storage credential. Runs on a published release or `workflow_dispatch`.
+- `.github/workflows/release.yml` -- release-please + PDF build + attach to GitHub releases (stable `nextcat.{lang}.pdf` alias uploaded alongside versioned artifacts). On a release it also moves the `published` branch to the release commit.
+- The website is deployed by Cloudflare Workers Builds, not GitHub Actions: it runs `just site` and serves `public/` as static assets (`wrangler.jsonc`). The `published` branch goes to nextcat.poblador.cat, so the site only changes on a release; every other branch, `main` included, gets a preview URL.
 - Conventional commits drive versioning: `feat:` bumps minor, `fix:` bumps patch
 
 ## Adding a chapter
