@@ -1,6 +1,3 @@
-// Serves the HTML reader as static assets on Cloudflare Workers.
-// Workers Builds runs `just site` and deploys the `published` branch, which the
-// release workflow moves to each release; other branches get Previews.
 {
   "name": "nextcat-poblador-cat",
   "compatibility_date": "2026-10-26",
@@ -9,8 +6,6 @@
     "not_found_handling": "404-page"
   },
   "routes": [{ "pattern": "nextcat.poblador.cat", "custom_domain": true }],
-  // Branch preview URLs live on workers.dev and need it enabled; a custom
-  // domain would otherwise switch both off.
   "workers_dev": true,
   "preview_urls": true,
   "previews": {}
