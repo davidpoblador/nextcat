@@ -61,7 +61,7 @@ def _render_markdown(md_text: str, strip_leading_h1: bool = True) -> str:
 
 
 def _write_page(slug: str, html: str) -> None:
-    """Write `html` so it's served at /{slug} (directory with index.html inside)."""
+    """Write `html` so it's served at /{slug}/ (directory with index.html inside)."""
     target = PUBLIC_DIR / slug
     target.mkdir(parents=True, exist_ok=True)
     (target / "index.html").write_text(html)
@@ -103,19 +103,20 @@ def build() -> None:
     for otf in FONTS_DIR.glob("*.otf"):
         shutil.copy(otf, public_fonts / otf.name)
 
-    # Stable, language-agnostic URL slugs:
-    #   /cap0 .. /capN  — front matter + chapters (continuous TOC numbering)
-    #   /annex1 .. /annexN — appendix items
-    #   /colophon — colofó
+    # Stable, language-agnostic URL slugs. Each page is a directory, so the
+    # trailing slash is the canonical form; the host redirects the bare form.
+    #   /cap0/ .. /capN/  — front matter + chapters (continuous TOC numbering)
+    #   /annex1/ .. /annexN/ — appendix items
+    #   /colophon/ — colofó
     front_pages: list[Page] = []
     chapter_pages: list[Page] = []
     toc_index = 0
     for p in front_matter_files:
-        front_pages.append(Page(href=f"/cap{toc_index}", title=chapter_title(p), source=p))
+        front_pages.append(Page(href=f"/cap{toc_index}/", title=chapter_title(p), source=p))
         toc_index += 1
     for i, p in enumerate(chapter_files):
         chapter_pages.append(
-            Page(href=f"/cap{toc_index}", title=chapter_title(p), source=p, number=i + 1)
+            Page(href=f"/cap{toc_index}/", title=chapter_title(p), source=p, number=i + 1)
         )
         toc_index += 1
 
@@ -143,7 +144,7 @@ def build() -> None:
 
     appendix_pages: list[Page] = [
         Page(
-            href=f"/annex{i}",
+            href=f"/annex{i}/",
             title=title,
             source=source,
             kind=kind,
@@ -154,7 +155,7 @@ def build() -> None:
 
     # Colophon: annex-level row after all appendix items
     colophon_strings = strings.get("colophon", {})
-    colophon_page = Page(href="/colophon", title=colophon_strings.get("title", "Colofó"), source=None)
+    colophon_page = Page(href="/colophon/", title=colophon_strings.get("title", "Colofó"), source=None)
 
     all_pages = front_pages + chapter_pages + appendix_pages + [colophon_page]
 
@@ -190,6 +191,7 @@ def build() -> None:
     }
     common_ctx = {
         "lang": lang,
+        "site_url": config["document"]["url"].rstrip("/"),
         "site_title": doc["title"],
         "repo_url": repo_url,
         "pdf_url": pdf_url,
@@ -203,6 +205,7 @@ def build() -> None:
     index_html = env.get_template("index.html").render(
         **common_ctx,
         page_title=doc["title"],
+        canonical_path="/",
         title=doc["title"],
         subtitle=doc["subtitle"],
         author=config["document"]["author"],
@@ -253,6 +256,7 @@ def build() -> None:
         html = chapter_template.render(
             **common_ctx,
             page_title=f"{display_title} — {doc['title']}",
+            canonical_path=page.href,
             title=display_title,
             chapter_number=page.number,
             chapter_label=chapter_label,
@@ -262,7 +266,7 @@ def build() -> None:
             next={"href": next_p.href, "title": next_display} if next_p else None,
             toc_title=toc_strings["title"],
         )
-        _write_page(page.href.lstrip("/"), html)
+        _write_page(page.href.strip("/"), html)
         console.print(f"  [dim]→[/dim] {page.href}")
 
     console.print(f"\n[green bold]Done.[/green bold] Open [cyan]file://{PUBLIC_DIR}/index.html[/cyan]")
