@@ -21,6 +21,7 @@ epub:
 # Build the static HTML reader into public/
 site: pdf
     uv run python -m scripts.site
+    cp _headers public/
 
 # Build the book (alias for `site`)
 book: site
