@@ -77,12 +77,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
-    permissions:
-      actions: write
     steps:
-      # A release created with GITHUB_TOKEN does not fire publish-site's
-      # `release: published` trigger, so dispatch it explicitly.
-      - name: Dispatch site publish
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run publish-site.yml --repo ${{ github.repository }} --ref ${{ needs.release-please.outputs.tag_name }}
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      # Workers Builds deploys the `published` branch to nextcat.poblador.cat,
+      # so moving it to the release commit publishes exactly what was released.
+      - name: Move the published branch to the release
+        run: git push --force origin "${{ needs.release-please.outputs.tag_name }}^{commit}:refs/heads/published"

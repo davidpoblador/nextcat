@@ -40,6 +40,10 @@ just book      # Àlies de `just site`
 just clean     # Elimina fitxers generats
 ```
 
+## Publicació
+
+El lloc web el publica Cloudflare Workers Builds, que executa `just site` i serveix `public/`. Cada release mou la branca `published` al commit de la release, i és aquesta branca la que arriba a [nextcat.poblador.cat](https://nextcat.poblador.cat/): el web només canvia quan hi ha una versió nova. Qualsevol altra branca, `main` inclosa, genera una URL de preview.
+
 ## Estructura
 
 ```
