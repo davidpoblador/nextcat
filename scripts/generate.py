@@ -60,9 +60,14 @@ def cover_date(lang: str) -> str:
 def get_version() -> str:
     """Get the current version string from git tags or VERSION file."""
     try:
-        return Version.from_git().serialize(style=Style.Pep440)
+        version = Version.from_git()
     except RuntimeError:
         return VERSION_FILE.read_text().strip()
+    # A clone without tags (Workers Builds checks out a shallow tree) reports
+    # 0.0.0; VERSION, kept by release-please, is the right answer then.
+    if version.base == "0.0.0":
+        return VERSION_FILE.read_text().strip()
+    return version.serialize(style=Style.Pep440)
 
 
 def get_edition() -> int:
