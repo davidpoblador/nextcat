@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.6](https://github.com/davidpoblador/nextcat/compare/v0.0.5...v0.0.6) (2026-10-26)
+
+
+### CI/CD
+
+* dispatch publish-site after a release instead of the deleted pages workflow ([#91](https://github.com/davidpoblador/nextcat/issues/91)) ([67b8723](https://github.com/davidpoblador/nextcat/commit/67b87237fbf48b7b7fc9c746dae3226c4a47708c))
+
 ## [0.0.5](https://github.com/davidpoblador/nextcat/compare/v0.0.4...v0.0.5) (2026-10-26)
 
 
