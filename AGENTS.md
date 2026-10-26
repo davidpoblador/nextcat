@@ -53,8 +53,7 @@ All deps (typer, babel, dunamai, jinja2, markdown, typst) live in `[dependency-g
 
 ## CI/CD
 
-- `.github/workflows/release.yml` -- release-please + PDF build + attach to GitHub releases (stable `nextcat.{lang}.pdf` alias uploaded alongside versioned artifacts). On a release it also moves the `published` branch to the release commit.
-- The website is deployed by Cloudflare Workers Builds, not GitHub Actions: it runs `just site` and serves `public/` as static assets (`wrangler.jsonc`). The `published` branch goes to nextcat.poblador.cat, so the site only changes on a release; every other branch, `main` included, gets a preview URL.
+- `.github/workflows/release.yml` -- release-please + PDF build + attach to GitHub releases (stable `nextcat.{lang}.pdf` alias uploaded alongside versioned artifacts)
 - Conventional commits drive versioning: `feat:` bumps minor, `fix:` bumps patch
 
 ## Adding a chapter

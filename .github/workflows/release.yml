@@ -83,7 +83,5 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      # Workers Builds deploys the `published` branch to nextcat.poblador.cat,
-      # so moving it to the release commit publishes exactly what was released.
       - name: Move the published branch to the release
         run: git push --force origin "${{ needs.release-please.outputs.tag_name }}^{commit}:refs/heads/published"
