@@ -80,7 +80,9 @@ jobs:
     permissions:
       actions: write
     steps:
-      - name: Dispatch Pages deploy
+      # A release created with GITHUB_TOKEN does not fire publish-site's
+      # `release: published` trigger, so dispatch it explicitly.
+      - name: Dispatch site publish
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --repo ${{ github.repository }} --ref main
+        run: gh workflow run publish-site.yml --repo ${{ github.repository }} --ref ${{ needs.release-please.outputs.tag_name }}
