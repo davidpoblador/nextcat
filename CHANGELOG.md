@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.7](https://github.com/davidpoblador/nextcat/compare/v0.0.6...v0.0.7) (2026-10-26)
+
+
+### CI/CD
+
+* keep deployment details out of the repository ([#96](https://github.com/davidpoblador/nextcat/issues/96)) ([eff183d](https://github.com/davidpoblador/nextcat/commit/eff183d2743233d74c0956915c2747606805288f))
+* serve the reader from Cloudflare Workers via Workers Builds ([#93](https://github.com/davidpoblador/nextcat/issues/93)) ([4c1f5f9](https://github.com/davidpoblador/nextcat/commit/4c1f5f9262ac470ad392d0e0cfa24f7c73137bd7))
+
 ## [0.0.6](https://github.com/davidpoblador/nextcat/compare/v0.0.5...v0.0.6) (2026-10-26)
 
 
